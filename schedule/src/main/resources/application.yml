@@ -1,0 +1,19 @@
+server:
+  port: 8001
+
+
+rancher:
+  host: 172.18.216.86
+  port: 8080
+  APIkey:
+    accesskey: 1A8AFE7FE850E805543F
+    secret: zaPVLt5DfmuyAtKzmro11jFCMTrHixzksuzCRAhb
+  stackapisurl: v2-beta/projects/1a5/stacks/1st16
+
+  webhooks:
+    syslog:
+      up: http://172.18.218.252:8080/v1-webhooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
+      down: http://172.18.218.252:8080/v1-webhooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
+    syslog2:
+      up: syslog2up
+      down: syslog2down

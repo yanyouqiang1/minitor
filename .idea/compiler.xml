@@ -8,12 +8,14 @@
         <outputRelativeToContentRoot value="true" />
         <module name="MinitorSchedule" />
         <module name="reciver" />
+        <module name="schedule" />
         <module name="streamSender" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="MinitorSchedule" target="1.6" />
       <module name="reciver" target="1.6" />
+      <module name="schedule" target="1.6" />
       <module name="springcloud" target="1.6" />
       <module name="streamSender" target="1.6" />
     </bytecodeTargetLevel>
