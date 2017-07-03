@@ -1,0 +1,48 @@
+server:
+  port: 8012
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        input:
+          destination: minitor-stream
+          group: group1
+          consumer:
+            durableSubscription: true
+  rabbitmq:
+    username: user
+    password: password
+#    host: 172.18.218.252
+#    port: 15673
+    addresses: 192.168.0.87:5673
+
+minitor:
+  schedule:
+    minsampling: 10
+    detectintval: 10000
+    services:
+      client:
+        acceptime: 400
+        limitime: 800
+      service:
+        acceptime: 300
+        limitime: 500
+
+rancher:
+  host: 172.18.216.86
+  port: 8080
+  APIkey:
+    accesskey: B613FD5F27FB3CBBBB3A
+    secret: Hfn5RKQDXFz3ow6teTaiJBGrA7NBx1yZQRNgpuLe
+  stackapisurl: v2-beta/projects/1a5/stacks/1st16
+
+  webhooks:
+    syslog:
+      up: v1-webhooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
+      down: v1-webhooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
+    syslog2:
+      up: syslog2up
+      down: syslog2down
+
+

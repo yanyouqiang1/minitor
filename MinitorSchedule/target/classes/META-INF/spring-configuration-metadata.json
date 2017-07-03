@@ -1,0 +1,53 @@
+{
+  "hints": [],
+  "groups": [
+    {
+      "sourceType": "app.handle.MinitorConfig",
+      "name": "minitor.app.schedule",
+      "type": "app.handle.MinitorConfig"
+    },
+    {
+      "sourceType": "app.schedule.RancherConfig",
+      "name": "rancher",
+      "type": "app.schedule.RancherConfig"
+    }
+  ],
+  "properties": [
+    {
+      "sourceType": "app.handle.MinitorConfig",
+      "defaultValue": 0,
+      "name": "minitor.app.schedule.minsampling",
+      "type": "java.lang.Integer"
+    },
+    {
+      "sourceType": "app.handle.MinitorConfig",
+      "name": "minitor.app.schedule.services",
+      "type": "java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.lang.String>>"
+    },
+    {
+      "sourceType": "app.schedule.RancherConfig",
+      "name": "rancher.a-p-ikey",
+      "type": "java.util.Map<java.lang.String,java.lang.String>"
+    },
+    {
+      "sourceType": "app.schedule.RancherConfig",
+      "name": "rancher.host",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "app.schedule.RancherConfig",
+      "name": "rancher.port",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "app.schedule.RancherConfig",
+      "name": "rancher.stackapisurl",
+      "type": "java.lang.String"
+    },
+    {
+      "sourceType": "app.schedule.RancherConfig",
+      "name": "rancher.webhooks",
+      "type": "java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.lang.String>>"
+    }
+  ]
+}

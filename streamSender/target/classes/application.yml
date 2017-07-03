@@ -1,0 +1,15 @@
+server:
+  port: 8011
+
+spring:
+  cloud:
+    stream:
+      bindings:
+        output:
+          destination: cloud-stream
+  rabbitmq:
+    username: yan
+    password: yan
+#    host: 172.18.218.252
+#    port: 15673
+    addresses: 172.18.218.252:15673
