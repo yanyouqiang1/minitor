@@ -43,7 +43,7 @@ public interface WarehoseInter {
     /**
      * 销毁消息
      */
-    public void destoryMsg();
+    public void destroyMsg();
 
     /**
      * 统计消息

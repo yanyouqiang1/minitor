@@ -59,7 +59,7 @@ public class MsgWarehouseImpl implements WarehoseInter {
     }
 
     @Override
-    public void destoryMsg() {
+    public void destroyMsg() {
         services.clear();
         msgMap.clear();
         statistics.clear();
