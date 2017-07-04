@@ -39,7 +39,7 @@ public class CommonHandleImpl implements HandleInter {
                 msgHandleListener.msgBeforeDestroy(service,warehoseInter.getServcieQueue(service));
             }
         }
-        warehoseInter.destoryMsg();
+        warehoseInter.destroyMsg();
     }
 
     public void setMsgHandleListener(MsgHandleListener msgHandleListener) {

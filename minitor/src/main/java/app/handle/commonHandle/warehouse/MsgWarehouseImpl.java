@@ -1,9 +1,11 @@
 package app.handle.commonHandle.warehouse;
 
+import app.handle.commonHandle.warehouse.msgAnalyisis.AbstractRealtimeStatistics;
 import app.handle.commonHandle.warehouse.msgAnalyisis.RealtimeStatistics;
 import app.handle.commonHandle.warehouse.msgAnalyisis.Singlestatistics;
 import app.handle.commonHandle.warehouse.msgAnalyisis.Statistics;
 import entitylib.MsgEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -12,12 +14,13 @@ import java.util.concurrent.LinkedBlockingDeque;
 /**
  * Created by Administrator on 2017/7/4 0004.
  */
-@Component
 public class MsgWarehouseImpl implements WarehoseInter {
     private Statistics statistics = new Statistics(); //总统计
-    private RealtimeStatistics realtimeStatistics = new RealtimeStatistics(); //实时统计
     private Map msgMap = new HashMap<String,LinkedBlockingDeque>();
     private List<String> services = new ArrayList();
+
+    @Autowired
+    AbstractRealtimeStatistics realtimeStatistics; //实时统计
 
     //监听器
     private HistoryDataListener historyDataListener;
@@ -78,10 +81,7 @@ public class MsgWarehouseImpl implements WarehoseInter {
         }
         //对单个服务的统计
         for(String servcie:services){
-            Singlestatistics singlestatistics =new Singlestatistics();
-            Queue msgque = (Queue) msgMap.get(servcie);
-            singlestatistics.setAccessCount(msgque.size());
-            realtimeStatistics.setServcieStatics(servcie,singlestatistics);
+            realtimeStatistics.setServcieStatics(servcie,realtimeStatistics.fillAlgorithm((Queue) msgMap.get(servcie)));
         }
 
     }
