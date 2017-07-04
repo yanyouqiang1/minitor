@@ -1,4 +1,4 @@
-package app.handle.commonHandle.warehouse.msgstore;
+package app.handle.commonHandle.warehouse.msgAnalyisis;
 
 /**
  * Created by Administrator on 2017/7/4 0004.
@@ -14,5 +14,9 @@ public class Statistics {
 
     public void setTotalAcess(int totalAcess) {
         this.totalAcess = totalAcess;
+    }
+
+    public void clear(){
+        totalAcess = 0;
     }
 }

@@ -6,10 +6,10 @@ spring:
     stream:
       bindings:
         output:
-          destination: cloud-stream
+          destination: minitor-stream
   rabbitmq:
-    username: yan
-    password: yan
+    username: user
+    password: password
 #    host: 172.18.218.252
 #    port: 15673
-    addresses: 172.18.218.252:15673
+    addresses: 172.18.216.86:5673

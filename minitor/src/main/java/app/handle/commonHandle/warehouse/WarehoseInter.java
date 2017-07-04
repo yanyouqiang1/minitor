@@ -2,6 +2,10 @@ package app.handle.commonHandle.warehouse;
 
 import entitylib.MsgEntity;
 
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.LinkedBlockingDeque;
+
 /**
  * Created by Administrator on 2017/7/4 0004.
  */
@@ -23,4 +27,26 @@ public interface WarehoseInter {
      * @return
      */
     public int getServiceAccess(String serviceName);
+
+    /**
+     * 获得所有服务
+     * @return
+     */
+    public List getServices();
+
+    /**
+     * 获得服务消息存储队列
+     * @return
+     */
+    public Queue getServcieQueue(String serviceName);
+
+    /**
+     * 销毁消息
+     */
+    public void destoryMsg();
+
+    /**
+     * 统计消息
+     */
+    public void sumup();
 }
