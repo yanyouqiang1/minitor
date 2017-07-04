@@ -19,6 +19,9 @@ public class MsgWarehouseImpl implements WarehoseInter {
     private Map msgMap = new HashMap<String,LinkedBlockingDeque>();
     private List<String> services = new ArrayList();
 
+    //监听器
+    private HistoryDataListener historyDataListener;
+
     @Override
     public void putMsg(MsgEntity msgEntity) {
         //消息储存
@@ -64,6 +67,15 @@ public class MsgWarehouseImpl implements WarehoseInter {
 
     @Override
     public void sumup() {
+        //历史数据处理
+        if(historyDataListener!=null){
+            for(String service:services){
+                Singlestatistics singlestatistics = realtimeStatistics.getServiceStatistics(service);
+                if(singlestatistics!=null){
+                    historyDataListener.handle(service,singlestatistics);
+                }
+            }
+        }
         //对单个服务的统计
         for(String servcie:services){
             Singlestatistics singlestatistics =new Singlestatistics();
@@ -72,5 +84,9 @@ public class MsgWarehouseImpl implements WarehoseInter {
             realtimeStatistics.setServcieStatics(servcie,singlestatistics);
         }
 
+    }
+
+    public void setHistoryDataListener(HistoryDataListener historyDataListener) {
+        this.historyDataListener = historyDataListener;
     }
 }
