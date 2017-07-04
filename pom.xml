@@ -12,6 +12,7 @@
         <module>streamSender</module>
         <module>MinitorSchedule</module>
         <module>schedule</module>
+        <module>minitor</module>
     </modules>
 
     <parent>

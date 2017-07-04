@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="minitor" />
         <module name="MinitorSchedule" />
         <module name="reciver" />
         <module name="schedule" />
@@ -13,6 +14,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="minitor" target="1.6" />
       <module name="MinitorSchedule" target="1.6" />
       <module name="reciver" target="1.6" />
       <module name="schedule" target="1.6" />

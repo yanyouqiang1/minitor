@@ -1,15 +1,18 @@
 server:
-  port: 8011
+  port: 8012
 
 spring:
   cloud:
     stream:
       bindings:
-        output:
+        input:
           destination: minitor-stream
+          group: group1
+          consumer:
+            durableSubscription: true
   rabbitmq:
     username: user
     password: password
-#    host: 172.18.218.252
-#    port: 15673
     addresses: 172.18.216.86:5673
+
+
