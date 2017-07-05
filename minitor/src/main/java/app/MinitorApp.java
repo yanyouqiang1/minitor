@@ -1,5 +1,6 @@
 package app;
 
+import app.database.dao.UserRepository;
 import app.handle.HandleInter;
 import entitylib.MsgEntity;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
 import org.springframework.cloud.stream.messaging.Sink;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
@@ -16,6 +18,8 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableBinding(Sink.class)
 @EnableScheduling
+//@EnableJpaRepositories(repositoryFactoryBeanClass = UserRepository.class)
+@EnableJpaRepositories
 public class MinitorApp {
     public static void main(String[] args){
         SpringApplication.run(MinitorApp.class,args);
@@ -28,4 +32,6 @@ public class MinitorApp {
     public void handle(MsgEntity msgEntity){
         handleInter.msgRecive(msgEntity);
     }
+
+
 }
