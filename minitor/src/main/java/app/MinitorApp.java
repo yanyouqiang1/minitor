@@ -28,6 +28,4 @@ public class MinitorApp {
     public void handle(MsgEntity msgEntity){
         handleInter.msgRecive(msgEntity);
     }
-
-
 }

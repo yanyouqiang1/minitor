@@ -29,12 +29,12 @@ public class MsgWarehouseImpl implements WarehoseInter {
     public void putMsg(MsgEntity msgEntity) {
         //消息储存
         LinkedBlockingDeque queue;
-        if(!services.contains(msgEntity.getSeviceName())){
-            services.add(msgEntity.getSeviceName());
+        if(!services.contains(msgEntity.getSpringcloudName())){
+            services.add(msgEntity.getSpringcloudName());
             queue = new LinkedBlockingDeque();
-            msgMap.put(msgEntity.getSeviceName(),queue);
+            msgMap.put(msgEntity.getSpringcloudName(),queue);
         }else{
-            queue = (LinkedBlockingDeque) msgMap.get(msgEntity.getSeviceName());
+            queue = (LinkedBlockingDeque) msgMap.get(msgEntity.getSpringcloudName());
         }
         queue.addFirst(msgEntity);
 
