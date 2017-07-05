@@ -1,5 +1,8 @@
 package app;
 
+import app.handle.HandleInter;
+import app.handle.commonHandle.CommonHandleImpl;
+import app.handle.commonHandle.Msgfilter;
 import app.handle.commonHandle.warehouse.HistoryDataListener;
 import app.handle.commonHandle.warehouse.MsgWarehouseImpl;
 import app.handle.commonHandle.warehouse.WarehoseInter;
@@ -7,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -16,6 +20,8 @@ import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+
+import javax.annotation.Resource;
 
 /**
  * Created by Administrator on 2017/7/4 0004.
@@ -30,6 +36,20 @@ public class Config {
         MsgWarehouseImpl msgWarehouse = new MsgWarehouseImpl();
         msgWarehouse.setHistoryDataListener(historyDataListener);
         return msgWarehouse;
+    }
+
+    @Autowired @Qualifier("httpStatusFilter")
+    Msgfilter httpStatusFilter;
+
+    @Autowired @Qualifier("methodFilter")
+    Msgfilter methodFilter;
+
+    @Bean
+    public HandleInter getcommonHandle(){
+        CommonHandleImpl commonHandle  = new CommonHandleImpl();
+        commonHandle.getMsgfilterChain().add(httpStatusFilter);
+        commonHandle.getMsgfilterChain().add(methodFilter);
+        return commonHandle;
     }
 
     @Bean

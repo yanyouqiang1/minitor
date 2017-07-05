@@ -1,4 +1,4 @@
-package app.dataconfig;
+package app.handleconfig;
 
 import app.handle.commonHandle.warehouse.HistoryDataListener;
 import app.handle.commonHandle.warehouse.msgAnalyisis.Singlestatistics;

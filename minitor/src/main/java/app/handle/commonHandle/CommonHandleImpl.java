@@ -7,19 +7,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/4 0004.
  */
-@Component
 public class CommonHandleImpl implements HandleInter {
     private MsgHandleListener msgHandleListener;
+    private List<Msgfilter> msgfilterChain= new LinkedList<Msgfilter>();
     @Autowired
     WarehoseInter warehoseInter;
 
     @Override
     public void msgRecive(MsgEntity msgEntity) {
+        //消息过滤器
+        Iterator iterable = msgfilterChain.iterator();
+        while(iterable.hasNext()){
+            Msgfilter msgfilter = (Msgfilter) iterable.next();
+            msgEntity = msgfilter.filter(msgEntity);
+        }
         warehoseInter.putMsg(msgEntity);
     }
 
@@ -44,5 +52,9 @@ public class CommonHandleImpl implements HandleInter {
 
     public void setMsgHandleListener(MsgHandleListener msgHandleListener) {
         this.msgHandleListener = msgHandleListener;
+    }
+
+    public List<Msgfilter> getMsgfilterChain() {
+        return msgfilterChain;
     }
 }

@@ -33,8 +33,8 @@ rancher:
   host: 172.18.216.86
   port: 8080
   APIkey:
-    accesskey: B613FD5F27FB3CBBBB3A
-    secret: Hfn5RKQDXFz3ow6teTaiJBGrA7NBx1yZQRNgpuLe
+    accesskey: E9F73BCB0BF95E54D48C
+    secret: MZWo9ZoxgaqKPPRpY3wSAdC8RpxuupVPj4zgYp1W
   stackapisurl: v2-beta/projects/1a5/stacks/1st16
 
   webhooks:
