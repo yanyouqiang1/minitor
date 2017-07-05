@@ -42,6 +42,6 @@ public class Controller {
     }
     @RequestMapping("/save")
     void save(){
-        userRepository.save(new User(100,"100"));
+        userRepository.save(new User("100",100));
     }
 }

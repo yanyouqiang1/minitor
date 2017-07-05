@@ -22,8 +22,6 @@ public class Person {
 
     private String address;
 
-
-
     public Person() {
 
     }
