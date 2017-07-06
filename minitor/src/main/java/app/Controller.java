@@ -1,8 +1,5 @@
 package app;
 
-import app.database.dao.UserRepository;
-import app.database.domain.Person;
-import app.database.domain.User;
 import app.handle.HandleInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,25 +20,4 @@ public class Controller {
         return "welcome";
     }
 
-    @RequestMapping("/account")
-    public int getaccount(){
-        return handleInter.getTotalAccess();
-    }
-
-    @Autowired
-    UserRepository userRepository;
-
-    @RequestMapping("/getdata")
-    User getall(){
-        return userRepository.findOne(1L);
-    }
-
-    @RequestMapping("/all")
-    List<User> all(){
-        return userRepository.findAll();
-    }
-    @RequestMapping("/save")
-    void save(){
-        userRepository.save(new User("100",100));
-    }
 }

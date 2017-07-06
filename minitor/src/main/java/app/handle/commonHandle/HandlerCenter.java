@@ -14,9 +14,10 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/7/4 0004.
  */
-public class CommonHandleImpl implements HandleInter {
+public class HandlerCenter implements HandleInter {
     private MsgHandleListener msgHandleListener;
     private List<Msgfilter> msgfilterChain= new LinkedList<Msgfilter>();
+
     @Autowired
     WarehoseInter warehoseInter;
 
@@ -31,23 +32,14 @@ public class CommonHandleImpl implements HandleInter {
         warehoseInter.putMsg(msgEntity);
     }
 
-    @Override
-    public int getTotalAccess() {
-        return warehoseInter.getTotalAccess();
-    }
-
     @Scheduled(initialDelay = 10000, fixedRate = 10000)
     private void handle(){
-        //处理消息
+        //统计消息
         warehoseInter.sumup();
-        //调用消息销毁前的监听器
+        //触发监听器
         if(this.msgHandleListener!=null){
-            List<String> services = warehoseInter.getServices();
-            for (String service:services){
-                msgHandleListener.msgBeforeDestroy(service,warehoseInter.getServcieQueue(service));
-            }
+            msgHandleListener.afterSumup();
         }
-        warehoseInter.destroyMsg();
     }
 
     public void setMsgHandleListener(MsgHandleListener msgHandleListener) {

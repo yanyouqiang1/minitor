@@ -12,11 +12,4 @@ public interface HandleInter {
      */
     public void msgRecive(MsgEntity msgEntity);
 
-    /**
-     * 获得访问量
-     * @return
-     */
-    public int getTotalAccess();
-
-
 }

@@ -1,11 +1,12 @@
 package app;
 
 import app.handle.HandleInter;
-import app.handle.commonHandle.CommonHandleImpl;
+import app.handle.commonHandle.HandlerCenter;
 import app.handle.commonHandle.Msgfilter;
-import app.handle.commonHandle.warehouse.HistoryDataListener;
-import app.handle.commonHandle.warehouse.MsgWarehouseImpl;
-import app.handle.commonHandle.warehouse.WarehoseInter;
+import app.handle.commonHandle.warehouse.*;
+import app.handleconfig.msgAnalyisis.GroupStatistics;
+import app.handleconfig.msgAnalyisis.MethodStatistics;
+import app.handleconfig.msgAnalyisis.OverallStatistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -16,16 +17,6 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class Config {
-    @Autowired
-    HistoryDataListener historyDataListener;
-
-    @Bean
-    public WarehoseInter getWarehose(){
-        MsgWarehouseImpl msgWarehouse = new MsgWarehouseImpl();
-        msgWarehouse.setHistoryDataListener(historyDataListener);
-        return msgWarehouse;
-    }
-
     @Autowired @Qualifier("httpStatusFilter")
     Msgfilter httpStatusFilter;
 
@@ -34,10 +25,40 @@ public class Config {
 
     @Bean
     public HandleInter getcommonHandle(){
-        CommonHandleImpl commonHandle  = new CommonHandleImpl();
+        HandlerCenter commonHandle  = new HandlerCenter();
         commonHandle.getMsgfilterChain().add(httpStatusFilter);
         commonHandle.getMsgfilterChain().add(methodFilter);
         return commonHandle;
     }
+
+
+    @Autowired
+    GroupStatisticsHandler groupStatisticsHandler;
+    @Autowired
+    MethodStatisticsHandler methodStatisticsHandler;
+    @Autowired
+    OverallStatisticsHandler overallStatisticsHandler;
+
+    @Bean
+    AbstractGroupStatistics groupStatistics(){
+        AbstractGroupStatistics groupStatistics = new GroupStatistics();
+        groupStatistics.setStatisticsHandler(groupStatisticsHandler);
+        return groupStatistics;
+    }
+
+    @Bean
+    AbstractOverallStatistics overallStatistics(){
+        AbstractOverallStatistics abstractOverallStatistics = new OverallStatistics();
+        abstractOverallStatistics.setOverallStatisticsHandler(overallStatisticsHandler);
+        return abstractOverallStatistics;
+    }
+
+    @Bean
+    AbstractMethodStatistics methodStatistics(){
+        AbstractMethodStatistics abstractMethodStatistics = new MethodStatistics();
+        abstractMethodStatistics.setMethodStatisticsHandler(methodStatisticsHandler);
+        return abstractMethodStatistics;
+    }
+
 
 }

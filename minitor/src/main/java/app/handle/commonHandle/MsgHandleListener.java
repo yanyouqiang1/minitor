@@ -10,10 +10,6 @@ import java.util.concurrent.LinkedBlockingDeque;
 //消息处理监听器
 
 public interface MsgHandleListener {
-    /**
-     *  在消息销毁前的处理
-     * @param servcieName 服务名
-     * @param msgQueue 消息体
-     */
-    public void msgBeforeDestroy(String servcieName,Queue msgQueue);
+    //统计结果之后
+    public void afterSumup();
 }
