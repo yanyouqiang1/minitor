@@ -10,6 +10,4 @@ spring:
   rabbitmq:
     username: user
     password: password
-#    host: 172.18.218.252
-#    port: 15673
-    addresses: 192.168.0.87:5673
+    addresses: 172.18.216.86:5673

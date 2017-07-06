@@ -21,7 +21,11 @@ public class Mini_group {
 
     private Float rate;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    private String groupName;
+
+    private String name,popularname;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private Mini_overall overall;
 
     @OneToMany(mappedBy = "group")
@@ -71,5 +75,29 @@ public class Mini_group {
 
     public void setMethods(Set<Mini_method> methods) {
         this.methods = methods;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getPopularname() {
+        return popularname;
+    }
+
+    public void setPopularname(String popularname) {
+        this.popularname = popularname;
     }
 }

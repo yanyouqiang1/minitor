@@ -11,7 +11,7 @@ public class MsgEntity {
     String resouce; //资源
     String method; //方法 post,get,..
     String popularName; //通俗名称 如搜索服务
-    String springcloudName; //spring cloud 服务名称
+    String name; //spring cloud 服务名称
     int resposneTime; //响应时间
 
     public MsgEntity() {
@@ -23,7 +23,7 @@ public class MsgEntity {
         this.resouce = resouce;
         this.method = method;
         this.popularName = popularName;
-        this.springcloudName = springcloudName;
+        this.name = springcloudName;
         this.resposneTime = resposneTime;
     }
 
@@ -67,12 +67,12 @@ public class MsgEntity {
         this.popularName = popularName;
     }
 
-    public String getSpringcloudName() {
-        return springcloudName;
+    public String getName() {
+        return name;
     }
 
-    public void setSpringcloudName(String springcloudName) {
-        this.springcloudName = springcloudName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public int getResposneTime() {

@@ -26,7 +26,7 @@ public class Mini_overall {
 
     private Integer response_min,response_max,resposne_avg;
 
-    private Integer TPS;
+    private Long TPS;
 
     @OneToMany(mappedBy = "overall")
     @LazyCollection(LazyCollectionOption.EXTRA)
@@ -140,11 +140,11 @@ public class Mini_overall {
         this.resposne_avg = resposne_avg;
     }
 
-    public Integer getTPS() {
+    public Long getTPS() {
         return TPS;
     }
 
-    public void setTPS(Integer TPS) {
+    public void setTPS(Long TPS) {
         this.TPS = TPS;
     }
 

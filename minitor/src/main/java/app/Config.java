@@ -11,12 +11,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
 
 /**
  * Created by Administrator on 2017/7/4 0004.
  */
 @Configuration
 public class Config {
+
     @Autowired @Qualifier("httpStatusFilter")
     Msgfilter httpStatusFilter;
 
@@ -40,6 +42,7 @@ public class Config {
     OverallStatisticsHandler overallStatisticsHandler;
 
     @Bean
+    @Scope("prototype")
     AbstractGroupStatistics groupStatistics(){
         AbstractGroupStatistics groupStatistics = new GroupStatistics();
         groupStatistics.setStatisticsHandler(groupStatisticsHandler);
@@ -54,11 +57,13 @@ public class Config {
     }
 
     @Bean
+    @Scope("prototype")
     AbstractMethodStatistics methodStatistics(){
         AbstractMethodStatistics abstractMethodStatistics = new MethodStatistics();
         abstractMethodStatistics.setMethodStatisticsHandler(methodStatisticsHandler);
         return abstractMethodStatistics;
     }
+
 
 
 }

@@ -15,7 +15,10 @@ public abstract class AbstractMethodStatistics {
 
     protected int response_min,response_max,resposne_avg;
 
-    protected int TPS;
+    protected long TPS;
+
+    protected String resource="",groupname="";
+
 
     //消息处理器
     private MethodStatisticsHandler methodStatisticsHandler;
@@ -48,6 +51,8 @@ public abstract class AbstractMethodStatistics {
         response_max =0;
         resposne_avg =0;
         TPS = 0;
+        resource="";
+        groupname="";
     }
 
     public Long getVisitors() {
@@ -146,15 +151,31 @@ public abstract class AbstractMethodStatistics {
         this.resposne_avg = resposne_avg;
     }
 
-    public Integer getTPS() {
+    public long getTPS() {
         return TPS;
     }
 
-    public void setTPS(Integer TPS) {
+    public void setTPS(long TPS) {
         this.TPS = TPS;
     }
 
     public void setMethodStatisticsHandler(MethodStatisticsHandler methodStatisticsHandler) {
         this.methodStatisticsHandler = methodStatisticsHandler;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
+
+    public String getGroupname() {
+        return groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
     }
 }

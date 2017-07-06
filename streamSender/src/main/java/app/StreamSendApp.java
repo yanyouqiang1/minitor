@@ -32,27 +32,39 @@ public class StreamSendApp {
     static int a = 100;
     @RequestMapping("/send")
     public String send(){
-        MsgEntity msgEntity = new MsgEntity("client",a);
-        a+=100;
+        MsgEntity msgEntity = new MsgEntity();
+        msgEntity.setHttpStatus(200);
+        msgEntity.setMethod("post");
+        msgEntity.setGroup("good");
+        msgEntity.setResouce("good/23");
+        msgEntity.setPopularName("查询服务");
+        msgEntity.setName("search");
+        msgEntity.setResposneTime(100);
         source.output().send(MessageBuilder.withPayload(msgEntity).build());
-        return a+"";
+        return "ok";
     }
     static int b=200;
     @RequestMapping("/send2")
     public String send2(){
-        MsgEntity msgEntity = new MsgEntity("service ",b);
-        b+=100;
+        MsgEntity msgEntity = new MsgEntity();
+        msgEntity.setHttpStatus(300);
+        msgEntity.setMethod("get");
+        msgEntity.setGroup("good");
+        msgEntity.setResouce("good/45");
+        msgEntity.setPopularName("查询服务");
+        msgEntity.setName("search");
+        msgEntity.setResposneTime(100);
         source.output().send(MessageBuilder.withPayload(msgEntity).build());
-        return a+"";
+        return "ok";
     }
 
-    @RequestMapping("/random")
-    public String random(){
-        int b=150;
-        b+=Math.random()*100;
-        MsgEntity msgEntity = new MsgEntity("service2",b);
-        source.output().send(MessageBuilder.withPayload(msgEntity).build());
-        return b+"";
-    }
+//    @RequestMapping("/random")
+//    public String random(){
+//        int b=150;
+//        b+=Math.random()*100;
+//        MsgEntity msgEntity = new MsgEntity("service2",b);
+//        source.output().send(MessageBuilder.withPayload(msgEntity).build());
+//        return b+"";
+//    }
 
 }

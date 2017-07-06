@@ -1,9 +1,11 @@
 package app.handle.commonHandle.warehouse;
 
+import app.handle.util.SpringUtil;
 import entitylib.MsgEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -19,12 +21,11 @@ public abstract class AbstractOverallStatistics {
 
     protected int response_min,response_max,resposne_avg;
 
-    protected int TPS;
+    protected long TPS;
 
 
     //成员属性
-    @Autowired
-    private List<AbstractGroupStatistics> groupStatistics;
+    private List<AbstractGroupStatistics> groupStatistics = new LinkedList<AbstractGroupStatistics>();
 
 
     //定义处理器
@@ -33,10 +34,20 @@ public abstract class AbstractOverallStatistics {
     //收到新的消息处理
     public void msgRecive(MsgEntity msgEntity){
         if(groupStatistics!=null) {
+            boolean isSend=false;
             Iterator iterator = groupStatistics.iterator();
-            while (iterator.hasNext()) {
+            while (iterator.hasNext()&&!isSend) {
                 AbstractGroupStatistics group = (AbstractGroupStatistics) iterator.next();
+                if(group.getGroupName().equals(msgEntity.getGroup())){
+                    group.msgRecive(msgEntity);
+                    isSend = true;
+                }
+            }
+            if(!isSend){
+                AbstractGroupStatistics group = SpringUtil.getBean(AbstractGroupStatistics.class);
+                group.setGroupName(msgEntity.getGroup());
                 group.msgRecive(msgEntity);
+                groupStatistics.add(group);
             }
         }
         update(msgEntity);
@@ -77,6 +88,7 @@ public abstract class AbstractOverallStatistics {
         response_max =0;
         resposne_avg =0;
         TPS = 0;
+        groupStatistics.clear();
     }
 
     public Long getVisitors() {
@@ -175,11 +187,11 @@ public abstract class AbstractOverallStatistics {
         this.resposne_avg = resposne_avg;
     }
 
-    public Integer getTPS() {
+    public long getTPS() {
         return TPS;
     }
 
-    public void setTPS(Integer TPS) {
+    public void setTPS(long TPS) {
         this.TPS = TPS;
     }
 

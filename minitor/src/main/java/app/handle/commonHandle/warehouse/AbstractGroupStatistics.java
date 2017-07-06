@@ -1,9 +1,11 @@
 package app.handle.commonHandle.warehouse;
 
+import app.handle.util.SpringUtil;
 import entitylib.MsgEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -13,12 +15,12 @@ public abstract class AbstractGroupStatistics {
     //统计属性
     protected long visitors;
     protected float rate;
-    protected String commonName;
-    protected String springName;
+    protected String popularName="";
+    protected String name="";
+    protected String groupName="";
 
     //成员属性
-    @Autowired
-    List<AbstractMethodStatistics> methodStatistics;
+    List<AbstractMethodStatistics> methodStatistics = new LinkedList<AbstractMethodStatistics>();
 
     //消息统计器
     private GroupStatisticsHandler statisticsHandler;
@@ -26,10 +28,20 @@ public abstract class AbstractGroupStatistics {
     //收到消息处理
     public void msgRecive(MsgEntity msgEntity){
         if(methodStatistics!=null) {
+            boolean isSend =false;
             Iterator iterator = methodStatistics.iterator();
-            while (iterator.hasNext()) {
+            while (iterator.hasNext()&&!isSend) {
                 AbstractMethodStatistics method = (AbstractMethodStatistics) iterator.next();
+                if(method.getResource().equals(msgEntity.getResouce())){
+                    method.msgRecive(msgEntity);
+                    isSend = true;
+                }
+            }
+            if(!isSend){
+                AbstractMethodStatistics method = SpringUtil.getBean(AbstractMethodStatistics.class);
+                method.setResource(msgEntity.getResouce());
                 method.msgRecive(msgEntity);
+                methodStatistics.add(method);
             }
         }
         update(msgEntity);
@@ -54,8 +66,10 @@ public abstract class AbstractGroupStatistics {
     private void clear(){
         this.visitors = 0l;
         this.rate = 0f;
-        this.commonName="";
-        this.springName ="";
+        this.popularName="";
+        this.name ="";
+        this.groupName="";
+        methodStatistics.clear();
     }
 
 
@@ -77,23 +91,31 @@ public abstract class AbstractGroupStatistics {
         this.rate = rate;
     }
 
-    public String getCommonName() {
-        return commonName;
+    public String getPopularName() {
+        return popularName;
     }
 
-    public void setCommonName(String commonName) {
-        this.commonName = commonName;
+    public void setPopularName(String popularName) {
+        this.popularName = popularName;
     }
 
-    public String getSpringName() {
-        return springName;
+    public String getName() {
+        return name;
     }
 
-    public void setSpringName(String springName) {
-        this.springName = springName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setStatisticsHandler(GroupStatisticsHandler statisticsHandler) {
         this.statisticsHandler = statisticsHandler;
+    }
+
+    public String getGroupName() {
+        return groupName;
+    }
+
+    public void setGroupName(String groupName) {
+        this.groupName = groupName;
     }
 }

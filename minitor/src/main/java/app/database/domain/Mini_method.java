@@ -13,15 +13,19 @@ public class Mini_method {
 
     private Long visitors;
 
-    private Long method_get,method_post,method_put,method_delete;
+    private Long method_get, method_post, method_put, method_delete;
 
-    private Long status_200,status_300,status_400,status_500;
+    private Long status_200, status_300, status_400, status_500;
 
-    private Integer response_min,response_max,resposne_avg;
+    private Integer response_min, response_max, resposne_avg;
 
-    private Integer TPS;
+    private Long TPS;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    private String resource;
+
+    private String groupname;
+
+    @ManyToOne(fetch = FetchType.EAGER)
     private Mini_group group;
 
     public Mini_method() {
@@ -132,11 +136,11 @@ public class Mini_method {
         this.resposne_avg = resposne_avg;
     }
 
-    public Integer getTPS() {
+    public Long getTPS() {
         return TPS;
     }
 
-    public void setTPS(Integer TPS) {
+    public void setTPS(Long TPS) {
         this.TPS = TPS;
     }
 
@@ -146,5 +150,21 @@ public class Mini_method {
 
     public void setGroup(Mini_group group) {
         this.group = group;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
+
+    public String getGroupname() {
+        return groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
     }
 }

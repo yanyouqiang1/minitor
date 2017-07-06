@@ -10,5 +10,23 @@ public class GroupStatistics extends AbstractGroupStatistics {
     @Override
     public void update(MsgEntity msgEntity) {
         this.visitors++;
+
+        if(super.name.equals("")){
+            super.name = msgEntity.getName();
+        }
+        if(super.name.equals("")){
+            super.popularName = msgEntity.getPopularName();
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "GroupStatistics{" +
+                "visitors=" + visitors +
+                ", rate=" + rate +
+                ", popularName='" + popularName + '\'' +
+                ", name='" + name + '\'' +
+                ", groupName='" + groupName + '\'' +
+                '}';
     }
 }
