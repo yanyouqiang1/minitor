@@ -1,43 +1,30 @@
 package app.database.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 
 /**
- * Created by Administrator on 2017/7/6.
+ * Created by Administrator on 2017/7/7.
  */
-@Entity
-public class Mini_method {
-    @Id
-    @GeneratedValue
+public class Basemethod {
     private Long id;
 
-    private Long visitors;
+    protected Long visitors;
 
-    private Long method_get, method_post, method_put, method_delete;
+    protected Long method_get, method_post, method_put, method_delete;
 
-    private Long status_100,status_200, status_300, status_400, status_500;
+    protected Long status_100,status_200, status_300, status_400, status_500;
 
-    private Integer response_min, response_max, resposne_avg;
+    protected Integer response_min, response_max, resposne_avg;
 
-    private Float rate_method_get,rate_method_post,rate_method_put,rate_method_delete;
+    protected Float rate_method_get,rate_method_post,rate_method_put,rate_method_delete;
 
-    private Float rate_status_100,rate_status_200, rate_status_300, rate_status_400, rate_status_500;
+    protected Float rate_status_100,rate_status_200, rate_status_300, rate_status_400, rate_status_500;
 
-    private Long TPS;
+    protected Long TPS;
 
-    private String resource;
+    protected String resource;
 
-    private String groupname;
-
-    @JsonIgnore
-    @ManyToOne(fetch = FetchType.LAZY)
-    private Mini_group group;
-
-    public Mini_method() {
-    }
-
+    protected String groupname;
 
     public Long getId() {
         return id;
@@ -85,6 +72,14 @@ public class Mini_method {
 
     public void setMethod_delete(Long method_delete) {
         this.method_delete = method_delete;
+    }
+
+    public Long getStatus_100() {
+        return status_100;
+    }
+
+    public void setStatus_100(Long status_100) {
+        this.status_100 = status_100;
     }
 
     public Long getStatus_200() {
@@ -141,46 +136,6 @@ public class Mini_method {
 
     public void setResposne_avg(Integer resposne_avg) {
         this.resposne_avg = resposne_avg;
-    }
-
-    public Long getTPS() {
-        return TPS;
-    }
-
-    public void setTPS(Long TPS) {
-        this.TPS = TPS;
-    }
-
-    public Mini_group getGroup() {
-        return group;
-    }
-
-    public void setGroup(Mini_group group) {
-        this.group = group;
-    }
-
-    public String getResource() {
-        return resource;
-    }
-
-    public void setResource(String resource) {
-        this.resource = resource;
-    }
-
-    public String getGroupname() {
-        return groupname;
-    }
-
-    public void setGroupname(String groupname) {
-        this.groupname = groupname;
-    }
-
-    public Long getStatus_100() {
-        return status_100;
-    }
-
-    public void setStatus_100(Long status_100) {
-        this.status_100 = status_100;
     }
 
     public Float getRate_method_get() {
@@ -253,5 +208,58 @@ public class Mini_method {
 
     public void setRate_status_500(Float rate_status_500) {
         this.rate_status_500 = rate_status_500;
+    }
+
+    public Long getTPS() {
+        return TPS;
+    }
+
+    public void setTPS(Long TPS) {
+        this.TPS = TPS;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
+    }
+
+    public String getGroupname() {
+        return groupname;
+    }
+
+    public void setGroupname(String groupname) {
+        this.groupname = groupname;
+    }
+
+    public void generate(Mini_method m){
+        this.id = m.getId();
+        this.TPS = m.getTPS();
+        this.groupname = m.getGroupname();
+        this.method_delete = m.getMethod_delete();
+        this.method_get = m.getMethod_get();
+        this.method_post = m.getMethod_post();
+        this.method_put=m.getMethod_put();
+        this.rate_method_delete = m.getRate_method_delete();
+        this.rate_method_get = m.getRate_method_get();
+        this.rate_method_post = m.getRate_method_post();
+        this.rate_method_put = m.getRate_method_put();
+        this.rate_status_100 = m.getRate_status_100();
+        this.rate_status_200 = m.getRate_status_200();
+        this.rate_status_300 = m.getRate_status_300();
+        this.rate_status_400 = m.getRate_status_400();
+        this.rate_status_500 = m.getRate_status_500();
+        this.resource = m.getResource();
+        this.response_max = m.getResponse_max();
+        this.response_min = m.getResponse_min();
+        this.resposne_avg = m.getResposne_avg();
+        this.status_100 = m.getStatus_100();
+        this.status_200 = m.getStatus_200();
+        this.status_300 = m.getStatus_300();
+        this.status_400 = m.getStatus_400();
+        this.status_500 = m.getStatus_500();
+        this.visitors = m.getVisitors();
     }
 }

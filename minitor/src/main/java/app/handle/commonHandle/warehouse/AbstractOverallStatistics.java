@@ -70,6 +70,7 @@ public abstract class AbstractOverallStatistics {
                 group.sumup();
             }
         }
+
         clear();
     }
 

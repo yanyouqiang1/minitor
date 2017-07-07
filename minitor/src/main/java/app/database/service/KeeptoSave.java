@@ -19,15 +19,13 @@ public class KeeptoSave {
     @Autowired
     OverallRepository overallRepository;
     private static Mini_overall OVERALL;
+    private static long id =1l;
 
     public Mini_overall getOverall() {
         return OVERALL;
     }
 
     public void setOverall(Mini_overall overall) {
-        if(OVERALL!=null){
-            overallRepository.save(OVERALL);
-        }
         OVERALL = overall;
     }
 
@@ -45,5 +43,13 @@ public class KeeptoSave {
                 method.setGroup(group);
             }
         }
+    }
+    public void dosave(){
+        Mini_overall overall =  overallRepository.saveAndFlush(OVERALL);
+        id = overall.getId();
+    }
+
+    public static long getId() {
+        return id;
     }
 }

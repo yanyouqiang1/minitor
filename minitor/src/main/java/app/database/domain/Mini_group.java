@@ -1,5 +1,6 @@
 package app.database.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.*;
 import org.hibernate.annotations.CascadeType;
 
@@ -25,8 +26,10 @@ public class Mini_group {
 
     private String name,popularname;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @JsonIgnore
+    @ManyToOne(fetch = FetchType.LAZY)
     private Mini_overall overall;
+
 
     @OneToMany(mappedBy = "group")
     @LazyCollection(LazyCollectionOption.EXTRA)

@@ -2,6 +2,7 @@ package app;
 
 import app.handle.HandleInter;
 import app.handle.commonHandle.HandlerCenter;
+import app.handle.commonHandle.MsgHandleListener;
 import app.handle.commonHandle.Msgfilter;
 import app.handle.commonHandle.warehouse.*;
 import app.handleconfig.msgAnalyisis.GroupStatistics;
@@ -25,11 +26,14 @@ public class Config {
     @Autowired @Qualifier("methodFilter")
     Msgfilter methodFilter;
 
+    @Autowired
+    MsgHandleListener msgHandleListener;
     @Bean
     public HandleInter getcommonHandle(){
         HandlerCenter commonHandle  = new HandlerCenter();
         commonHandle.getMsgfilterChain().add(httpStatusFilter);
         commonHandle.getMsgfilterChain().add(methodFilter);
+        commonHandle.setMsgHandleListener(msgHandleListener);
         return commonHandle;
     }
 
