@@ -22,6 +22,9 @@ public class MethodStatistics extends AbstractMethodStatistics {
         }
 
         switch (msgEntity.getHttpStatus()){
+            case 100:
+                super.status_100++;
+                break;
             case 200:
                 super.status_200++;
                 break;

@@ -22,7 +22,12 @@ public class Mini_overall {
 
     private Long method_get,method_post,method_put,method_delete;
 
-    private Long status_200,status_300,status_400,status_500;
+    private Long status_100,status_200,status_300,status_400,status_500;
+
+    private Float rate_method_get,rate_method_post,rate_method_put,rate_method_delete;
+
+    private Float rate_status_100,rate_status_200, rate_status_300, rate_status_400, rate_status_500;
+
 
     private Integer response_min,response_max,resposne_avg;
 
@@ -154,5 +159,85 @@ public class Mini_overall {
 
     public void setGroups(Set<Mini_group> groups) {
         this.groups = groups;
+    }
+
+    public Long getStatus_100() {
+        return status_100;
+    }
+
+    public void setStatus_100(Long status_100) {
+        this.status_100 = status_100;
+    }
+
+    public Float getRate_method_get() {
+        return rate_method_get;
+    }
+
+    public void setRate_method_get(Float rate_method_get) {
+        this.rate_method_get = rate_method_get;
+    }
+
+    public Float getRate_method_post() {
+        return rate_method_post;
+    }
+
+    public void setRate_method_post(Float rate_method_post) {
+        this.rate_method_post = rate_method_post;
+    }
+
+    public Float getRate_method_put() {
+        return rate_method_put;
+    }
+
+    public void setRate_method_put(Float rate_method_put) {
+        this.rate_method_put = rate_method_put;
+    }
+
+    public Float getRate_method_delete() {
+        return rate_method_delete;
+    }
+
+    public void setRate_method_delete(Float rate_method_delete) {
+        this.rate_method_delete = rate_method_delete;
+    }
+
+    public Float getRate_status_100() {
+        return rate_status_100;
+    }
+
+    public void setRate_status_100(Float rate_status_100) {
+        this.rate_status_100 = rate_status_100;
+    }
+
+    public Float getRate_status_200() {
+        return rate_status_200;
+    }
+
+    public void setRate_status_200(Float rate_status_200) {
+        this.rate_status_200 = rate_status_200;
+    }
+
+    public Float getRate_status_300() {
+        return rate_status_300;
+    }
+
+    public void setRate_status_300(Float rate_status_300) {
+        this.rate_status_300 = rate_status_300;
+    }
+
+    public Float getRate_status_400() {
+        return rate_status_400;
+    }
+
+    public void setRate_status_400(Float rate_status_400) {
+        this.rate_status_400 = rate_status_400;
+    }
+
+    public Float getRate_status_500() {
+        return rate_status_500;
+    }
+
+    public void setRate_status_500(Float rate_status_500) {
+        this.rate_status_500 = rate_status_500;
     }
 }

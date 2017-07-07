@@ -1,6 +1,7 @@
 package app.handle.commonHandle.warehouse;
 
 import entitylib.MsgEntity;
+import org.apache.catalina.users.AbstractGroup;
 
 /**
  * Created by Administrator on 2017/7/6.
@@ -11,7 +12,7 @@ public abstract class AbstractMethodStatistics {
 
     protected long method_get,method_post,method_put,method_delete;
 
-    protected long status_200,status_300,status_400,status_500;
+    protected long status_100,status_200,status_300,status_400,status_500;
 
     protected int response_min,response_max,resposne_avg;
 
@@ -19,6 +20,9 @@ public abstract class AbstractMethodStatistics {
 
     protected String resource="",groupname="";
 
+
+    //自身属性
+    private AbstractGroupStatistics parentGroup;
 
     //消息处理器
     private MethodStatisticsHandler methodStatisticsHandler;
@@ -177,5 +181,21 @@ public abstract class AbstractMethodStatistics {
 
     public void setGroupname(String groupname) {
         this.groupname = groupname;
+    }
+
+    public AbstractGroupStatistics getParentGroup() {
+        return parentGroup;
+    }
+
+    public void setParentGroup(AbstractGroupStatistics parentGroup) {
+        this.parentGroup = parentGroup;
+    }
+
+    public long getStatus_100() {
+        return status_100;
+    }
+
+    public void setStatus_100(long status_100) {
+        this.status_100 = status_100;
     }
 }

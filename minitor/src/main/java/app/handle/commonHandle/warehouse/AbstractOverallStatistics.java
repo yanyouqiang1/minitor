@@ -17,7 +17,7 @@ public abstract class AbstractOverallStatistics {
 
     protected long method_get,method_post,method_put,method_delete;
 
-    protected long status_200,status_300,status_400,status_500;
+    protected long status_100,status_200,status_300,status_400,status_500;
 
     protected int response_min,response_max,resposne_avg;
 
@@ -46,6 +46,7 @@ public abstract class AbstractOverallStatistics {
             if(!isSend){
                 AbstractGroupStatistics group = SpringUtil.getBean(AbstractGroupStatistics.class);
                 group.setGroupName(msgEntity.getGroup());
+                group.setParentOverall(this);
                 group.msgRecive(msgEntity);
                 groupStatistics.add(group);
             }
@@ -197,5 +198,13 @@ public abstract class AbstractOverallStatistics {
 
     public void setOverallStatisticsHandler(OverallStatisticsHandler overallStatisticsHandler) {
         this.overallStatisticsHandler = overallStatisticsHandler;
+    }
+
+    public long getStatus_100() {
+        return status_100;
+    }
+
+    public void setStatus_100(long status_100) {
+        this.status_100 = status_100;
     }
 }

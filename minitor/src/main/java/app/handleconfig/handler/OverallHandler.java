@@ -25,10 +25,24 @@ public class OverallHandler implements OverallStatisticsHandler {
         overall.setResponse_max(overallStatistics.getResponse_max());
         overall.setResponse_min(overallStatistics.getResponse_min());
         overall.setResposne_avg(overallStatistics.getResposne_avg());
+        overall.setStatus_100(overallStatistics.getStatus_100());
         overall.setStatus_200(overallStatistics.getStatus_200());
         overall.setStatus_300(overallStatistics.getStatus_300());
         overall.setStatus_400(overallStatistics.getStatus_400());
         overall.setStatus_500(overallStatistics.getStatus_500());
+
+        //rate
+        long visitors = overallStatistics.getVisitors();
+        overall.setRate_method_delete((float) (overallStatistics.getMethod_delete()/visitors));
+        overall.setRate_method_get((float) (overallStatistics.getMethod_get()/visitors));
+        overall.setRate_method_post((float) (overallStatistics.getMethod_post()/visitors));
+        overall.setRate_method_put((float) (overallStatistics.getMethod_put()/visitors));
+        overall.setRate_status_100((float) (overallStatistics.getStatus_100()/visitors));
+        overall.setRate_status_200((float) (overallStatistics.getStatus_200()/visitors));
+        overall.setRate_status_300((float) (overallStatistics.getStatus_300()/visitors));
+        overall.setRate_status_400((float) (overallStatistics.getStatus_400()/visitors));
+        overall.setRate_status_500((float) (overallStatistics.getStatus_500()/visitors));
+
         overall.setTPS(overallStatistics.getTPS());
         keeptoSave.setOverall(overall);
     }

@@ -21,7 +21,7 @@ public abstract class AbstractGroupStatistics {
 
     //成员属性
     List<AbstractMethodStatistics> methodStatistics = new LinkedList<AbstractMethodStatistics>();
-
+    private AbstractOverallStatistics parentOverall;
     //消息统计器
     private GroupStatisticsHandler statisticsHandler;
 
@@ -40,6 +40,7 @@ public abstract class AbstractGroupStatistics {
             if(!isSend){
                 AbstractMethodStatistics method = SpringUtil.getBean(AbstractMethodStatistics.class);
                 method.setResource(msgEntity.getResouce());
+                method.setParentGroup(this);
                 method.msgRecive(msgEntity);
                 methodStatistics.add(method);
             }
@@ -117,5 +118,13 @@ public abstract class AbstractGroupStatistics {
 
     public void setGroupName(String groupName) {
         this.groupName = groupName;
+    }
+
+    public AbstractOverallStatistics getParentOverall() {
+        return parentOverall;
+    }
+
+    public void setParentOverall(AbstractOverallStatistics parentOverall) {
+        this.parentOverall = parentOverall;
     }
 }

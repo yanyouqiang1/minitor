@@ -26,6 +26,7 @@ public class MethodHandler implements MethodStatisticsHandler {
         method.setResponse_max(methodStatistics.getResponse_max());
         method.setResponse_min(methodStatistics.getResponse_min());
         method.setResposne_avg(methodStatistics.getResposne_avg());
+        method.setStatus_100(methodStatistics.getStatus_100());
         method.setStatus_200(methodStatistics.getStatus_200());
         method.setStatus_300(methodStatistics.getStatus_300());
         method.setStatus_400(methodStatistics.getStatus_400());
@@ -33,6 +34,19 @@ public class MethodHandler implements MethodStatisticsHandler {
         method.setTPS(methodStatistics.getTPS());
         method.setResource(methodStatistics.getResource());
         method.setGroupname(methodStatistics.getGroupname());
+
+        //rate
+        long visitors = methodStatistics.getVisitors();
+        method.setRate_method_delete((float) (methodStatistics.getMethod_delete()/visitors));
+        method.setRate_method_get((float) (methodStatistics.getMethod_get()/visitors));
+        method.setRate_method_post((float) (methodStatistics.getMethod_post()/visitors));
+        method.setRate_method_put((float) (methodStatistics.getMethod_put()/visitors));
+        method.setRate_status_100((float) (methodStatistics.getStatus_100()/visitors));
+        method.setRate_status_200((float) (methodStatistics.getStatus_200()/visitors));
+        method.setRate_status_300((float) (methodStatistics.getStatus_300()/visitors));
+        method.setRate_status_400((float) (methodStatistics.getStatus_400()/visitors));
+        method.setRate_status_500((float) (methodStatistics.getStatus_500()/visitors));
+
         keeptoSave.save(method);
     }
 }

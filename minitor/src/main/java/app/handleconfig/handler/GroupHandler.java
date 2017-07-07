@@ -21,6 +21,11 @@ public class GroupHandler implements GroupStatisticsHandler {
         group.setVisitors(groupStatistics.getVisitors());
         group.setName(groupStatistics.getName());
         group.setPopularname(groupStatistics.getPopularName());
+
+        //rate
+        long visitors = groupStatistics.getParentOverall().getVisitors();
+        group.setRate((float) (groupStatistics.getVisitors()/visitors));
+
         keeptoSave.save(group);
     }
 }

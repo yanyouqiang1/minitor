@@ -14,7 +14,9 @@ public class HttpStatusFilter implements Msgfilter {
     public MsgEntity filter(MsgEntity msgEntity) {
         int status = msgEntity.getHttpStatus();
         int adjust; //调整之后
-        if(status<300){
+        if(status<200){
+            adjust = 100;
+        }else if(status<300){
             adjust = 200;
         }else if(status<400){
             adjust = 300;
