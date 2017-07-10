@@ -6,10 +6,12 @@ import app.webInterface.entity.list.Details_resources;
 import app.webInterface.entity.list.Details_services;
 import app.webInterface.entity.method.*;
 import app.webInterface.entity.overview.*;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Administrator on 2017/7/10.
  */
+@Component
 public class RestImpl implements RestInter {
     @Override
     public Overview overview() {
@@ -47,47 +49,47 @@ public class RestImpl implements RestInter {
     }
 
     @Override
-    public Details_group details_group(int page, int size) {
+    public Details_group details_group(int groupid, int page, int size) {
         return null;
     }
 
     @Override
-    public Details_resources details_resources(int page, int size) {
+    public Details_resources details_resources(int resourceid, int page, int size) {
         return null;
     }
 
     @Override
-    public Details_services details_services(int page, int size) {
+    public Details_services details_services(int serviceid, int page, int size) {
         return null;
     }
 
     @Override
-    public Method method() {
+    public Method method(int id) {
         return null;
     }
 
     @Override
-    public Method_visitors method_visitors() {
+    public Method_visitors method_visitors(int id) {
         return null;
     }
 
     @Override
-    public Method_success_rate method_success_rate() {
+    public Method_success_rate method_success_rate(int id) {
         return null;
     }
 
     @Override
-    public Method_status_code method_status_code() {
+    public Method_status_code method_status_code(int id) {
         return null;
     }
 
     @Override
-    public Method_response_time method_response_time() {
+    public Method_response_time method_response_time(int id) {
         return null;
     }
 
     @Override
-    public Method_tps method_tps() {
+    public Method_tps method_tps(int id) {
         return null;
     }
 }
