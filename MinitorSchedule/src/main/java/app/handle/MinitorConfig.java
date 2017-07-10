@@ -8,7 +8,7 @@ import java.util.Map;
 /**
  * Created by Administrator on 2017/6/7 0007.
  */
-@ConfigurationProperties(prefix = "minitor.app.schedule")
+@ConfigurationProperties(prefix = "overview.app.schedule")
 public class MinitorConfig {
     int minsampling;
     Map<String,Map<String,String>> services = new HashMap<String, Map<String, String>>();
