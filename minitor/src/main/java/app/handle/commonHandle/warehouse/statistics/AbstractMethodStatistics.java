@@ -10,7 +10,7 @@ public abstract class AbstractMethodStatistics implements Statistics{
     protected long visitors;
 
     //自身属性
-    protected long methodid;
+    protected long id;
     protected String name;
 
     //映射属性
@@ -40,12 +40,13 @@ public abstract class AbstractMethodStatistics implements Statistics{
         attributeClear();
     }
     public abstract void attributeClear();
-    public long getMethodid() {
-        return methodid;
+
+    public long getId() {
+        return id;
     }
 
-    public void setMethodid(long methodid) {
-        this.methodid = methodid;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

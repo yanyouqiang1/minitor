@@ -4,10 +4,14 @@ import app.database.domain.Minitor_method;
 import app.database.domain.Minitor_overall;
 import app.handle.commonHandle.warehouse.statistics.AbstractMethodStatistics;
 import entitylib.MsgEntity;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Administrator on 2017/7/6.
  */
+@Component
+@Scope("prototype")
 public class MethodStatistics extends AbstractMethodStatistics {
     protected long method_get,method_post,method_put,method_delete;
 
@@ -74,6 +78,7 @@ public class MethodStatistics extends AbstractMethodStatistics {
         minitor_method.setStatus_400(status_400);
         minitor_method.setStatus_500(status_500);
         minitor_method.setTPS(TPS);
+        minitor_method.setResourceId(method.getParentResource().getResourceid());
 
     }
 }

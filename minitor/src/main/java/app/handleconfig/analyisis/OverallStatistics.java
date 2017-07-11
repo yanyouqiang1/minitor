@@ -1,12 +1,19 @@
 package app.handleconfig.analyisis;
 
+import app.Global;
+import app.database.dao.OverallRepository;
 import app.database.domain.Minitor_overall;
 import app.handle.commonHandle.warehouse.statistics.AbstractOverallStatistics;
 import entitylib.MsgEntity;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Administrator on 2017/7/6.
  */
+@Component
+@Scope("prototype")
 public class OverallStatistics extends AbstractOverallStatistics{
 
     public long status_100,status_200,status_300,status_400,status_500;
@@ -61,6 +68,8 @@ public class OverallStatistics extends AbstractOverallStatistics{
         TPS =0;
     }
 
+    @Autowired
+    OverallRepository overallRepository;
     @Override
     public void handleResult(AbstractOverallStatistics overall) {
         Minitor_overall minitor_overall = new Minitor_overall();
@@ -74,7 +83,8 @@ public class OverallStatistics extends AbstractOverallStatistics{
         minitor_overall.setStatus_400(status_400);
         minitor_overall.setStatus_500(status_500);
         minitor_overall.setTPS(TPS);
-
+        Minitor_overall current = overallRepository.saveAndFlush(minitor_overall);
+        Global.CurrentOverallId = current.getId();
     }
 
 }

@@ -61,8 +61,8 @@ public abstract class AbstractOverallStatistics implements Statistics{
         if(groups!=null){
             for(Map.Entry<Long,String> entry:groups.entrySet()){
                 AbstractGroupStatistics group = SpringUtil.getBean(AbstractGroupStatistics.class);
-                group.setGroupName(entry.getValue());
-                group.setGroupid(entry.getKey());
+                group.setName(entry.getValue());
+                group.setId(entry.getKey());
                 group.setParentOverall(this);
                 group.statisticsUpdate();
                 groupMap.put(entry.getKey(),group);

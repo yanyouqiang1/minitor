@@ -14,8 +14,8 @@ public abstract class AbstractGroupStatistics implements Statistics{
     protected long visitors;
 
     //自身属性
-    protected String groupName="";
-    protected Long groupid;
+    protected String name="";
+    protected Long id;
 
 
     //映射属性
@@ -75,11 +75,11 @@ public abstract class AbstractGroupStatistics implements Statistics{
         }
         resourceStatisticsMap.clear();
         serviceStatisticsMap.clear();
-        Map<Long,String> resources = Global.getResoucesByGroupId(this.groupid);
+        Map<Long,String> resources = Global.getResoucesByGroupId(this.id);
         if(resources!=null){
             for(Map.Entry<Long,String> resourceEntry:resources.entrySet()){
                 AbstractResourceStatistics resource = SpringUtil.getBean(AbstractResourceStatistics.class);
-                resource.setResourceid(resourceEntry.getKey());
+                resource.setId(resourceEntry.getKey());
                 resource.setName(resourceEntry.getValue());
                 resource.setParentGroup(this);
                 resource.statisticsUpdate();
@@ -90,7 +90,7 @@ public abstract class AbstractGroupStatistics implements Statistics{
         if(services!=null){
             for(Map.Entry<Long,String> serviceEntry:services.entrySet()){
                 AbstractServiceStatistics service = SpringUtil.getBean(AbstractServiceStatistics.class);
-                service.setServiceid(serviceEntry.getKey());
+                service.setId(serviceEntry.getKey());
                 service.setName(serviceEntry.getValue());
                 service.statisticsUpdate();
                 serviceStatisticsMap.put(serviceEntry.getKey(),service);
@@ -107,13 +107,6 @@ public abstract class AbstractGroupStatistics implements Statistics{
         this.visitors = visitors;
     }
 
-    public String getGroupName() {
-        return groupName;
-    }
-
-    public void setGroupName(String groupName) {
-        this.groupName = groupName;
-    }
 
     public AbstractOverallStatistics getParentOverall() {
         return parentOverall;
@@ -123,11 +116,19 @@ public abstract class AbstractGroupStatistics implements Statistics{
         this.parentOverall = parentOverall;
     }
 
-    public Long getGroupid() {
-        return groupid;
+    public String getName() {
+        return name;
     }
 
-    public void setGroupid(Long groupid) {
-        this.groupid = groupid;
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

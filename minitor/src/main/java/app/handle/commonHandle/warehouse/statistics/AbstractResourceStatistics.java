@@ -14,7 +14,7 @@ public abstract class AbstractResourceStatistics implements Statistics{
     //统计属性
     long visitors;
     //自身属性
-    long resourceid;
+    long id;
     String name;
 
     //映射属性
@@ -56,11 +56,11 @@ public abstract class AbstractResourceStatistics implements Statistics{
             methodStatisticsMap = new HashMap<>();
         }
         methodStatisticsMap.clear();
-        Map<Long,String> resources = Global.getMethodByResourceId(resourceid);
+        Map<Long,String> resources = Global.getMethodByResourceId(this.id);
         if(resources!=null){
             for(Map.Entry<Long,String> resourceEntry:resources.entrySet()){
                 AbstractMethodStatistics method = SpringUtil.getBean(AbstractMethodStatistics.class);
-                method.setMethodid(resourceEntry.getKey());
+                method.setId(resourceEntry.getKey());
                 method.setName(resourceEntry.getValue());
                 method.setParentResource(this);
                 methodStatisticsMap.put(resourceEntry.getKey(),method);
@@ -68,12 +68,12 @@ public abstract class AbstractResourceStatistics implements Statistics{
         }
     }
 
-    public long getResourceid() {
-        return resourceid;
+    public long getId() {
+        return id;
     }
 
-    public void setResourceid(long resourceid) {
-        this.resourceid = resourceid;
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {

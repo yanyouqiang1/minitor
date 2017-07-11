@@ -34,14 +34,10 @@ public class Global {
     }
 
 
+    /**
+     * database
+     */
     //当前最新添加的overall id
-    private static long currentOverallId=1;
+    public static long CurrentOverallId=1;
 
-    public static long getCurrentOverallId() {
-        return currentOverallId;
-    }
-
-    public static void setCurrentOverallId(long currentOverallId) {
-        Global.currentOverallId = currentOverallId;
-    }
 }

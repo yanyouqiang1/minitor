@@ -8,7 +8,7 @@ import entitylib.MsgEntity;
 public abstract class AbstractServiceStatistics implements Statistics{
     long visitors;
 
-    protected long serviceid;
+    protected long id;
     protected String name;
 
 
@@ -36,11 +36,12 @@ public abstract class AbstractServiceStatistics implements Statistics{
 
     }
 
-    public long getServiceid() {
-        return serviceid;
+    public long getId() {
+        return id;
     }
-    public void setServiceid(long serviceid) {
-        this.serviceid = serviceid;
+
+    public void setId(long id) {
+        this.id = id;
     }
 
     public String getName() {
