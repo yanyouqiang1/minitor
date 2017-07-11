@@ -6,7 +6,7 @@ spring:
     stream:
       bindings:
         output:
-          destination: minitor-stream
+          destination: overview-stream
   rabbitmq:
     username: user
     password: password

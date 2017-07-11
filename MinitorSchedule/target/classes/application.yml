@@ -6,7 +6,7 @@ spring:
     stream:
       bindings:
         input:
-          destination: minitor-stream
+          destination: overview-stream
           group: group1
           consumer:
             durableSubscription: true
