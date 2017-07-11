@@ -10,10 +10,13 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class MymsgHandleListener implements MsgHandleListener {
+
     @Autowired
     KeeptoSave keeptoSave;
+
     @Override
     public void afterSumup() {
         keeptoSave.dosave();
     }
+
 }

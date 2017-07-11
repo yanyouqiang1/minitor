@@ -1,11 +1,9 @@
 package app.handle.commonHandle.warehouse;
 
+import app.handle.commonHandle.warehouse.statistics.AbstractOverallStatistics;
 import entitylib.MsgEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.*;
-import java.util.concurrent.LinkedBlockingDeque;
 
 /**
  * Created by Administrator on 2017/7/4 0004.
@@ -23,5 +21,10 @@ public class MsgWarehouseImpl implements WarehoseInter {
     @Override
     public void sumup() {
         overallStatistics.sumup();
+    }
+
+    @Override
+    public void statisticsUpdate() {
+        overallStatistics.statisticsUpdate();
     }
 }

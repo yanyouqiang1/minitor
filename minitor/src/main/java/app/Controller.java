@@ -4,17 +4,13 @@ import app.database.dao.GroupRepository;
 import app.database.dao.MethodRepository;
 import app.database.dao.OverallRepository;
 import app.database.domain.Baseoverall;
-import app.database.domain.Mini_group;
-import app.database.domain.Mini_method;
-import app.database.domain.Mini_overall;
+import app.database.domain.Minitor_overall;
 import app.database.service.KeeptoSave;
 import app.handle.HandleInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Min;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by Administrator on 2017/7/4 0004.
@@ -42,7 +38,7 @@ public class Controller {
     GroupRepository groupRepository;
 
     @RequestMapping("/current")
-    Mini_overall wholecurrent(){
+    Minitor_overall wholecurrent(){
         long id = keeptoSave.getId();
         return overallRepository.findOne(id);
     }

@@ -21,4 +21,10 @@ public interface WarehoseInter {
      * 统计消息
      */
     public void sumup();
+
+
+    /***
+     *  服务有更新
+     */
+    public void statisticsUpdate();
 }

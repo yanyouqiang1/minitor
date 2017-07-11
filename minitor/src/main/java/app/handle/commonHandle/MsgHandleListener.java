@@ -1,9 +1,5 @@
 package app.handle.commonHandle;
 
-import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingDeque;
-
 /**
  * Created by Administrator on 2017/7/4 0004.
  */

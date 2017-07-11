@@ -4,10 +4,10 @@ import app.handle.HandleInter;
 import app.handle.commonHandle.HandlerCenter;
 import app.handle.commonHandle.MsgHandleListener;
 import app.handle.commonHandle.Msgfilter;
-import app.handle.commonHandle.warehouse.*;
-import app.handleconfig.msgAnalyisis.GroupStatistics;
-import app.handleconfig.msgAnalyisis.MethodStatistics;
-import app.handleconfig.msgAnalyisis.OverallStatistics;
+import app.handle.commonHandle.warehouse.statistics.*;
+import app.handleconfig.analyisis.GroupStatistics;
+import app.handleconfig.analyisis.MethodStatistics;
+import app.handleconfig.analyisis.OverallStatistics;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
@@ -39,11 +39,11 @@ public class Config {
 
 
     @Autowired
-    GroupStatisticsHandler groupStatisticsHandler;
+    GroupStatisticsResultHandler groupStatisticsHandler;
     @Autowired
-    MethodStatisticsHandler methodStatisticsHandler;
+    MethodStatisticsResultHandler methodStatisticsHandler;
     @Autowired
-    OverallStatisticsHandler overallStatisticsHandler;
+    OverallStatisticsResultHandler overallStatisticsHandler;
 
     @Bean
     @Scope("prototype")

@@ -1,11 +1,11 @@
 package app.handle.commonHandle;
 
+import app.Global;
 import app.handle.HandleInter;
 import app.handle.commonHandle.warehouse.WarehoseInter;
 import entitylib.MsgEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.stereotype.Component;
 
 import java.util.Iterator;
 import java.util.LinkedList;
@@ -40,6 +40,12 @@ public class HandlerCenter implements HandleInter {
         if(this.msgHandleListener!=null){
             msgHandleListener.afterSumup();
         }
+    }
+
+    @Scheduled(fixedDelay = 30000)
+    private void statisticUpdate(){
+        Global.update();
+        warehoseInter.statisticsUpdate();
     }
 
     public void setMsgHandleListener(MsgHandleListener msgHandleListener) {

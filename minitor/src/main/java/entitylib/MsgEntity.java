@@ -1,30 +1,17 @@
 package entitylib;
 
-import org.apache.http.protocol.HTTP;
-
 /**
  * Created by Administrator on 2017/6/2 0002.
  */
 public class MsgEntity {
     int httpStatus; //状态码
-    String group; //属于哪个组
-    String resouce; //资源
-    String method; //方法 post,get,..
-    String popularName; //通俗名称 如搜索服务
-    String name; //spring cloud 服务名称
+    Long groupid; //属于哪个组
+    Long resouceid; //资源
+    Long methodid; //方法 post,get,..
+    Long serviceid; //通俗名称 如搜索服务
     int resposneTime; //响应时间
 
     public MsgEntity() {
-    }
-
-    public MsgEntity(int httpStatus, String group, String resouce, String method, String popularName, String springcloudName, int resposneTime) {
-        this.httpStatus = httpStatus;
-        this.group = group;
-        this.resouce = resouce;
-        this.method = method;
-        this.popularName = popularName;
-        this.name = springcloudName;
-        this.resposneTime = resposneTime;
     }
 
     public int getHttpStatus() {
@@ -35,44 +22,36 @@ public class MsgEntity {
         this.httpStatus = httpStatus;
     }
 
-    public String getGroup() {
-        return group;
+    public Long getGroupid() {
+        return groupid;
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    public void setGroupid(Long groupid) {
+        this.groupid = groupid;
     }
 
-    public String getResouce() {
-        return resouce;
+    public Long getResouceid() {
+        return resouceid;
     }
 
-    public void setResouce(String resouce) {
-        this.resouce = resouce;
+    public void setResouceid(Long resouceid) {
+        this.resouceid = resouceid;
     }
 
-    public String getMethod() {
-        return method;
+    public Long getMethodid() {
+        return methodid;
     }
 
-    public void setMethod(String method) {
-        this.method = method;
+    public void setMethodid(Long methodid) {
+        this.methodid = methodid;
     }
 
-    public String getPopularName() {
-        return popularName;
+    public Long getServiceid() {
+        return serviceid;
     }
 
-    public void setPopularName(String popularName) {
-        this.popularName = popularName;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
+    public void setServiceid(Long serviceid) {
+        this.serviceid = serviceid;
     }
 
     public int getResposneTime() {
