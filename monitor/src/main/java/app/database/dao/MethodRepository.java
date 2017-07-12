@@ -11,4 +11,8 @@ import java.util.List;
  */
 @Transactional
 public interface MethodRepository extends JpaRepository<Monitor_method,Long> {
+    public Monitor_method findFirstByIdOrderByColumnid(long id);
+    public List<Monitor_method> findTop90ByIdOrderByColumnid(long id);
+
+//    public List<Monitor_method> findDistinctById();
 }

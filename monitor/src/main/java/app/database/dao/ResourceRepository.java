@@ -11,4 +11,5 @@ import javax.transaction.Transactional;
  */
 @Transactional
 public interface ResourceRepository extends JpaRepository<Monitor_resource,Long> {
+
 }

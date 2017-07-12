@@ -13,6 +13,6 @@ import java.util.List;
  * Created by Administrator on 2017/7/6.
  */
 @Transactional
-//@RepositoryRestResource(path = "overall")
 public interface OverallRepository extends JpaRepository<Monitor_overall, Long> {
+    public List<Monitor_overall> findTop90ByIdIsNotNullOrderByIdDesc();
 }

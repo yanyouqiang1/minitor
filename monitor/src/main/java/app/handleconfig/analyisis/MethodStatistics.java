@@ -15,15 +15,17 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class MethodStatistics extends AbstractMethodStatistics {
-    protected long status_100,status_200,status_300,status_400,status_500;
+    protected long status_100, status_200, status_300, status_400, status_500;
 
-    protected int response_min,response_max,resposne_avg;
+    protected float rate_status_100, rate_status_200, rate_status_300, rate_status_400, rate_status_500;
+
+    protected int response_min, response_max, resposne_avg;
 
     protected long TPS;
 
     @Override
     public void update(MsgEntity msgEntity) {
-        switch (msgEntity.getHttpStatus()){
+        switch (msgEntity.getHttpStatus()) {
             case 100:
                 status_100++;
                 break;
@@ -41,15 +43,15 @@ public class MethodStatistics extends AbstractMethodStatistics {
                 break;
         }
         int responsetime = msgEntity.getResposneTime();
-        if(responsetime<response_min){
+        if (responsetime < response_min) {
             response_min = responsetime;
         }
-        if(responsetime>response_max){
+        if (responsetime > response_max) {
             response_max = responsetime;
         }
-        resposne_avg = (int) ((visitors-1)*resposne_avg/visitors);
+        resposne_avg = (int) ((visitors - 1) * resposne_avg / visitors);
 
-        TPS = visitors/10;
+        TPS = visitors / 10;
     }
 
     @Override
@@ -59,16 +61,23 @@ public class MethodStatistics extends AbstractMethodStatistics {
         status_300 = 0;
         status_400 = 0;
         status_500 = 0;
-        response_min=0;
-        response_max=0;
-        resposne_avg=0;
-        TPS =0;
+        response_min = 0;
+        response_max = 0;
+        resposne_avg = 0;
+        TPS = 0;
     }
 
     @Autowired
     MethodRepository methodRepository;
+
     @Override
     public void handleResult(AbstractMethodStatistics method) {
+        rate_status_100 = (float) status_100 / method.getVisitors();
+        rate_status_200 = (float) status_200 / method.getVisitors();
+        rate_status_300 = (float) status_300 / method.getVisitors();
+        rate_status_400 = (float) status_400 / method.getVisitors();
+        rate_status_500 = (float) status_500 / method.getVisitors();
+
         Monitor_method monitor_method = new Monitor_method();
         monitor_method.setVisitors(method.getVisitors());
         monitor_method.setResponse_max(response_min);
@@ -79,10 +88,16 @@ public class MethodStatistics extends AbstractMethodStatistics {
         monitor_method.setStatus_300(status_300);
         monitor_method.setStatus_400(status_400);
         monitor_method.setStatus_500(status_500);
+        monitor_method.setRate_status_100(rate_status_100);
+        monitor_method.setRate_status_200(rate_status_200);
+        monitor_method.setRate_status_300(rate_status_300);
+        monitor_method.setRate_status_400(rate_status_400);
+        monitor_method.setRate_status_500(rate_status_500);
         monitor_method.setTPS(TPS);
         monitor_method.setResourceId(method.getParentResource().getId());
         monitor_method.setName(method.getName());
         monitor_method.setOverall(Global.CurrentOverall);
+        monitor_method.setId(method.getId());
         methodRepository.save(monitor_method);
     }
 }
