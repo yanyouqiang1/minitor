@@ -15,6 +15,4 @@ import java.util.List;
 @Transactional
 //@RepositoryRestResource(path = "overall")
 public interface OverallRepository extends JpaRepository<Monitor_overall, Long> {
-    @Query("select o from Monitor_overall o where o.id>?1 and o.id<=?2 order by id desc ")
-    List getBetween(long left,long right);
 }

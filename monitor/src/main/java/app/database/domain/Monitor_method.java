@@ -9,8 +9,13 @@ import javax.persistence.*;
  */
 @Entity
 public class Monitor_method {
+    @Id
+    @GeneratedValue
+    private Long columnid;
+
     private Long id;
 
+    @Column(name = "resourceId")
     private Long resourceId;
 
     private Long visitors;
@@ -182,5 +187,13 @@ public class Monitor_method {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public Long getColumnid() {
+        return columnid;
+    }
+
+    public void setColumnid(Long columnid) {
+        this.columnid = columnid;
     }
 }

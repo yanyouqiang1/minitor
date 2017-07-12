@@ -2,15 +2,17 @@ package app.database.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * Created by Administrator on 2017/7/11.
  */
 @Entity
 public class Monitor_resource {
+    @Id
+    @GeneratedValue
+    private Long columnid;
+
     Long id;
 
     Long visitors;
@@ -64,5 +66,13 @@ public class Monitor_resource {
 
     public void setOverall(Monitor_overall overall) {
         this.overall = overall;
+    }
+
+    public Long getColumnid() {
+        return columnid;
+    }
+
+    public void setColumnid(Long columnid) {
+        this.columnid = columnid;
     }
 }

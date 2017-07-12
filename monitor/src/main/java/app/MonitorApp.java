@@ -16,9 +16,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableBinding(Sink.class)
 @EnableScheduling
-public class MinitorApp {
+public class MonitorApp {
     public static void main(String[] args){
-        SpringApplication.run(MinitorApp.class,args);
+        SpringApplication.run(MonitorApp.class,args);
     }
 
     @Autowired

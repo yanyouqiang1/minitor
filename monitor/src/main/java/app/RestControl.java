@@ -66,7 +66,7 @@ public class RestControl {
         return restInter.details_resources(id,page,size);
     }
 
-    @RequestMapping("/resources/{id}/monitor_details")
+    @RequestMapping("/services/{id}/monitor_details")
     public Details_services Details_services(@PathVariable(name = "id") int id, @RequestParam(name = "page", defaultValue = "0")int page, @RequestParam(name = "size",defaultValue = "10")int size){
         return restInter.details_services(id,page,size);
     }

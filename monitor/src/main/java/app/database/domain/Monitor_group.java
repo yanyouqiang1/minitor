@@ -10,6 +10,10 @@ import javax.persistence.Entity;
  */
 @Entity
 public class Monitor_group {
+    @Id
+    @GeneratedValue
+    private Long columnid;
+
     private Long id;
 
     private Long visitors;
@@ -63,5 +67,13 @@ public class Monitor_group {
 
     public void setOverall(Monitor_overall overall) {
         this.overall = overall;
+    }
+
+    public Long getColumnid() {
+        return columnid;
+    }
+
+    public void setColumnid(Long columnid) {
+        this.columnid = columnid;
     }
 }

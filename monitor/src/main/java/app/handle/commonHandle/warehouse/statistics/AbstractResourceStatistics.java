@@ -35,12 +35,12 @@ public abstract class AbstractResourceStatistics implements Statistics{
     }
     public abstract void update(MsgEntity msgEntity);
     public void sumup(){
+        handleResult(this);
         if(methodStatisticsMap!=null){
             for(AbstractMethodStatistics method:methodStatisticsMap.values()){
                 method.sumup();
             }
         }
-        handleResult(this);
         clear();
 
     }

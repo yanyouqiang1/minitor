@@ -29,7 +29,9 @@ public class GroupStatistics extends AbstractGroupStatistics {
     GroupRepository groupRepository;
     @Override
     public void handleResult(AbstractGroupStatistics group) {
-        rate = (float) group.getVisitors()/(group.getParentOverall().getVisitors());
+        if(group.getParentOverall().getVisitors()!=0) {
+            rate = (float) group.getVisitors() / (group.getParentOverall().getVisitors());
+        }
         Monitor_group monitor_group = new Monitor_group();
         monitor_group.setId(group.getId());
         monitor_group.setName(group.getName());
@@ -38,6 +40,4 @@ public class GroupStatistics extends AbstractGroupStatistics {
         monitor_group.setOverall(Global.CurrentOverall);
         groupRepository.save(monitor_group);
     }
-
-
 }

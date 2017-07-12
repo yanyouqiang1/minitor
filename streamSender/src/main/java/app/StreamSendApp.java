@@ -34,12 +34,11 @@ public class StreamSendApp {
     public String send(){
         MsgEntity msgEntity = new MsgEntity();
         msgEntity.setHttpStatus(200);
-        msgEntity.setMethod("post");
-        msgEntity.setGroup("good");
-        msgEntity.setResouce("good/23");
-        msgEntity.setPopularName("查询服务");
-        msgEntity.setName("search");
-        msgEntity.setResposneTime(100);
+        msgEntity.setGroupid(1l);
+        msgEntity.setResouceid(1l);
+        msgEntity.setMethodid(1l);
+        msgEntity.setServiceid(1l);
+        msgEntity.setResposneTime(400);
         source.output().send(MessageBuilder.withPayload(msgEntity).build());
         return "ok";
     }
@@ -47,24 +46,13 @@ public class StreamSendApp {
     @RequestMapping("/send2")
     public String send2(){
         MsgEntity msgEntity = new MsgEntity();
-        msgEntity.setHttpStatus(300);
-        msgEntity.setMethod("get");
-        msgEntity.setGroup("good");
-        msgEntity.setResouce("good/45");
-        msgEntity.setPopularName("查询服务");
-        msgEntity.setName("search");
-        msgEntity.setResposneTime(100);
+        msgEntity.setHttpStatus(200);
+        msgEntity.setGroupid(1l);
+        msgEntity.setResouceid(1l);
+        msgEntity.setMethodid(2l);
+        msgEntity.setServiceid(1l);
+        msgEntity.setResposneTime(400);
         source.output().send(MessageBuilder.withPayload(msgEntity).build());
         return "ok";
     }
-
-//    @RequestMapping("/random")
-//    public String random(){
-//        int b=150;
-//        b+=Math.random()*100;
-//        MsgEntity msgEntity = new MsgEntity("service2",b);
-//        source.output().send(MessageBuilder.withPayload(msgEntity).build());
-//        return b+"";
-//    }
-
 }

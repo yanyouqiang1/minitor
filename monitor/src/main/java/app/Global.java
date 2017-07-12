@@ -2,6 +2,7 @@ package app;
 
 import app.database.domain.Monitor_overall;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -10,15 +11,30 @@ import java.util.Map;
 public class Global {
     //获得所有组 eg:1->user
     public static Map<Long,String> getGroups(){
-        return null;
+        Map<Long,String> map = new HashMap<>();
+        map.put(1l,"group1");
+        map.put(2l,"group2");
+        return map;
     }
     //根据组ID获得组下所有资源
     public static Map<Long,String> getResoucesByGroupId(long groupid){
-        return null;
+        if(groupid==1l){
+            Map<Long,String> map = new HashMap<>();
+            map.put(1l,"resource1");
+            map.put(2l,"resource2");
+            return map;
+        }else
+            return null;
     }
     //根据资源ID获得所有方法
     public static Map<Long,String> getMethodByResourceId(long resourceid){
-        return null;
+        if(resourceid==1l){
+            Map<Long,String> map = new HashMap<>();
+            map.put(1l,"get");
+            map.put(2l,"post");
+            return map;
+        }else
+            return null;
     }
 
     //根据服务ID 获取服务名称
@@ -28,14 +44,15 @@ public class Global {
 
     //获得所有服务
     public static Map<Long,String> getServices(){
-        return null;
+        Map<Long,String> map = new HashMap<>();
+        map.put(1l,"service1");
+        map.put(2l,"service2");
+        return map;
     }
 
     public static void update(){
 
     }
-
-
     /**
      * database
      */

@@ -11,5 +11,4 @@ import java.util.List;
  */
 @Transactional
 public interface MethodRepository extends JpaRepository<Monitor_method,Long> {
-    List<Monitor_method> findTop10ByResourceOrderByIdDesc(String resource);
 }

@@ -11,5 +11,4 @@ import java.util.List;
  */
 @Transactional
 public interface GroupRepository extends JpaRepository<Monitor_group,Long> {
-    List<Monitor_group> findTop10ByGroupNameOrderByIdDesc(String groupName);
 }

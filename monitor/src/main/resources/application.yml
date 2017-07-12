@@ -16,8 +16,7 @@ spring:
     addresses: 172.18.216.86:5673
 
   datasource:
-#    url: jdbc:mysql://172.18.216.86:10004/overview?characterEncoding=utf8&useSSL=false
-    url: jdbc:mysql://172.18.216.86:10004/overview?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://172.18.216.86:10004/monitor?autoReconnect=true&useSSL=false
     username: root
     password: root
     driver-class-name: com.mysql.jdbc.Driver

@@ -18,7 +18,7 @@ public class OverallStatistics extends AbstractOverallStatistics{
 
     protected long status_100,status_200,status_300,status_400,status_500;
 
-    protected Float rate_status_100,rate_status_200, rate_status_300, rate_status_400, rate_status_500;
+    protected float rate_status_100,rate_status_200, rate_status_300, rate_status_400, rate_status_500;
 
     protected int response_min,response_max,resposne_avg;
 
@@ -74,12 +74,13 @@ public class OverallStatistics extends AbstractOverallStatistics{
     OverallRepository overallRepository;
     @Override
     public void handleResult(AbstractOverallStatistics overall) {
-        rate_status_100 = (float)status_100/visitors;
-        rate_status_200 = (float)status_200/visitors;
-        rate_status_300 = (float)status_300/visitors;
-        rate_status_400 = (float)status_400/visitors;
-        rate_status_500 = (float)status_500/visitors;
-
+        if(overall.getVisitors()!=0){
+            rate_status_100 = (float)status_100/overall.getVisitors();
+            rate_status_200 = (float)status_200/overall.getVisitors();
+            rate_status_300 = (float)status_300/overall.getVisitors();
+            rate_status_400 = (float)status_400/overall.getVisitors();
+            rate_status_500 = (float)status_500/overall.getVisitors();
+        }
         Monitor_overall monitor_overall = new Monitor_overall();
         monitor_overall.setVisitors(overall.getVisitors());
         monitor_overall.setResponse_max(response_min);
