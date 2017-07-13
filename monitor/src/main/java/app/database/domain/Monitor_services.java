@@ -17,6 +17,8 @@ public class Monitor_services {
     String name;
     Long visitors;
 
+    private Integer response_min,response_max,response_avg;
+
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)
     private Monitor_overall overall;
@@ -59,5 +61,29 @@ public class Monitor_services {
 
     public void setColumnid(Long columnid) {
         this.columnid = columnid;
+    }
+
+    public Integer getResponse_min() {
+        return response_min;
+    }
+
+    public void setResponse_min(Integer response_min) {
+        this.response_min = response_min;
+    }
+
+    public Integer getResponse_max() {
+        return response_max;
+    }
+
+    public void setResponse_max(Integer response_max) {
+        this.response_max = response_max;
+    }
+
+    public Integer getResponse_avg() {
+        return response_avg;
+    }
+
+    public void setResponse_avg(Integer response_avg) {
+        this.response_avg = response_avg;
     }
 }

@@ -36,7 +36,7 @@ public class Method {
         rate_status_500 = monitor_method.getRate_status_500();
         response_min = monitor_method.getResponse_min();
         response_max = monitor_method.getResponse_max();
-        resposne_avg = monitor_method.getResposne_avg();
+        resposne_avg = monitor_method.getResponse_avg();
         TPS = monitor_method.getTPS();
     }
 

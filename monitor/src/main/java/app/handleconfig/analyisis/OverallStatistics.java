@@ -20,7 +20,7 @@ public class OverallStatistics extends AbstractOverallStatistics{
 
     protected float rate_status_100,rate_status_200, rate_status_300, rate_status_400, rate_status_500;
 
-    protected int response_min,response_max,resposne_avg;
+    protected int response_min,response_max,response_avg;
 
     protected long TPS;
 
@@ -45,6 +45,9 @@ public class OverallStatistics extends AbstractOverallStatistics{
         }
 
         int responsetime = msgEntity.getResposneTime();
+        if(visitors==1){
+            response_min = responsetime;
+        }
         if(responsetime<response_min){
             response_min = responsetime;
         }
@@ -52,7 +55,7 @@ public class OverallStatistics extends AbstractOverallStatistics{
             response_max = responsetime;
         }
 
-        resposne_avg = (int) ((visitors-1)*resposne_avg/visitors);
+        response_avg = (int) ((visitors-1)*response_avg/visitors);
 
         TPS = visitors/10;
     }
@@ -66,7 +69,7 @@ public class OverallStatistics extends AbstractOverallStatistics{
         status_500 = 0;
         response_min=0;
         response_max=0;
-        resposne_avg=0;
+        response_avg=0;
         TPS =0;
     }
 
@@ -83,9 +86,9 @@ public class OverallStatistics extends AbstractOverallStatistics{
         }
         Monitor_overall monitor_overall = new Monitor_overall();
         monitor_overall.setVisitors(overall.getVisitors());
-        monitor_overall.setResponse_max(response_min);
-        monitor_overall.setResponse_min(response_max);
-        monitor_overall.setResposne_avg(resposne_avg);
+        monitor_overall.setResponse_max(response_max);
+        monitor_overall.setResponse_min(response_min);
+        monitor_overall.setResponse_avg(response_avg);
         monitor_overall.setStatus_100(status_100);
         monitor_overall.setStatus_200(status_200);
         monitor_overall.setStatus_300(status_300);

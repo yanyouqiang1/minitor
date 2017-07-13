@@ -15,14 +15,29 @@ import org.springframework.stereotype.Component;
 @Component
 @Scope("prototype")
 public class ServiceStatistics extends AbstractServiceStatistics {
+    protected int response_min,response_max,response_avg;
+
     @Override
     public void update(MsgEntity msgEntity) {
-        
+        int responsetime = msgEntity.getResposneTime();
+        if(visitors==1){
+            response_min = responsetime;
+        }
+        if(responsetime<response_min){
+            response_min = responsetime;
+        }
+        if(responsetime>response_max){
+            response_max = responsetime;
+        }
+
+        response_avg = (int) ((visitors-1)*response_avg/visitors);
     }
 
     @Override
     public void attributeClear() {
-
+        response_min=0;
+        response_max=0;
+        response_avg=0;
     }
 
     @Autowired
@@ -34,6 +49,9 @@ public class ServiceStatistics extends AbstractServiceStatistics {
         monitor_services.setId(service.getId());
         monitor_services.setName(service.getName());
         monitor_services.setVisitors(service.getVisitors());
+        monitor_services.setResponse_avg(response_avg);
+        monitor_services.setResponse_max(response_max);
+        monitor_services.setResponse_min(response_min);
         monitor_services.setOverall(Global.CurrentOverall);
         serviceRepository.save(monitor_services);
     }

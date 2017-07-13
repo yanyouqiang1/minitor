@@ -5,6 +5,7 @@ import app.util.SpringUtil;
 import entitylib.MsgEntity;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Administrator on 2017/7/6.
@@ -57,7 +58,7 @@ public abstract class AbstractGroupStatistics implements Statistics{
 
     public void statisticsUpdate(){
         if(resourceStatisticsMap==null) {
-            resourceStatisticsMap = new HashMap<>();
+            resourceStatisticsMap = new ConcurrentHashMap<>();
         }
         resourceStatisticsMap.clear();
         Map<Long,String> resources = Global.getResoucesByGroupId(this.id);

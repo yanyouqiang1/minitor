@@ -3,29 +3,43 @@ package app.webInterface.entity.list;
 import app.database.domain.Monitor_method;
 import app.database.domain.Monitor_resource;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2017/7/10.
  */
 public class Details_group {
-    Map<Monitor_resource,List<Monitor_method>> groups;
+    List<Monitor_method> methods;
+    String name;
+    Long id;
 
-    public Details_group() {
-        this.groups = new HashMap<>();
+    public void generate(List<Monitor_method> monitor_methods, String groupName, long id) {
+        this.methods = monitor_methods;
+        this.name = groupName;
+        this.id = id;
     }
 
-    public void addGroup(Monitor_resource resource,List<Monitor_method> methods){
-        groups.put(resource, methods);
+    public String getName() {
+        return name;
     }
 
-    public Map<Monitor_resource, List<Monitor_method>> getGroups() {
-        return groups;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setGroups(Map<Monitor_resource, List<Monitor_method>> groups) {
-        this.groups = groups;
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Monitor_method> getMethods() {
+        return methods;
+    }
+
+    public void setMethods(List<Monitor_method> methods) {
+        this.methods = methods;
     }
 }

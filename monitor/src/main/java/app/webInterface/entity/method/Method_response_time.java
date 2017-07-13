@@ -14,7 +14,7 @@ public class Method_response_time {
         int size = methods.size();
         method_response_time = new int[size];
         for(int i=0;i<size;i++){
-            method_response_time[i] = methods.get(i).getResposne_avg();
+            method_response_time[i] = methods.get(i).getResponse_avg();
         }
     }
 

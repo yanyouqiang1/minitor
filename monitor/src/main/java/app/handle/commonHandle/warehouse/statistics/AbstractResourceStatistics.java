@@ -6,73 +6,79 @@ import entitylib.MsgEntity;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Administrator on 2017/7/11.
  */
-public abstract class AbstractResourceStatistics implements Statistics{
+public abstract class AbstractResourceStatistics implements Statistics {
     //统计属性
     long visitors;
     //自身属性
-    long id;
+    Long id;
     String name;
 
     //映射属性
     protected AbstractGroupStatistics parentGroup;
-    Map<Long,AbstractMethodStatistics> methodStatisticsMap;
+    Map<Long, AbstractMethodStatistics> methodStatisticsMap;
 
-    public void msgRecive(MsgEntity msgEntity){
+    public void msgRecive(MsgEntity msgEntity) {
         Long methodid = msgEntity.getMethodid();
-        if(methodStatisticsMap==null){
+        if (methodStatisticsMap == null) {
             statisticsUpdate();
         }
-        AbstractMethodStatistics method =  methodStatisticsMap.get(methodid);
-        if(method!=null){
+        AbstractMethodStatistics method = methodStatisticsMap.get(methodid);
+        if (method != null) {
             method.msgRecive(msgEntity);
         }
         this.visitors++;
         update(msgEntity);
     }
+
     public abstract void update(MsgEntity msgEntity);
-    public void sumup(){
+
+    public void sumup() {
         handleResult(this);
-        if(methodStatisticsMap!=null){
-            for(AbstractMethodStatistics method:methodStatisticsMap.values()){
+        if (methodStatisticsMap != null) {
+            for (AbstractMethodStatistics method : methodStatisticsMap.values()) {
                 method.sumup();
             }
         }
         clear();
 
     }
+
     public abstract void handleResult(AbstractResourceStatistics resource);
 
     public void clear() {
-        this.visitors=0;
+        this.visitors = 0;
         attributeClear();
     }
+
     public abstract void attributeClear();
+
     public void statisticsUpdate() {
-        if(methodStatisticsMap==null){
-            methodStatisticsMap = new HashMap<>();
+        if (methodStatisticsMap == null) {
+            methodStatisticsMap = new ConcurrentHashMap<>();
         }
         methodStatisticsMap.clear();
-        Map<Long,String> resources = Global.getMethodByResourceId(this.id);
-        if(resources!=null){
-            for(Map.Entry<Long,String> resourceEntry:resources.entrySet()){
+        Map<Long, String> resources = Global.getMethodByResourceId(this.id);
+        if (resources != null) {
+            for (Map.Entry<Long, String> resourceEntry : resources.entrySet()) {
                 AbstractMethodStatistics method = SpringUtil.getBean(AbstractMethodStatistics.class);
                 method.setId(resourceEntry.getKey());
                 method.setName(resourceEntry.getValue());
                 method.setParentResource(this);
-                methodStatisticsMap.put(resourceEntry.getKey(),method);
+                methodStatisticsMap.put(resourceEntry.getKey(), method);
             }
         }
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

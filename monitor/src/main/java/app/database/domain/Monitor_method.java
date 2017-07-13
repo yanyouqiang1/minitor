@@ -18,13 +18,17 @@ public class Monitor_method {
     @Column(name = "resourceId")
     private Long resourceId;
 
+    private Long groupid;
+
+    private Long serviceid;
+
     private Long visitors;
 
     private Long status_100,status_200,status_300,status_400,status_500;
 
     private Float rate_status_100,rate_status_200, rate_status_300, rate_status_400, rate_status_500;
 
-    private Integer response_min, response_max, resposne_avg;
+    private Integer response_min, response_max, response_avg;
 
     private Long TPS;
 
@@ -141,29 +145,6 @@ public class Monitor_method {
         this.rate_status_500 = rate_status_500;
     }
 
-    public Integer getResponse_min() {
-        return response_min;
-    }
-
-    public void setResponse_min(Integer response_min) {
-        this.response_min = response_min;
-    }
-
-    public Integer getResponse_max() {
-        return response_max;
-    }
-
-    public void setResponse_max(Integer response_max) {
-        this.response_max = response_max;
-    }
-
-    public Integer getResposne_avg() {
-        return resposne_avg;
-    }
-
-    public void setResposne_avg(Integer resposne_avg) {
-        this.resposne_avg = resposne_avg;
-    }
 
     public Long getTPS() {
         return TPS;
@@ -195,5 +176,45 @@ public class Monitor_method {
 
     public void setColumnid(Long columnid) {
         this.columnid = columnid;
+    }
+
+    public Integer getResponse_min() {
+        return response_min;
+    }
+
+    public void setResponse_min(Integer response_min) {
+        this.response_min = response_min;
+    }
+
+    public Integer getResponse_max() {
+        return response_max;
+    }
+
+    public void setResponse_max(Integer response_max) {
+        this.response_max = response_max;
+    }
+
+    public Integer getResponse_avg() {
+        return response_avg;
+    }
+
+    public void setResponse_avg(Integer response_avg) {
+        this.response_avg = response_avg;
+    }
+
+    public Long getGroupid() {
+        return groupid;
+    }
+
+    public void setGroupid(Long groupid) {
+        this.groupid = groupid;
+    }
+
+    public Long getServiceid() {
+        return serviceid;
+    }
+
+    public void setServiceid(Long serviceid) {
+        this.serviceid = serviceid;
     }
 }

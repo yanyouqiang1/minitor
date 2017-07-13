@@ -10,12 +10,35 @@ import java.util.Map;
  */
 public class Global {
     //获得所有组 eg:1->user
-    public static Map<Long,String> getGroups(){
+    public static Map<Long,String> getAllGroups(){
         Map<Long,String> map = new HashMap<>();
         map.put(1l,"group1");
         map.put(2l,"group2");
         return map;
     }
+    //获得所有资源
+    public static Map<Long,String> getAllResources(){
+        Map<Long,String> map = new HashMap<>();
+        map.put(1l,"resource1");
+        map.put(2l,"resource2");
+        return map;
+    }
+    //获得所有方法
+    public static Map<Long,String> getAllMethods(){
+        Map<Long,String> map = new HashMap<>();
+        map.put(1l,"get");
+        map.put(2l,"post");
+        return map;
+    }
+
+    //获得所有服务
+    public static Map<Long,String> getAllServices(){
+        Map<Long,String> map = new HashMap<>();
+        map.put(1l,"service1");
+        map.put(2l,"service2");
+        return map;
+    }
+
     //根据组ID获得组下所有资源
     public static Map<Long,String> getResoucesByGroupId(long groupid){
         if(groupid==1l){
@@ -42,17 +65,17 @@ public class Global {
         return null;
     }
 
-    //获得所有服务
-    public static Map<Long,String> getServices(){
-        Map<Long,String> map = new HashMap<>();
-        map.put(1l,"service1");
-        map.put(2l,"service2");
-        return map;
+    public static long getServiceIdBymethodId(long methodId){
+        if(methodId==1l){
+            return 1l;
+        }
+        return 2l;
     }
-
     public static void update(){
 
     }
+
+
     /**
      * database
      */

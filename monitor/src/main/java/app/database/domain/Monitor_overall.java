@@ -24,7 +24,7 @@ public class Monitor_overall {
 
     private Float rate_status_100,rate_status_200, rate_status_300, rate_status_400, rate_status_500;
 
-    private Integer response_min,response_max,resposne_avg;
+    private Integer response_min,response_max,response_avg;
 
     private Long TPS;
 
@@ -163,12 +163,12 @@ public class Monitor_overall {
         this.response_max = response_max;
     }
 
-    public Integer getResposne_avg() {
-        return resposne_avg;
+    public Integer getResponse_avg() {
+        return response_avg;
     }
 
-    public void setResposne_avg(Integer resposne_avg) {
-        this.resposne_avg = resposne_avg;
+    public void setResponse_avg(Integer response_avg) {
+        this.response_avg = response_avg;
     }
 
     public Long getTPS() {

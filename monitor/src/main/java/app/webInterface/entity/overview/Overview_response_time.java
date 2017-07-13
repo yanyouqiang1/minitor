@@ -13,7 +13,7 @@ public class Overview_response_time {
         int size = overalls.size();
         overview_response_time = new int[size];
         for(int i=0;i<size;i++){
-            overview_response_time[i] = overalls.get(i).getResposne_avg();
+            overview_response_time[i] = overalls.get(i).getResponse_avg();
         }
     }
 

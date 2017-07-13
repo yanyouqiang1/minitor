@@ -25,22 +25,22 @@ public interface RestInter {
 
     public Details details(int page,int size);
 
-    public Details_group details_group(int groupid,int page,int size);
+    public Details_group details_group(long groupid,int page,int size);
 
-    public Details_resources details_resources(int resourceid,int page,int size);
+    public Details_resources details_resources(long resourceid,int page,int size);
 
-    public Details_services details_services(int serviceid,int page,int size);
+    public Details_services details_services(long serviceid,int page,int size);
 
-    public Method method(int id);
+    public Method method(long id);
 
-    public Method_visitors method_visitors(int id);
+    public Method_visitors method_visitors(long id);
 
-    public Method_success_rate method_success_rate(int id);
+    public Method_success_rate method_success_rate(long id);
 
-    public Method_status_code method_status_code(int id);
+    public Method_status_code method_status_code(long id);
 
-    public Method_response_time method_response_time(int id);
+    public Method_response_time method_response_time(long id);
 
-    public Method_tps method_tps(int id);
+    public Method_tps method_tps(long id);
 
 }

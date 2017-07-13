@@ -1,6 +1,9 @@
 package app.webInterface.entity.overview;
 
+import app.database.domain.Monitor_group;
 import app.database.domain.Monitor_overall;
+
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/10.
@@ -14,11 +17,15 @@ public class Overview {
 
     private float rate_status_100,rate_status_200, rate_status_300, rate_status_400, rate_status_500;
 
+    private float successRate;
+
     private int response_min,response_max,resposne_avg;
 
     private long TPS;
 
-    public void generate(Monitor_overall overall){
+    private List<Monitor_group> groups;
+
+    public void generate(Monitor_overall overall,List<Monitor_group> monitor_groups){
         id = overall.getId();
         visitors = overall.getVisitors();
         status_100 = overall.getStatus_100();
@@ -31,10 +38,12 @@ public class Overview {
         rate_status_300 = overall.getRate_status_300();
         rate_status_400 = overall.getRate_status_400();
         rate_status_500 = overall.getRate_status_500();
+        successRate = 1-rate_status_500;
         response_min = overall.getResponse_min();
         response_max = overall.getResponse_max();
-        resposne_avg = overall.getResposne_avg();
+        resposne_avg = overall.getResponse_avg();
         TPS = overall.getTPS();
+        this.groups = monitor_groups;
     }
 
 
@@ -165,5 +174,21 @@ public class Overview {
 
     public void setTPS(Long TPS) {
         this.TPS = TPS;
+    }
+
+    public float getSuccessRate() {
+        return successRate;
+    }
+
+    public void setSuccessRate(float successRate) {
+        this.successRate = successRate;
+    }
+
+    public List<Monitor_group> getGroups() {
+        return groups;
+    }
+
+    public void setGroups(List<Monitor_group> groups) {
+        this.groups = groups;
     }
 }
