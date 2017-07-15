@@ -14,5 +14,6 @@ import java.util.List;
  */
 @Transactional
 public interface OverallRepository extends JpaRepository<Monitor_overall, Long> {
+    public Monitor_overall findFirstByIdIsNotNullOrderByIdDesc();
     public List<Monitor_overall> findTop90ByIdIsNotNullOrderByIdDesc();
 }

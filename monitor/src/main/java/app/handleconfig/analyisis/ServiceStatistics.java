@@ -52,7 +52,7 @@ public class ServiceStatistics extends AbstractServiceStatistics {
         monitor_services.setResponse_avg(response_avg);
         monitor_services.setResponse_max(response_max);
         monitor_services.setResponse_min(response_min);
-        monitor_services.setOverall(Global.CurrentOverall);
+        monitor_services.setOverall(Global.getCurrentOverall());
         serviceRepository.save(monitor_services);
     }
 

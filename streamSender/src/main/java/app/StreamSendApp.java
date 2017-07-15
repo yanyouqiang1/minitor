@@ -8,6 +8,7 @@ import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.messaging.Source;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -27,6 +28,12 @@ public class StreamSendApp {
     @Autowired
     public StreamSendApp(Source source){
         this.source = source;
+    }
+
+    @RequestMapping("/ka")
+    public String ka(){
+        source.output().send(MessageBuilder.withPayload("hello").build());
+        return "ok";
     }
 
     static int a = 100;
@@ -52,6 +59,19 @@ public class StreamSendApp {
         msgEntity.setMethodid(2l);
         msgEntity.setServiceid(1l);
         msgEntity.setResposneTime(400);
+        source.output().send(MessageBuilder.withPayload(msgEntity).build());
+        return "ok";
+    }
+
+    @RequestMapping("/test")
+    public String test(@RequestParam(name = "group",required = true)long group,@RequestParam(name="resource",required = true) long resource,@RequestParam(name = "method",required = true)long method,@RequestParam(name = "response",required = true)int response,@RequestParam(name = "service",required = true)long service,@RequestParam(name = "httpstatus",defaultValue = "200")int httpstatus){
+        MsgEntity msgEntity = new MsgEntity();
+        msgEntity.setHttpStatus(httpstatus);
+        msgEntity.setGroupid(group);
+        msgEntity.setResouceid(resource);
+        msgEntity.setMethodid(method);
+        msgEntity.setServiceid(service);
+        msgEntity.setResposneTime(response);
         source.output().send(MessageBuilder.withPayload(msgEntity).build());
         return "ok";
     }

@@ -1,6 +1,8 @@
 package app;
 
+import app.database.dao.OverallRepository;
 import app.database.domain.Monitor_overall;
+import app.util.SpringUtil;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -79,7 +81,19 @@ public class Global {
     /**
      * database
      */
-    //当前最新添加的overall id
-    public static Monitor_overall CurrentOverall;
 
+    //当前最新添加的overall id
+    private static Monitor_overall CurrentOverall;
+
+    public static Monitor_overall getCurrentOverall(){
+        if(CurrentOverall==null){
+            OverallRepository overallRepository = SpringUtil.getBean(OverallRepository.class);
+            CurrentOverall = overallRepository.findFirstByIdIsNotNullOrderByIdDesc();
+        }
+        return CurrentOverall;
+    }
+
+    public static void setCurrentOverall(Monitor_overall currentOverall) {
+        CurrentOverall = currentOverall;
+    }
 }

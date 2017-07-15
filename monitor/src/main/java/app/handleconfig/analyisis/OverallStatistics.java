@@ -100,7 +100,7 @@ public class OverallStatistics extends AbstractOverallStatistics{
         monitor_overall.setRate_status_400(rate_status_400);
         monitor_overall.setRate_status_500(rate_status_500);
         monitor_overall.setTPS(TPS);
-        Global.CurrentOverall = overallRepository.saveAndFlush(monitor_overall);
+        Global.setCurrentOverall(overallRepository.saveAndFlush(monitor_overall));
     }
 
 }

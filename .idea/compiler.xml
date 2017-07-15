@@ -21,7 +21,7 @@
       <module name="reciver" target="1.6" />
       <module name="schedule" target="1.6" />
       <module name="springcloud" target="1.6" />
-      <module name="streamSender" target="1.6" />
+      <module name="streamSender" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

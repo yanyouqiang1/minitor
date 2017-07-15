@@ -3,7 +3,7 @@
   "groups": [
     {
       "sourceType": "app.handle.MinitorConfig",
-      "name": "minitor.app.schedule",
+      "name": "overview.app.schedule",
       "type": "app.handle.MinitorConfig"
     },
     {
@@ -16,12 +16,12 @@
     {
       "sourceType": "app.handle.MinitorConfig",
       "defaultValue": 0,
-      "name": "minitor.app.schedule.minsampling",
+      "name": "overview.app.schedule.minsampling",
       "type": "java.lang.Integer"
     },
     {
       "sourceType": "app.handle.MinitorConfig",
-      "name": "minitor.app.schedule.services",
+      "name": "overview.app.schedule.services",
       "type": "java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.lang.String>>"
     },
     {

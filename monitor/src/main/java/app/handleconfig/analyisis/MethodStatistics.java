@@ -106,7 +106,7 @@ public class MethodStatistics extends AbstractMethodStatistics {
         monitor_method.setGroupid(method.getParentResource().getParentGroup().getId());
         monitor_method.setServiceid(Global.getServiceIdBymethodId(method.getId()));
         monitor_method.setName(method.getName());
-        monitor_method.setOverall(Global.CurrentOverall);
+        monitor_method.setOverall(Global.getCurrentOverall());
         monitor_method.setId(method.getId());
         methodRepository.save(monitor_method);
     }

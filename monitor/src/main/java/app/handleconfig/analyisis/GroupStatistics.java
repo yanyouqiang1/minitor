@@ -37,7 +37,7 @@ public class GroupStatistics extends AbstractGroupStatistics {
         monitor_group.setName(group.getName());
         monitor_group.setVisitors(group.getVisitors());
         monitor_group.setRate(rate);
-        monitor_group.setOverall(Global.CurrentOverall);
+        monitor_group.setOverall(Global.getCurrentOverall());
         groupRepository.save(monitor_group);
     }
 }

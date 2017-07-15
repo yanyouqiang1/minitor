@@ -35,7 +35,7 @@ public class RestImpl implements RestInter {
 
     @Override
     public Overview overview() {
-        Monitor_overall overall = Global.CurrentOverall;
+        Monitor_overall overall = Global.getCurrentOverall();
         List<Monitor_group> monitor_groups = groupRepository.findAllByOverall(overall);
         Overview overview = new Overview();
         overview.generate(overall,monitor_groups);
@@ -84,7 +84,7 @@ public class RestImpl implements RestInter {
 
     @Override
     public Details details(int page, int size) {
-        List<Monitor_method> monitor_methods = methodRepository.findAllByOverall(new PageRequest(page,size),Global.CurrentOverall);
+        List<Monitor_method> monitor_methods = methodRepository.findAllByOverall(new PageRequest(page,size),Global.getCurrentOverall());
         Details details = new Details();
         details.generate(monitor_methods);
         return details;
@@ -97,7 +97,7 @@ public class RestImpl implements RestInter {
         if(groupMap.get(groupid)==null){
             return null;
         }
-        List<Monitor_method> monitor_methods = methodRepository.findAllByGroupidAndOverall(new PageRequest(page,size),groupid,Global.CurrentOverall);
+        List<Monitor_method> monitor_methods = methodRepository.findAllByGroupidAndOverall(new PageRequest(page,size),groupid,Global.getCurrentOverall());
         String groupName = groupMap.get(groupid).toString();
         Details_group details_group = new Details_group();
         details_group.generate(monitor_methods,groupName,groupid);
@@ -110,7 +110,7 @@ public class RestImpl implements RestInter {
         if(resources.get(resourceid)==null){
             return null;
         }
-        List<Monitor_method> monitor_methods = methodRepository.findByResourceIdAndOverall(new PageRequest(page,size),resourceid,Global.CurrentOverall);
+        List<Monitor_method> monitor_methods = methodRepository.findByResourceIdAndOverall(new PageRequest(page,size),resourceid,Global.getCurrentOverall());
         String resourceName = resources.get(resourceid).toString();
         Details_resources details_resources = new Details_resources();
         details_resources.generate(monitor_methods,resourceName,resourceid);
@@ -124,7 +124,7 @@ public class RestImpl implements RestInter {
         if(groupMap.get(serviceid)==null){
             return null;
         }
-        List<Monitor_method> monitor_methods = methodRepository.findAllByServiceidAndOverall(new PageRequest(page,size),serviceid,Global.CurrentOverall);
+        List<Monitor_method> monitor_methods = methodRepository.findAllByServiceidAndOverall(new PageRequest(page,size),serviceid,Global.getCurrentOverall());
         String serviceName = groupMap.get(serviceid).toString();
         Details_services details_services = new Details_services();
         details_services.generate(monitor_methods,serviceName,serviceid);

@@ -34,7 +34,7 @@ public class ResourceStatistics extends AbstractResourceStatistics {
         monitor_resource.setName(resource.getName());
         monitor_resource.setVisitors(resource.getVisitors());
         monitor_resource.setGroupId(resource.getParentGroup().getId());
-        monitor_resource.setOverall(Global.CurrentOverall);
+        monitor_resource.setOverall(Global.getCurrentOverall());
         resourceRepository.save(monitor_resource);
     }
 
