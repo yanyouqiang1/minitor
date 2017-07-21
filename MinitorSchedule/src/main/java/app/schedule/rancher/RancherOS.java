@@ -1,11 +1,8 @@
-package app.schedule;
+package app.schedule.rancher;
 
-import app.handle.MinitorConfig;
 import org.json.JSONException;
 import app.schedule.util.HttpRequest;
 import app.schedule.util.JsonUtil;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

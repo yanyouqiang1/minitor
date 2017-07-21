@@ -1,7 +1,7 @@
 package app;
 
-import app.manage.RancherConfig;
-import app.manage.RancherOS;
+import app.schedule.rancher.RancherConfig;
+import app.schedule.rancher.RancherOS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

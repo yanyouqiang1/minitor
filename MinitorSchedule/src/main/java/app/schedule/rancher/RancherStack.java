@@ -1,9 +1,7 @@
-package app.manage;
+package app.schedule.rancher;
 
-import app.manage.entity.ServiceDetail;
-import app.manage.util.BidirectionalMap;
-import app.manage.util.JsonUtil;
-import app.manage.util.TopologyMap;
+import app.schedule.util.BidirectionalMap;
+import app.schedule.util.TopologyMap;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -27,6 +25,7 @@ public class RancherStack {
     public void init() {
         try {
             //对应关系初始化
+            System.out.println("IIIIIIIIIIIIIIIIIIIIIIIIIII");
             RtoS = new BidirectionalMap<String,String>();
             List<String> list = rancherOS.getStackServices();
 
@@ -50,19 +49,5 @@ public class RancherStack {
 
     public TopologyMap getTopologyMap() {
         return topologyMap;
-    }
-
-    public ServiceDetail getServiceDetial(String servcieName){
-        String rancherName = RtoS.getK(servcieName).toString();
-        String json = rancherOS.getJson(rancherName);
-
-        ServiceDetail service = new ServiceDetail();
-        service.setName(servcieName);
-        try {
-            service.setScale(Integer.valueOf(JsonUtil.getList(json, "scale").indexOf(0)));
-        }catch (Exception e){
-            System.out.println(e);
-        }
-        return service;
     }
 }

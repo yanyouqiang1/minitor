@@ -1,4 +1,4 @@
-package app.manage.util;
+package app.schedule.rancher.rancherUtil;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;

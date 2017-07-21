@@ -15,7 +15,6 @@ public class Monitor_method {
 
     private Long id;
 
-    @Column(name = "resourceId")
     private Long resourceId;
 
     private Long groupid;

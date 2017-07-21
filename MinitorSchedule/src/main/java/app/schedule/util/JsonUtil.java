@@ -44,7 +44,6 @@ public class JsonUtil {
             list.add(o.toString());
         } else if (o instanceof JSONArray) {
             JSONArray jsonArray = (JSONArray) o;
-
             for (int i = 0; i < jsonArray.length(); i++) {
 //                System.out.println(jsonArray.get(i));
                 list.add(jsonArray.get(i).toString());

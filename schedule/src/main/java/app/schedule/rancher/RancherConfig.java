@@ -1,4 +1,4 @@
-package app.manage;
+package app.schedule.rancher;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
