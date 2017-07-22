@@ -1,4 +1,4 @@
-package app.schedule.rancher;
+package app.schedule.rancherImpl;
 
 import app.handle.MsgLinkedBlockingQueue;
 import app.schedule.ScheduleInter;
@@ -28,7 +28,7 @@ public class RancherScheduleImpl implements ScheduleInter {
             System.out.println("无高负载服务！！");
             return true;
         }
-        System.out.println("rancher 处理中!"+serviceOverList);
+        System.out.println("rancherImpl 处理中!"+serviceOverList);
         //寻找问题根源
         //List<String> source = findSoruce(serviceOverList);
 
@@ -38,7 +38,7 @@ public class RancherScheduleImpl implements ScheduleInter {
 //            rancherOS.scaleService(str,true);
         }
 
-        System.out.println("rancher 处理完毕！");
+        System.out.println("rancherImpl 处理完毕！");
         return true;
     }
 

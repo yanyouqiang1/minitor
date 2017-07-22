@@ -1,7 +1,7 @@
-package app.schedule.rancher;
+package app.schedule.rancherImpl;
 
-import app.schedule.rancher.rancherUtil.HttpRequest;
-import app.schedule.rancher.rancherUtil.JsonUtil;
+import app.schedule.rancherImpl.util.HttpRequest;
+import app.schedule.rancherImpl.util.JsonUtil;
 import org.json.JSONException;
 
 import java.util.List;
@@ -39,32 +39,39 @@ public class RancherOS {
 
     /***
      * 获取服务名
-     * @param rancherName
+     * @param serviceId
      * @return
      * @throws JSONException
      */
-    public String getServiceName(String rancherName) throws JSONException {
+    public String getServiceName(String serviceId) throws JSONException {
         if (RancherServiceURL.equals("")) {
             getServiceURL();
         }
-        String realpath = RancherServiceURL + rancherName;
+        String realpath = RancherServiceURL + serviceId;
 
         String result = HttpRequest.sendGetwithAuthen(accesskey, secret, realpath, "");
 
         return JsonUtil.getList(result, "name").get(0);
     }
 
-    public List<String> getlinkedServices(String rancherName) throws JSONException {
+    public List<String> getlinkedServices(String serviceId) throws JSONException {
         if (RancherServiceURL.equals("")) {
             getServiceURL();
         }
-        String realpath = RancherServiceURL + rancherName;
+        String realpath = RancherServiceURL + serviceId;
         String result = HttpRequest.sendGetwithAuthen(accesskey, secret, realpath, "");
-
-
         return JsonUtil.getList(result, "linkedServices");
     }
+    public int getServiceScale(String serviceId) throws JSONException {
+        if (RancherServiceURL.equals("")) {
+            getServiceURL();
+        }
+        String realpath = RancherServiceURL + serviceId;
 
+        String result = HttpRequest.sendGetwithAuthen(accesskey, secret, realpath, "");
+
+        return Integer.valueOf(JsonUtil.getList(result, "scale").get(0));
+    }
     /***
      *  增加服务，或者减少服务
      * @param serviceName 服务名

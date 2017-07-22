@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Entity
 @Data
 public class Monitor_method {
-
     @Id
     @GeneratedValue
     private Long columnid;
@@ -35,5 +34,8 @@ public class Monitor_method {
     private Long TPS;
 
     private String name;
+
+    public Monitor_method() {
+    }
 
 }

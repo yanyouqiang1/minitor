@@ -1,4 +1,4 @@
-package app.schedule.rancher.rancherUtil;
+package app.schedule.rancherImpl.util;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,16 +13,16 @@ import java.util.List;
  */
 public class JsonUtil {
 
-    public static Object getJson(String json,String queryName) throws JSONException {
-        Object resultO=null;
-        if(json.equals("")||json==null||queryName.equals("")||queryName==null){
+    public static Object getJson(String json, String queryName) throws JSONException {
+        Object resultO = null;
+        if (json.equals("") || json == null || queryName.equals("") || queryName == null) {
             return null;
         }
         JSONObject jsonObject = new JSONObject(json);
         Iterator iterator = jsonObject.keys();
-        while(iterator.hasNext()){
+        while (iterator.hasNext()) {
             String keys = iterator.next().toString();
-            if(keys.equals(queryName)){
+            if (keys.equals(queryName)) {
                 resultO = jsonObject.get(keys);
                 break;
             }
@@ -37,19 +37,17 @@ public class JsonUtil {
      * @return 返回List
      * @throws JSONException
      */
-    public static List<String> getList(String json,String queryName) throws JSONException {
+    public static List<String> getList(String json, String queryName) throws JSONException {
         List<String> list = new ArrayList<String>();
         Object o = JsonUtil.getJson(json, queryName);
-        if (o instanceof String) {
-            list.add(o.toString());
-        } else if (o instanceof JSONArray) {
+        if (o instanceof JSONArray) {
             JSONArray jsonArray = (JSONArray) o;
 
             for (int i = 0; i < jsonArray.length(); i++) {
 //                System.out.println(jsonArray.get(i));
                 list.add(jsonArray.get(i).toString());
             }
-        }else if(o instanceof JSONObject){
+        } else if (o instanceof JSONObject) {
             JSONObject jsonObject1 = (JSONObject) o;
             Iterator iterator = jsonObject1.keys();
             while (iterator.hasNext()) {
@@ -57,6 +55,8 @@ public class JsonUtil {
                 list.add(jsonObject1.getString(keys).toString());
 //                System.out.println(jsonObject1.getString(keys));
             }
+        } else{
+            list.add(o.toString());
         }
         return list;
     }

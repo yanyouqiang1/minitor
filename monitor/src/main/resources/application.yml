@@ -12,13 +12,19 @@ spring:
             durableSubscription: true
   rabbitmq:
     username: user
-    password: password
-    addresses: 172.18.216.86:5673
+    password: passworrd
+    addresses: 192.168.0.100:5672
+#    username: ${RABBIT_NAME}
+#    password: ${RABBIT_PASS}
+#    addresses: ${RABBIT_ADDRESS}
 
   datasource:
-    url: jdbc:mysql://172.18.216.86:10004/monitor?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://192.168.0.100/monitor?autoReconnect=true&useSSL=false
     username: root
     password: root
+#    url: ${MYSQL_URL}
+#    username: ${MYSQL_NAME}
+#    password: ${MYSQL_PASS}
     driver-class-name: com.mysql.jdbc.Driver
     dbcp2:
       max-idle: 10

@@ -21,19 +21,21 @@ public class Method {
     private Long TPS;
 
 
-    public void generate(Monitor_method method){
-        this.id = method.getId();
-        this.serviceid = method.getServiceid();
-        this.name = method.getName();
-        this.visitors = method.getVisitors();
-        this.rate_status_100= method.getRate_status_100();
-        this.rate_status_200 = method.getRate_status_200();
-        this.rate_status_300 = method.getRate_status_300();
-        this.rate_status_400 = method.getRate_status_400();
-        this.rate_status_500 = method.getRate_status_500();
-        this.response_avg = method.getResponse_avg();
-        this.response_min = method.getResponse_min();
-        this.response_max = method.getResponse_max();
-        this.TPS = method.getTPS();
+    public static Method generate(Monitor_method method){
+        Method method1 = new Method();
+        method1.id = method.getId();
+        method1.serviceid = method.getServiceid();
+        method1.name = method.getName();
+        method1.visitors = method.getVisitors();
+        method1.rate_status_100= method.getRate_status_100();
+        method1.rate_status_200 = method.getRate_status_200();
+        method1.rate_status_300 = method.getRate_status_300();
+        method1.rate_status_400 = method.getRate_status_400();
+        method1.rate_status_500 = method.getRate_status_500();
+        method1.response_avg = method.getResponse_avg();
+        method1.response_min = method.getResponse_min();
+        method1.response_max = method.getResponse_max();
+        method1.TPS = method.getTPS();
+        return method1;
     }
 }

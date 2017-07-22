@@ -1,4 +1,4 @@
-package app.schedule.rancher;
+package app.schedule.rancherImpl;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
@@ -12,8 +12,10 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "rancher")
 public class RancherConfig {
 
+    private String stackapisurl;
+    private String host;
 
-    private String stackapisurl,host,port;
+    private String port;
 
     private Map<String, String> APIkey = new HashMap<String, String>();
 
@@ -58,5 +60,4 @@ public class RancherConfig {
     public void setPort(String port) {
         this.port = port;
     }
-
 }

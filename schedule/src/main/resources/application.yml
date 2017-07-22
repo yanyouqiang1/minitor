@@ -1,14 +1,33 @@
 server:
   port: 8001
 
+spring:
+  datasource:
+    url: jdbc:mysql://192.168.0.100/monitor?autoReconnect=true&useSSL=false
+    username: root
+    password: root
+#    url: ${MYSQL_URL}
+#    username: ${MYSQL_NAME}
+#    password: ${MYSQL_PASS}
+    driver-class-name: com.mysql.jdbc.Driver
+    dbcp2:
+      max-idle: 10
+      max-wait-millis: 10000
+      min-idle: 5
+      initial-size: 5
+  jpa:
+    database: mysql
+    show-sql: true
+    hibernate:
+      ddl-auto: update
 
 rancher:
-  host: 172.18.216.86
+  host: 192.168.0.100
   port: 8080
   APIkey:
-    accesskey: 1A8AFE7FE850E805543F
-    secret: zaPVLt5DfmuyAtKzmro11jFCMTrHixzksuzCRAhb
-  stackapisurl: v2-beta/projects/1a5/stacks/1st16
+    accesskey: 17D2E910090C61661B83
+    secret: rXqsHJA5i425oiFqqJ7Ebm1zB9DSmSXXh4zoT1hH
+  stackapisurl: v2-beta/projects/1a5/stacks/1st10
 
   webhooks:
     syslog:
@@ -17,3 +36,4 @@ rancher:
     syslog2:
       up: syslog2up
       down: syslog2down
+
