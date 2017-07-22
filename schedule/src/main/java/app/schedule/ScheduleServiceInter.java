@@ -11,7 +11,7 @@ import java.util.List;
 public interface ScheduleServiceInter {
     /***
      *  获取服务的所有方法 监控数据
-     * @param serviceName 根据服务名
+     * @param service 根据服务
      * @return
      */
     public List<List<Method>> getServiceMethod(Service service);

@@ -1,10 +1,12 @@
 package app.schedule.entity;
 
 import app.database.domain.Monitor_method;
+import lombok.Data;
 
 /**
  * Created by Administrator on 2017/7/21 0021.
  */
+@Data
 public class Method {
     private Long id;
 
