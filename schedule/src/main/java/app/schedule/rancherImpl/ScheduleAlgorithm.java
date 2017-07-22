@@ -20,10 +20,15 @@ public class ScheduleAlgorithm implements ScheduleAlgorithmInter {
             int size = singleMethod.size();
             int count = 0;
             for(Method m:singleMethod){
-                if(m)
+                if(m.getResponse_avg()>400){
+                    count++;
+                }
+            }
+            if(count>size/2){
+                return true;
             }
         }
-        return null;
+        return false;
     }
 
     @Override
