@@ -6,8 +6,12 @@ spring:
     stream:
       bindings:
         output:
-          destination: overview-stream
+          destination: ${STREAM_NAME:overview-stream}
   rabbitmq:
-    username: user
-    password: password
-    addresses: 172.18.216.86:5673
+    username: ${RABBIT_NAME:user}
+    password: ${RABBIT_PASS:password}
+    addresses: ${RABBIT_ADDRESS}
+#  rabbitmq:
+#    username: user
+#    password: password
+#    addresses: 172.18.216.86:5673

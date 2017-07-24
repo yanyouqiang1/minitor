@@ -4,6 +4,7 @@ import app.schedule.entity.Method;
 import app.schedule.entity.Service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,6 +12,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/7/21 0021.
  */
+@Component
 public class ScheduleCenter {
     @Autowired
     ScheduleServiceInter scheduleService;
@@ -21,7 +23,7 @@ public class ScheduleCenter {
     @Autowired
     ScheduleExecuteInter scheduleExecute;
 
-    @Scheduled(fixedRate = 30000l)
+    @Scheduled(fixedRate = 10000)
     public void doSchedule(){
         List<Service> overLoads = new LinkedList<Service>(); //超载列表
         List<Service> relaxs = new LinkedList<Service>(); //轻载列表
@@ -36,16 +38,16 @@ public class ScheduleCenter {
                 relaxs.add(s);
             }
         }
-
         //寻找根源 执行调度
         List<Service> adjustUP = scheduleAlgorithm.judgeSourceService(overLoads);
         for(Service sup:adjustUP){
             scheduleExecute.upService(sup);
         }
-
+        //调整轻松服务
         List<Service> adjustDOWN = scheduleAlgorithm.adjustRelaxService(relaxs);
         for(Service sdown:adjustDOWN){
-            scheduleExecute.downServcie(sdown);
+            scheduleExecute.downService(sdown);
         }
+        scheduleExecute.afterSchedule();
     }
 }

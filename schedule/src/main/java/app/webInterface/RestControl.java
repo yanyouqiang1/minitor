@@ -22,7 +22,7 @@ public class RestControl {
 
     @RequestMapping("/topology")
     public List getTopology(){
-        return rancherStack.getAllServcie();
+        return rancherStack.getRancherServices();
     }
 
     @RequestMapping("/service/{serviceName}")

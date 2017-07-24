@@ -2,6 +2,7 @@ package app.database.service;
 
 import app.database.dao.ScheduleServiceRepository;
 import app.database.domain.Schedule_service;
+import app.schedule.rancherImpl.RancherService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,5 +18,15 @@ public class ScheduleService {
 
     public List<Schedule_service> getScheduleByServiceName(String serviceName){
         return scheduleServiceRepository.findTop30ByName(serviceName);
+    }
+
+
+    public void save(List<RancherService> rancherServices){
+        for (RancherService rs:rancherServices){
+            Schedule_service ss = new Schedule_service();
+            ss.setName(rs.getName());
+            ss.setScale(rs.getScale());
+            scheduleServiceRepository.save(ss);
+        }
     }
 }

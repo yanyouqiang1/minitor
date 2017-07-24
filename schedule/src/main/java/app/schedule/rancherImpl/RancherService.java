@@ -4,6 +4,7 @@ import app.schedule.ScheduleExecuteInter;
 import app.schedule.ScheduleServiceInter;
 import app.schedule.entity.Method;
 import app.schedule.entity.Service;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,11 +21,13 @@ public class RancherService {
     private int scale;
     private List<RancherService> linkedServices = new LinkedList<RancherService>();
 
+    @JsonIgnore
     @Autowired
     RancherOS rancherOS;
 
     public void upService() {
         rancherOS.scaleService(name, true);
+        scale++;
     }
 
 
@@ -32,6 +35,7 @@ public class RancherService {
         if (scale > 1) {
             rancherOS.scaleService(name, false);
         }
+        scale--;
     }
 
     public static Service generate(RancherService rancherService){

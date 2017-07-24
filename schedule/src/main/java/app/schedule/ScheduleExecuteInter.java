@@ -9,5 +9,6 @@ import java.util.List;
  */
 public interface ScheduleExecuteInter {
     public void upService(Service service);
-    public void downServcie(Service service);
+    public void downService(Service service);
+    public void afterSchedule();
 }

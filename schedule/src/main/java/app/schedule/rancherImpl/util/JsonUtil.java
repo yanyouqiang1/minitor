@@ -55,8 +55,9 @@ public class JsonUtil {
                 list.add(jsonObject1.getString(keys).toString());
 //                System.out.println(jsonObject1.getString(keys));
             }
-        } else{
-            list.add(o.toString());
+        } else if(o!=null){
+            if(!o.toString().equals("null"))
+                list.add(o.toString());
         }
         return list;
     }
