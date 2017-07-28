@@ -37,3 +37,6 @@ rancher:
       up: syslog2up
       down: syslog2down
 
+prometheus:
+  address: 192.168.0.100:9090
+

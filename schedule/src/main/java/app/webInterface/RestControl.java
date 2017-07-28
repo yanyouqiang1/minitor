@@ -1,5 +1,7 @@
 package app.webInterface;
 
+import app.containerstate.ContainerInter;
+import app.containerstate.prometheus.PrometheusImpl;
 import app.database.service.ScheduleService;
 import app.schedule.entity.Method;
 import app.schedule.entity.Service;
@@ -37,5 +39,13 @@ public class RestControl {
     @RequestMapping("/schedule/{serviceName}")
     public List getSchedule(@PathVariable(name = "serviceName")String serviceName){
         return scheduleService.getScheduleByServiceName(serviceName);
+    }
+
+    @Autowired
+    ContainerInter containerInter;
+    @RequestMapping("/test")
+    public String test(){
+        containerInter.getCpuRateByContainerName("monitor-sender-1");
+        return "ok";
     }
 }

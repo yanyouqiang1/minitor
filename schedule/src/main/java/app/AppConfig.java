@@ -1,5 +1,8 @@
 package app;
 
+import app.containerstate.ContainerInter;
+import app.containerstate.prometheus.PrometheusConfig;
+import app.containerstate.prometheus.PrometheusImpl;
 import app.schedule.rancherImpl.RancherConfig;
 import app.schedule.rancherImpl.RancherOS;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,5 +20,12 @@ public class AppConfig {
     @Bean
     public RancherOS getRancherOS(){
         return new RancherOS(rancherConfig);
+    }
+
+    @Autowired
+    PrometheusConfig prometheusConfig;
+    @Bean
+    public ContainerInter getContainerImpl(){
+        return new PrometheusImpl(prometheusConfig);
     }
 }

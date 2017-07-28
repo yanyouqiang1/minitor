@@ -1,12 +1,13 @@
 package app.containerstate.prometheus;
 
-import app.containerstate.ContanerInter;
+import app.containerstate.ContainerInter;
 import app.containerstate.entity.ConsultData;
+import app.global.HttpRequest;
 
 /**
  * Created by Administrator on 2017/7/28.
  */
-public class PrometheusImpl implements ContanerInter {
+public class PrometheusImpl implements ContainerInter {
 
     PrometheusConfig config;
     public  PrometheusImpl(PrometheusConfig config){
@@ -15,7 +16,8 @@ public class PrometheusImpl implements ContanerInter {
 
     @Override
     public ConsultData getCpuRateByContainerName(String containerName) {
-        String url = PrometheusHttpApi.
+        long currentTime = System.currentTimeMillis()/1000;
+        String result = PrometheusHttpApi.urlSplicer(config.getAddress(),containerName,String.valueOf(currentTime-90),String.valueOf(currentTime),"10");
         return null;
     }
 

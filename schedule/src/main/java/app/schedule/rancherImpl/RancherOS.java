@@ -1,7 +1,7 @@
 package app.schedule.rancherImpl;
 
 import app.global.HttpRequest;
-import app.schedule.rancherImpl.util.JsonUtil;
+import app.global.JsonUtil;
 import org.json.JSONException;
 
 import java.util.List;

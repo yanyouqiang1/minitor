@@ -5,7 +5,7 @@ import app.containerstate.entity.ConsultData;
 /**
  * Created by Administrator on 2017/7/28.
  */
-public interface ContanerInter {
+public interface ContainerInter {
     /***
      *  获得CPU使用率
      * @param containerName

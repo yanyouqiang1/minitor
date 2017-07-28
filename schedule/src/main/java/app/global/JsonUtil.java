@@ -1,4 +1,4 @@
-package app.schedule.rancherImpl.util;
+package app.global;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -13,17 +13,16 @@ import java.util.List;
  */
 public class JsonUtil {
 
-    public static Object getJson(String json, String queryName) throws JSONException {
+    public static Object getJson(JSONObject json, String queryName) throws JSONException {
         Object resultO = null;
-        if (json.equals("") || json == null || queryName.equals("") || queryName == null) {
+        if (json == null || queryName.equals("") || queryName == null) {
             return null;
         }
-        JSONObject jsonObject = new JSONObject(json);
-        Iterator iterator = jsonObject.keys();
+        Iterator iterator = json.keys();
         while (iterator.hasNext()) {
             String keys = iterator.next().toString();
             if (keys.equals(queryName)) {
-                resultO = jsonObject.get(keys);
+                resultO = json.get(keys);
                 break;
             }
         }
@@ -39,7 +38,8 @@ public class JsonUtil {
      */
     public static List<String> getList(String json, String queryName) throws JSONException {
         List<String> list = new ArrayList<String>();
-        Object o = JsonUtil.getJson(json, queryName);
+        JSONObject jsonObject = new JSONObject(json);
+        Object o = JsonUtil.getJson(jsonObject, queryName);
         if (o instanceof JSONArray) {
             JSONArray jsonArray = (JSONArray) o;
 
