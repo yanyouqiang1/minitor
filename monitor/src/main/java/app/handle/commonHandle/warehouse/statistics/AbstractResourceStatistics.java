@@ -23,7 +23,7 @@ public abstract class AbstractResourceStatistics implements Statistics {
     Map<Long, AbstractMethodStatistics> methodStatisticsMap;
 
     public void msgRecive(MsgEntity msgEntity) {
-        Long methodid = msgEntity.getMethodid();
+        Long methodid = msgEntity.getMethodId();
         if (methodStatisticsMap == null) {
             statisticsUpdate();
         }

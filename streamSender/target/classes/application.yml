@@ -8,8 +8,8 @@ spring:
         output:
           destination: ${STREAM_NAME:overview-stream}
   rabbitmq:
-    username: ${RABBIT_NAME}
-    password: ${RABBIT_PASS}
+    username: ${RABBIT_NAME:user}
+    password: ${RABBIT_PASS:password}
     addresses: ${RABBIT_ADDRESS}
 #  rabbitmq:
 #    username: user

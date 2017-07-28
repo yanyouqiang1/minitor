@@ -44,7 +44,7 @@ public class OverallStatistics extends AbstractOverallStatistics{
                 break;
         }
 
-        int responsetime = msgEntity.getResposneTime();
+        int responsetime = msgEntity.getResponseTime();
         if(visitors==1){
             response_min = responsetime;
         }

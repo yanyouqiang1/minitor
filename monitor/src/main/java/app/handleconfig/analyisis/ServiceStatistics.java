@@ -19,7 +19,7 @@ public class ServiceStatistics extends AbstractServiceStatistics {
 
     @Override
     public void update(MsgEntity msgEntity) {
-        int responsetime = msgEntity.getResposneTime();
+        int responsetime = msgEntity.getResponseTime();
         if(visitors==1){
             response_min = responsetime;
         }

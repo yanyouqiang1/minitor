@@ -25,7 +25,7 @@ public abstract class AbstractGroupStatistics implements Statistics{
 
     //收到消息处理
     public void msgRecive(MsgEntity msgEntity){
-        long resourceid = msgEntity.getResouceid();
+        long resourceid = msgEntity.getResourceId();
         if(resourceStatisticsMap==null){
             statisticsUpdate();
         }

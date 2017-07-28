@@ -25,13 +25,13 @@ public abstract class AbstractOverallStatistics implements Statistics {
             statisticsUpdate();
         }
         //下发到组
-        Long groupid = msgEntity.getGroupid();
+        Long groupid = msgEntity.getGroupId();
         AbstractGroupStatistics group = groupMap.get(groupid);
         if (group != null) {
             group.msgRecive(msgEntity);
         }
         //下发到服务
-        long serviceid = msgEntity.getServiceid();
+        long serviceid = msgEntity.getServiceId();
         AbstractServiceStatistics service = serviceStatisticsMap.get(serviceid);
         if (service != null) {
             service.msgRecive(msgEntity);

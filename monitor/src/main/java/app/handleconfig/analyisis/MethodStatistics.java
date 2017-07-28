@@ -43,11 +43,11 @@ public class MethodStatistics extends AbstractMethodStatistics {
                 status_500++;
                 break;
         }
-        int responsetime = msgEntity.getResposneTime();
+        int responsetime = msgEntity.getResponseTime();
         if(visitors==1){
             response_min = responsetime;
-            serviceid = msgEntity.getServiceid();
-            groupid = msgEntity.getGroupid();
+            serviceid = msgEntity.getServiceId();
+            groupid = msgEntity.getGroupId();
         }
         if (responsetime < response_min) {
             response_min = responsetime;
