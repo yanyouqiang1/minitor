@@ -83,8 +83,7 @@ public class ScheduleAlgorithm implements ScheduleAlgorithmInter {
             }
         }
 
-        System.out.println("-------------------------------------------------------");
-        System.out.println("增加"+ JSONObject.wrap(overloadServices));
+        System.out.println("负载判断---:"+overloadServices.toString());
 
         return overloadServices;
     }

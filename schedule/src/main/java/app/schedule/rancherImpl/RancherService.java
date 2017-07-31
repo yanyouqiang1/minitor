@@ -28,6 +28,7 @@ public class RancherService {
     public void upService() {
         rancherOS.scaleService(name, true);
         scale++;
+        System.out.println("服务:"+name+" 容器增加");
     }
 
 
@@ -36,6 +37,7 @@ public class RancherService {
             rancherOS.scaleService(name, false);
         }
         scale--;
+        System.out.println("服务:"+name+" 容器减少");
     }
 
     public static Service generate(RancherService rancherService){

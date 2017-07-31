@@ -5,6 +5,7 @@ target/
 *.zip
 *.tar
 *.tar.gz
+*.class
 
 # eclipse ignore
 .settings/
@@ -30,3 +31,10 @@ Thumbs.db
 
 # else
 .springBeans
+MinitorSchedule/src/main/resources/static/bootstrap/js/
+schedule/src/main/java/app/containerstate/prometheus/PrometheusConfig.java
+schedule/src/main/java/app/containerstate/prometheus/util/
+schedule/src/main/java/app/schedule/rancherImpl/util/
+schedule/src/test/java/testjson/
+/monitor/target/
+/.idea/

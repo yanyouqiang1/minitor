@@ -1,10 +1,10 @@
 package app.handleconfig.analyisis;
 
-import app.Global;
+import app.handle.commonHandle.GlobalResource;
 import app.database.dao.ServiceRepository;
 import app.database.domain.Monitor_services;
 import app.handle.commonHandle.warehouse.statistics.AbstractServiceStatistics;
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -18,8 +18,8 @@ public class ServiceStatistics extends AbstractServiceStatistics {
     protected int response_min,response_max,response_avg;
 
     @Override
-    public void update(MsgEntity msgEntity) {
-        int responsetime = msgEntity.getResponseTime();
+    public void update(MonitorMessage monitorMessage) {
+        int responsetime = monitorMessage.getResponseTime();
         if(visitors==1){
             response_min = responsetime;
         }
@@ -30,7 +30,7 @@ public class ServiceStatistics extends AbstractServiceStatistics {
             response_max = responsetime;
         }
 
-        response_avg = (int) ((visitors-1)*response_avg/visitors);
+        response_avg = (int) (((visitors - 1) * response_avg + responsetime) / visitors);
     }
 
     @Override
@@ -52,7 +52,7 @@ public class ServiceStatistics extends AbstractServiceStatistics {
         monitor_services.setResponse_avg(response_avg);
         monitor_services.setResponse_max(response_max);
         monitor_services.setResponse_min(response_min);
-        monitor_services.setOverall(Global.getCurrentOverall());
+        monitor_services.setOverall(GlobalResource.getCurrentOverall());
         serviceRepository.save(monitor_services);
     }
 

@@ -1,8 +1,7 @@
 package app.containerstate.prometheus;
 
-import app.containerstate.ContainerInter;
-import app.containerstate.entity.ConsultData;
-import app.global.HttpRequest;
+import app.schedule.rancherImpl.algorithm.ContainerInter;
+import app.schedule.rancherImpl.algorithm.entity.ResultData;
 
 /**
  * Created by Administrator on 2017/7/28.
@@ -15,14 +14,26 @@ public class PrometheusImpl implements ContainerInter {
     }
 
     @Override
-    public ConsultData getCpuRateByContainerName(String containerName) {
+    public ResultData getCpuRateByContainerName(String containerName) {
         long currentTime = System.currentTimeMillis()/1000;
-        String result = PrometheusHttpApi.urlSplicer(config.getAddress(),containerName,String.valueOf(currentTime-90),String.valueOf(currentTime),"10");
-        return null;
+        ResultData resultData=null;
+        try{
+            resultData = PrometheusHttpApi.getCpuData(config.getAddress(),containerName,String.valueOf(currentTime-90),String.valueOf(currentTime),"10");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultData;
     }
 
     @Override
-    public ConsultData getMemoryByContainerName(String containerName) {
-        return null;
+    public ResultData getMemoryByContainerName(String containerName) {
+        long currentTime = System.currentTimeMillis()/1000;
+        ResultData resultData=null;
+        try{
+            resultData = PrometheusHttpApi.getMemoryData(config.getAddress(),containerName,String.valueOf(currentTime-90),String.valueOf(currentTime),"10");
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return resultData;
     }
 }

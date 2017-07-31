@@ -1,6 +1,6 @@
 package app.handle.commonHandle.warehouse.statistics;
 
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
 
 /**
  * Created by Administrator on 2017/7/6.
@@ -17,12 +17,12 @@ public abstract class AbstractMethodStatistics implements Statistics {
     private AbstractResourceStatistics parentResource;
 
 
-    public void msgRecive(MsgEntity msgEntity) {
+    public void msgRecive(MonitorMessage monitorMessage) {
         this.visitors++;
-        update(msgEntity);
+        update(monitorMessage);
     }
 
-    public abstract void update(MsgEntity msgEntity);
+    public abstract void update(MonitorMessage monitorMessage);
 
     public void sumup() {
         handleResult(this);

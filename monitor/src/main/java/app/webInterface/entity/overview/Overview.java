@@ -27,7 +27,7 @@ public class Overview {
 
     public void generate(Monitor_overall overall,List<Monitor_group> monitor_groups){
         id = overall.getId();
-        visitors = overall.getVisitors();
+        visitors = overall.getRequest_visitors();
         status_100 = overall.getStatus_100();
         status_200 = overall.getStatus_200();
         status_300 = overall.getStatus_300();

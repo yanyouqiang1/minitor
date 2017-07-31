@@ -1,8 +1,10 @@
 package app.schedule.rancherImpl;
 
-import app.global.HttpRequest;
-import app.global.JsonUtil;
+import app.globalUtil.HttpRequest;
+import app.schedule.rancherImpl.util.JsonUtil;
 import org.json.JSONException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Map;
@@ -10,22 +12,11 @@ import java.util.Map;
 /**
  * Created by Administrator on 2017/6/6 0006.
  */
+@Component
 public class RancherOS {
 
-    String accesskey;
-    String secret;
-    String stackapisurl;
-    String host, port;
-    Map<String, Map<String, String>> webhooks;
-
-    public RancherOS(RancherConfig rancherConfig) {
-        host = rancherConfig.getHost();
-        port = rancherConfig.getPort();
-        accesskey = rancherConfig.getAPIkey().get("accesskey");
-        secret = rancherConfig.getAPIkey().get("secret");
-        stackapisurl = "http://" + host + ":" + port + "/" + rancherConfig.getStackapisurl();
-        webhooks = rancherConfig.getWebhooks();
-    }
+    @Autowired
+    RancherPresetValue rancherPresetValue;
 
     /***
      * 获取服务列表
@@ -33,7 +24,7 @@ public class RancherOS {
      * @throws JSONException
      */
     public List<String> getStackServices() throws JSONException {
-        String result = HttpRequest.sendGetwithAuthen(accesskey, secret, stackapisurl, "");
+        String result = HttpRequest.sendGetwithAuthen(rancherPresetValue.getAccesskey(), rancherPresetValue.getSecret(), rancherPresetValue.getStackApiUrl(), "");
         return JsonUtil.getList(result, "serviceIds");
     }
 
@@ -49,7 +40,7 @@ public class RancherOS {
         }
         String realpath = RancherServiceURL + serviceId;
 
-        String result = HttpRequest.sendGetwithAuthen(accesskey, secret, realpath, "");
+        String result = HttpRequest.sendGetwithAuthen(rancherPresetValue.getAccesskey(), rancherPresetValue.getSecret(), realpath, "");
 
         return JsonUtil.getList(result, "name").get(0);
     }
@@ -59,7 +50,7 @@ public class RancherOS {
             getServiceURL();
         }
         String realpath = RancherServiceURL + serviceId;
-        String result = HttpRequest.sendGetwithAuthen(accesskey, secret, realpath, "");
+        String result = HttpRequest.sendGetwithAuthen(rancherPresetValue.getAccesskey(), rancherPresetValue.getSecret(), realpath, "");
         return JsonUtil.getList(result, "linkedServices");
     }
     public int getServiceScale(String serviceId) throws JSONException {
@@ -68,10 +59,11 @@ public class RancherOS {
         }
         String realpath = RancherServiceURL + serviceId;
 
-        String result = HttpRequest.sendGetwithAuthen(accesskey, secret, realpath, "");
+        String result = HttpRequest.sendGetwithAuthen(rancherPresetValue.getAccesskey(), rancherPresetValue.getSecret(), realpath, "");
 
         return Integer.valueOf(JsonUtil.getList(result, "scale").get(0));
     }
+
     /***
      *  增加服务，或者减少服务
      * @param serviceName 服务名
@@ -80,14 +72,13 @@ public class RancherOS {
      */
     public boolean scaleService(String serviceName, boolean upOrdown) {
         String webhooksURL = "";
-        Map serviceMap = webhooks.get(serviceName);
         if (upOrdown) {
-            webhooksURL = serviceMap.get("up").toString();
+            webhooksURL = rancherPresetValue.getServiceUpUrl(serviceName);
         } else {
-            webhooksURL = serviceMap.get("down").toString();
+            webhooksURL =  rancherPresetValue.getServiceDownUrl(serviceName);
         }
-
         if (webhooksURL.equals("")) {
+            System.out.println("scale"+serviceName+"容器失败");
             return false;
         }
         HttpRequest.httpClientPost(webhooksURL, null, "UTF8");
@@ -98,7 +89,7 @@ public class RancherOS {
 
     private void getServiceURL() {
         //获得rancher 服务地址
-        String[] strings = stackapisurl.split("projects");
+        String[] strings = rancherPresetValue.getStackApiUrl().split("projects");
         StringBuilder stringBuilder = new StringBuilder(strings[0]);
         stringBuilder.append("projects/");
 
@@ -116,7 +107,7 @@ public class RancherOS {
             getServiceURL();
         }
         String realpath = RancherServiceURL + rancherName;
-        String result = HttpRequest.sendGetwithAuthen(accesskey, secret, realpath, "");
+        String result = HttpRequest.sendGetwithAuthen(rancherPresetValue.getAccesskey(), rancherPresetValue.getSecret(), realpath, "");
         return result;
     }
 }

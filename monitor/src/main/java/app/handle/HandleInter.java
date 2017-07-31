@@ -1,6 +1,6 @@
 package app.handle;
 
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
 
 /**
  * Created by Administrator on 2017/7/4 0004.
@@ -8,8 +8,8 @@ import entitylib.MsgEntity;
 public interface HandleInter {
     /**
      * 接收消息
-     * @param msgEntity
+     * @param monitorMessage
      */
-    public void msgRecive(MsgEntity msgEntity);
+    public void msgRecive(MonitorMessage monitorMessage);
 
 }

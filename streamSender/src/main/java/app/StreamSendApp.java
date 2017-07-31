@@ -1,6 +1,7 @@
 package app;
 
 import entitylib.MsgEntity;
+import messagechannel.RabbitChannel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -17,22 +18,18 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @SpringBootApplication
 @RestController
-@EnableBinding(Source.class)
+@EnableBinding(RabbitChannel.class)
 public class StreamSendApp {
     public static void main(String[] args){
         SpringApplication.run(StreamSendApp.class,args);
     }
 
-    private Source source;
-
     @Autowired
-    public StreamSendApp(Source source){
-        this.source = source;
-    }
+    private RabbitChannel rabbitChannel;
 
     @RequestMapping("/ka")
     public String ka(){
-        source.output().send(MessageBuilder.withPayload("hello").build());
+        rabbitChannel.requestOutPut().send(MessageBuilder.withPayload("hello").build());
         return "ok";
     }
 
@@ -41,12 +38,12 @@ public class StreamSendApp {
     public String send(){
         MsgEntity msgEntity = new MsgEntity();
         msgEntity.setHttpStatus(200);
-        msgEntity.setGroupid(1l);
-        msgEntity.setResouceid(1l);
-        msgEntity.setMethodid(1l);
-        msgEntity.setServiceid(1l);
-        msgEntity.setResposneTime(400);
-        source.output().send(MessageBuilder.withPayload(msgEntity).build());
+        msgEntity.setGroupId(1l);
+        msgEntity.setResourceId(1l);
+        msgEntity.setMethodId(1l);
+        msgEntity.setServiceId(1l);
+        msgEntity.setResponseTime(400);
+        rabbitChannel.responseOutPut().send(MessageBuilder.withPayload(msgEntity).build());
         return "ok";
     }
     static int b=200;
@@ -54,12 +51,12 @@ public class StreamSendApp {
     public String send2(){
         MsgEntity msgEntity = new MsgEntity();
         msgEntity.setHttpStatus(200);
-        msgEntity.setGroupid(1l);
-        msgEntity.setResouceid(1l);
-        msgEntity.setMethodid(2l);
-        msgEntity.setServiceid(1l);
-        msgEntity.setResposneTime(400);
-        source.output().send(MessageBuilder.withPayload(msgEntity).build());
+        msgEntity.setGroupId(1l);
+        msgEntity.setResourceId(1l);
+        msgEntity.setMethodId(1l);
+        msgEntity.setServiceId(1l);
+        msgEntity.setResponseTime(400);
+        rabbitChannel.responseOutPut().send(MessageBuilder.withPayload(msgEntity).build());
         return "ok";
     }
 
@@ -67,12 +64,12 @@ public class StreamSendApp {
     public String test(@RequestParam(name = "group",required = true)long group,@RequestParam(name="resource",required = true) long resource,@RequestParam(name = "method",required = true)long method,@RequestParam(name = "response",required = true)int response,@RequestParam(name = "service",required = true)long service,@RequestParam(name = "httpstatus",defaultValue = "200")int httpstatus){
         MsgEntity msgEntity = new MsgEntity();
         msgEntity.setHttpStatus(httpstatus);
-        msgEntity.setGroupid(group);
-        msgEntity.setResouceid(resource);
-        msgEntity.setMethodid(method);
-        msgEntity.setServiceid(service);
-        msgEntity.setResposneTime(response);
-        source.output().send(MessageBuilder.withPayload(msgEntity).build());
+        msgEntity.setGroupId(group);
+        msgEntity.setResourceId(resource);
+        msgEntity.setMethodId(method);
+        msgEntity.setServiceId(service);
+        msgEntity.setResponseTime(response);
+        rabbitChannel.responseOutPut().send(MessageBuilder.withPayload(msgEntity).build());
         return "ok";
     }
 }

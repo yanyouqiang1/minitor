@@ -17,4 +17,5 @@ public interface GroupRepository extends JpaRepository<Monitor_group,Long> {
     public List<Monitor_group> findAllByOverall(Monitor_overall overall);
 
     public List<Monitor_group> findByOverall(Pageable pageable,Monitor_overall overall);
+
 }

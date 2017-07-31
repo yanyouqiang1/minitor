@@ -1,10 +1,10 @@
 package app.handleconfig.analyisis;
 
-import app.Global;
+import app.handle.commonHandle.GlobalResource;
 import app.database.dao.MethodRepository;
 import app.database.domain.Monitor_method;
 import app.handle.commonHandle.warehouse.statistics.AbstractMethodStatistics;
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -23,10 +23,11 @@ public class MethodStatistics extends AbstractMethodStatistics {
 
     protected long TPS;
 
-    protected long serviceid,groupid;
+    protected long serviceid, groupid;
+
     @Override
-    public void update(MsgEntity msgEntity) {
-        switch (msgEntity.getHttpStatus()) {
+    public void update(MonitorMessage monitorMessage) {
+        switch (monitorMessage.getHttpStatus()) {
             case 100:
                 status_100++;
                 break;
@@ -43,11 +44,13 @@ public class MethodStatistics extends AbstractMethodStatistics {
                 status_500++;
                 break;
         }
-        int responsetime = msgEntity.getResponseTime();
-        if(visitors==1){
+        int responsetime = monitorMessage.getResponseTime();
+        if (visitors == 1) {
             response_min = responsetime;
-            serviceid = msgEntity.getServiceId();
-            groupid = msgEntity.getGroupId();
+            response_avg = responsetime;
+            serviceid = monitorMessage.getServiceId();
+            groupid = monitorMessage.getGroupId();
+
         }
         if (responsetime < response_min) {
             response_min = responsetime;
@@ -55,8 +58,7 @@ public class MethodStatistics extends AbstractMethodStatistics {
         if (responsetime > response_max) {
             response_max = responsetime;
         }
-        response_avg = (int) ((visitors - 1) * response_avg / visitors);
-
+        response_avg = (int) (((visitors - 1) * response_avg + responsetime) / visitors);
         TPS = visitors / 10;
 
     }
@@ -79,7 +81,7 @@ public class MethodStatistics extends AbstractMethodStatistics {
 
     @Override
     public void handleResult(AbstractMethodStatistics method) {
-        if(method.getVisitors()!=0) {
+        if (method.getVisitors() != 0) {
             rate_status_100 = (float) status_100 / method.getVisitors();
             rate_status_200 = (float) status_200 / method.getVisitors();
             rate_status_300 = (float) status_300 / method.getVisitors();
@@ -103,10 +105,10 @@ public class MethodStatistics extends AbstractMethodStatistics {
         monitor_method.setRate_status_500(rate_status_500);
         monitor_method.setTPS(TPS);
         monitor_method.setResourceId(method.getParentResource().getId());
-        monitor_method.setGroupid(method.getParentResource().getParentGroup().getId());
-        monitor_method.setServiceid(Global.getServiceIdBymethodId(method.getId()));
+        monitor_method.setGroupid(groupid);
+        monitor_method.setServiceid(serviceid);
         monitor_method.setName(method.getName());
-        monitor_method.setOverall(Global.getCurrentOverall());
+        monitor_method.setOverall(GlobalResource.getCurrentOverall());
         monitor_method.setId(method.getId());
         methodRepository.save(monitor_method);
     }

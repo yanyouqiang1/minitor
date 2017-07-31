@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.Date;
 import java.util.List;
 
 //import org.springframework.data.rest.core.annotation.RepositoryRestResource;
@@ -16,4 +17,7 @@ import java.util.List;
 public interface OverallRepository extends JpaRepository<Monitor_overall, Long> {
     public Monitor_overall findFirstByIdIsNotNullOrderByIdDesc();
     public List<Monitor_overall> findTop90ByIdIsNotNullOrderByIdDesc();
+
+    public void deleteAllByCreateTimeBefore(Date date);
+    public void deleteAllByIdNotNull();
 }

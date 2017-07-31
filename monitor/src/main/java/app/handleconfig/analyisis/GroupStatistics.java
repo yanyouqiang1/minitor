@@ -1,10 +1,10 @@
 package app.handleconfig.analyisis;
 
-import app.Global;
+import app.handle.commonHandle.GlobalResource;
 import app.database.dao.GroupRepository;
 import app.database.domain.Monitor_group;
 import app.handle.commonHandle.warehouse.statistics.AbstractGroupStatistics;
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -18,7 +18,7 @@ public class GroupStatistics extends AbstractGroupStatistics {
     protected float rate;
 
     @Override
-    public void update(MsgEntity msgEntity) {
+    public void update(MonitorMessage monitorMessage) {
 
     }
     @Override
@@ -37,7 +37,7 @@ public class GroupStatistics extends AbstractGroupStatistics {
         monitor_group.setName(group.getName());
         monitor_group.setVisitors(group.getVisitors());
         monitor_group.setRate(rate);
-        monitor_group.setOverall(Global.getCurrentOverall());
+        monitor_group.setOverall(GlobalResource.getCurrentOverall());
         groupRepository.save(monitor_group);
     }
 }

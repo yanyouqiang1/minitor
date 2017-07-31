@@ -1,7 +1,7 @@
 package app.handleconfig.filter;
 
 import app.handle.commonHandle.Msgfilter;
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 @Component("httpStatusFilter")
 public class HttpStatusFilter implements Msgfilter {
     @Override
-    public MsgEntity filter(MsgEntity msgEntity) {
-        int status = msgEntity.getHttpStatus();
+    public MonitorMessage filter(MonitorMessage monitorMessage) {
+        int status = monitorMessage.getHttpStatus();
         int adjust; //调整之后
         if(status<200){
             adjust = 100;
@@ -25,7 +25,7 @@ public class HttpStatusFilter implements Msgfilter {
         }else{
             adjust = 500;
         }
-        msgEntity.setHttpStatus(adjust);
-        return msgEntity;
+        monitorMessage.setHttpStatus(adjust);
+        return monitorMessage;
     }
 }

@@ -13,9 +13,9 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @SpringBootApplication
 @EnableConfigurationProperties({RancherConfig.class, PrometheusConfig.class})
 @EnableScheduling
-public class App {
+public class ScheduleApp {
     public static void main(String[] args) {
-        SpringApplication.run(App.class, args);
+        SpringApplication.run(ScheduleApp.class, args);
     }
 
 }

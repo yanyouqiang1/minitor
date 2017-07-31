@@ -1,27 +1,24 @@
-server:
-  port: 8012
-
 spring:
   cloud:
     stream:
       bindings:
-        input:
+        input_channel_request:
           destination: ${STREAM_NAME:overview-stream}
-          group: group1
+          group: monitor_group
+          consumer:
+            durableSubscription: true
+        input_channel_response:
+          destination: ${STREAM_NAME:overview-stream}
+          group: monitor_group
           consumer:
             durableSubscription: true
   rabbitmq:
-#    username: user
-#    password: passworrd
-#    addresses: 192.168.0.100:5672
     username: ${RABBIT_NAME:user}
     password: ${RABBIT_PASS:password}
-    addresses: ${RABBIT_ADDRESS:192.168.0.102:5672}
+    addresses: ${RABBIT_ADDRESS:192.168.0.101:5673}
+#    addresses: ${RABBIT_ADDRESS:192.168.0.101:5672}
 
   datasource:
-#    url: jdbc:mysql://192.168.0.100/monitor?autoReconnect=true&useSSL=false
-#    username: root
-#    password: root
     url: jdbc:mysql://${MYSQL_ADDRESS:192.168.0.100:3306}/monitor?autoReconnect=true&useSSL=false
     username: ${MYSQL_NAME:root}
     password: ${MYSQL_PASS:root}
@@ -36,6 +33,16 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
+
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    hostname: ${EUREKA_ADDRESS:192.168.0.100}
+    port:  ${EUREKA_PORT:8093}
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
 
 
 

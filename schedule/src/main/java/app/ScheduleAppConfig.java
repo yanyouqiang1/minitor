@@ -1,6 +1,7 @@
 package app;
 
-import app.containerstate.ContainerInter;
+import app.schedule.rancherImpl.RancherPresetValue;
+import app.schedule.rancherImpl.algorithm.ContainerInter;
 import app.containerstate.prometheus.PrometheusConfig;
 import app.containerstate.prometheus.PrometheusImpl;
 import app.schedule.rancherImpl.RancherConfig;
@@ -13,14 +14,15 @@ import org.springframework.context.annotation.Configuration;
  * Created by Administrator on 2017/7/1 0001.
  */
 @Configuration
-public class AppConfig {
+public class ScheduleAppConfig {
     @Autowired
     RancherConfig rancherConfig;
 
     @Bean
-    public RancherOS getRancherOS(){
-        return new RancherOS(rancherConfig);
+    public RancherPresetValue rancherPresetValue(){
+        return new RancherPresetValue(rancherConfig);
     }
+
 
     @Autowired
     PrometheusConfig prometheusConfig;

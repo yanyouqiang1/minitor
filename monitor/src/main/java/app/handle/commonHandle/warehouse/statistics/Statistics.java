@@ -1,6 +1,6 @@
 package app.handle.commonHandle.warehouse.statistics;
 
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
 
 /**
  * Created by Administrator on 2017/7/11.
@@ -8,9 +8,9 @@ import entitylib.MsgEntity;
 public interface Statistics {
     /***
      *  接收消息
-     * @param msgEntity
+     * @param monitorMessage
      */
-    public void msgRecive(MsgEntity msgEntity);
+    public void msgRecive(MonitorMessage monitorMessage);
 
     /***
      *  统计信号

@@ -1,11 +1,10 @@
 package app.handleconfig.analyisis;
 
-import app.Global;
+import app.handle.commonHandle.GlobalResource;
 import app.database.dao.ResourceRepository;
-import app.database.domain.Monitor_group;
 import app.database.domain.Monitor_resource;
 import app.handle.commonHandle.warehouse.statistics.AbstractResourceStatistics;
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -17,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 public class ResourceStatistics extends AbstractResourceStatistics {
     @Override
-    public void update(MsgEntity msgEntity) {
+    public void update(MonitorMessage monitorMessage) {
 
     }
     @Override
@@ -34,7 +33,7 @@ public class ResourceStatistics extends AbstractResourceStatistics {
         monitor_resource.setName(resource.getName());
         monitor_resource.setVisitors(resource.getVisitors());
         monitor_resource.setGroupId(resource.getParentGroup().getId());
-        monitor_resource.setOverall(Global.getCurrentOverall());
+        monitor_resource.setOverall(GlobalResource.getCurrentOverall());
         resourceRepository.save(monitor_resource);
     }
 

@@ -1,0 +1,5 @@
+spring:
+  application:
+    name: monitor
+server:
+  port: 8012

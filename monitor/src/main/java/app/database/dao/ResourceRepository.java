@@ -15,4 +15,6 @@ import java.util.List;
 @Transactional
 public interface ResourceRepository extends JpaRepository<Monitor_resource,Long> {
     public List<Monitor_resource> findByGroupIdAndOverall(Pageable pageable, long id, Monitor_overall overall);
+
+    public String findDistinctNameById(long id);
 }

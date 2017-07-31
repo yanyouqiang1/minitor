@@ -1,4 +1,4 @@
-package app.global;
+package app.globalUtil;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;

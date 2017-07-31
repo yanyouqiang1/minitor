@@ -1,8 +1,8 @@
 package app.handle.commonHandle.warehouse.statistics;
 
-import app.Global;
 import app.util.SpringUtil;
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -11,6 +11,9 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by Administrator on 2017/7/6.
  */
 public abstract class AbstractGroupStatistics implements Statistics{
+    @Autowired
+    TopologyInter toplogyInter;
+
     //统计属性
     protected long visitors;
 
@@ -24,20 +27,20 @@ public abstract class AbstractGroupStatistics implements Statistics{
     private AbstractOverallStatistics parentOverall;
 
     //收到消息处理
-    public void msgRecive(MsgEntity msgEntity){
-        long resourceid = msgEntity.getResourceId();
+    public void msgRecive(MonitorMessage monitorMessage){
+        long resourceid = monitorMessage.getResourceId();
         if(resourceStatisticsMap==null){
             statisticsUpdate();
         }
         AbstractResourceStatistics resource = resourceStatisticsMap.get(resourceid);
         if(resource!=null){
-            resource.msgRecive(msgEntity);
+            resource.msgRecive(monitorMessage);
         }
         this.visitors++;
-        update(msgEntity);
+        update(monitorMessage);
     }
 
-    public abstract void update(MsgEntity msgEntity);
+    public abstract void update(MonitorMessage monitorMessage);
 
     public void sumup(){
         handleResult(this);
@@ -61,7 +64,7 @@ public abstract class AbstractGroupStatistics implements Statistics{
             resourceStatisticsMap = new ConcurrentHashMap<>();
         }
         resourceStatisticsMap.clear();
-        Map<Long,String> resources = Global.getResoucesByGroupId(this.id);
+        Map<Long,String> resources = toplogyInter.getResourceByGroupId(this.id);
         if(resources!=null){
             for(Map.Entry<Long,String> resourceEntry:resources.entrySet()){
                 AbstractResourceStatistics resource = SpringUtil.getBean(AbstractResourceStatistics.class);

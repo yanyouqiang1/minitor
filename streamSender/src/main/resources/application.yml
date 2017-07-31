@@ -5,12 +5,19 @@ spring:
   cloud:
     stream:
       bindings:
-        output:
-          destination: ${STREAM_NAME:overview-stream}
+        output_channel_request:
+          destination: overview-stream
+          content-type: application/json
+        output_channel_response:
+          destination: overview-stream
+          content-type: application/json
+#        output:
+#          destination: ${STREAM_NAME:overview-stream}
+#          content-type: application/json
   rabbitmq:
     username: ${RABBIT_NAME:user}
     password: ${RABBIT_PASS:password}
-    addresses: ${RABBIT_ADDRESS}
+    addresses: ${RABBIT_ADDRESS:192.168.0.101:5673}
 #  rabbitmq:
 #    username: user
 #    password: password

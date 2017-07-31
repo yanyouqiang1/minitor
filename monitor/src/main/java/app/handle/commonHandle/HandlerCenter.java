@@ -1,12 +1,13 @@
 package app.handle.commonHandle;
 
-import app.Global;
+import app.database.dao.OverallRepository;
 import app.handle.HandleInter;
 import app.handle.commonHandle.warehouse.WarehoseInter;
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
+import java.util.Date;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
@@ -22,18 +23,19 @@ public class HandlerCenter implements HandleInter {
     WarehoseInter warehoseInter;
 
     @Override
-    public void msgRecive(MsgEntity msgEntity) {
+    public void msgRecive(MonitorMessage monitorMessage) {
         //消息过滤器
         Iterator iterable = msgfilterChain.iterator();
         while(iterable.hasNext()){
             Msgfilter msgfilter = (Msgfilter) iterable.next();
-            msgEntity = msgfilter.filter(msgEntity);
+            monitorMessage = msgfilter.filter(monitorMessage);
         }
-        warehoseInter.putMsg(msgEntity);
+        warehoseInter.putMsg(monitorMessage);
     }
 
-    @Scheduled(initialDelay = 10000, fixedRate = 10000)
+    @Scheduled(initialDelay = 10*1000, fixedDelay = 10000)
     private void handle(){
+        System.out.println("统计数据:"+System.currentTimeMillis());
         //统计消息
         warehoseInter.sumup();
         //触发监听器
@@ -42,12 +44,19 @@ public class HandlerCenter implements HandleInter {
         }
     }
 
-    @Scheduled(fixedDelay = 30000)
+    @Scheduled(fixedDelay = 60*1000)
     private void statisticUpdate(){
-        Global.update();
+        System.out.println("更新网关数据:"+System.currentTimeMillis());
         warehoseInter.statisticsUpdate();
     }
 
+    @Autowired
+    OverallRepository overallRepository;
+    @Scheduled(fixedDelay = 60*60*1000)
+    private void doClean(){
+        Date boforeDate = new Date(new Date().getTime()-60*60*1000l);
+        overallRepository.deleteAllByCreateTimeBefore(boforeDate);
+    }
     public void setMsgHandleListener(MsgHandleListener msgHandleListener) {
         this.msgHandleListener = msgHandleListener;
     }

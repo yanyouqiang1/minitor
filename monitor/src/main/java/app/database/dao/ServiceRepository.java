@@ -14,4 +14,7 @@ import java.util.List;
 @Transactional
 public interface ServiceRepository extends JpaRepository<Monitor_services,Long> {
     public List<Monitor_services> findByOverall(Monitor_overall overall);
+
+    public String findDistinctNameById(long id);
+
 }

@@ -1,41 +1,45 @@
 package app.handle.commonHandle.warehouse.statistics;
 
-import app.Global;
 import app.util.SpringUtil;
-import entitylib.MsgEntity;
+import entitylib.MonitorMessage;
+import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * Created by Administrator on 2017/7/11.
  */
+@Data
 public abstract class AbstractResourceStatistics implements Statistics {
+    @Autowired
+    TopologyInter toplogyInter;
+
     //统计属性
-    long visitors;
+    protected long visitors;
     //自身属性
-    Long id;
-    String name;
+    protected Long id;
+    protected String name;
 
     //映射属性
     protected AbstractGroupStatistics parentGroup;
     Map<Long, AbstractMethodStatistics> methodStatisticsMap;
 
-    public void msgRecive(MsgEntity msgEntity) {
-        Long methodid = msgEntity.getMethodId();
+    public void msgRecive(MonitorMessage monitorMessage) {
+        Long methodid = monitorMessage.getMethodId();
         if (methodStatisticsMap == null) {
             statisticsUpdate();
         }
         AbstractMethodStatistics method = methodStatisticsMap.get(methodid);
         if (method != null) {
-            method.msgRecive(msgEntity);
+            method.msgRecive(monitorMessage);
         }
         this.visitors++;
-        update(msgEntity);
+        update(monitorMessage);
     }
 
-    public abstract void update(MsgEntity msgEntity);
+    public abstract void update(MonitorMessage monitorMessage);
 
     public void sumup() {
         handleResult(this);
@@ -62,7 +66,7 @@ public abstract class AbstractResourceStatistics implements Statistics {
             methodStatisticsMap = new ConcurrentHashMap<>();
         }
         methodStatisticsMap.clear();
-        Map<Long, String> resources = Global.getMethodByResourceId(this.id);
+        Map<Long, String> resources = toplogyInter.getMethodByResourceId(this.id);
         if (resources != null) {
             for (Map.Entry<Long, String> resourceEntry : resources.entrySet()) {
                 AbstractMethodStatistics method = SpringUtil.getBean(AbstractMethodStatistics.class);
@@ -72,37 +76,5 @@ public abstract class AbstractResourceStatistics implements Statistics {
                 methodStatisticsMap.put(resourceEntry.getKey(), method);
             }
         }
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public AbstractGroupStatistics getParentGroup() {
-        return parentGroup;
-    }
-
-    public void setParentGroup(AbstractGroupStatistics parentGroup) {
-        this.parentGroup = parentGroup;
-    }
-
-    public long getVisitors() {
-        return visitors;
-    }
-
-    public void setVisitors(long visitors) {
-        this.visitors = visitors;
     }
 }

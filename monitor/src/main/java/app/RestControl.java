@@ -1,5 +1,8 @@
 package app;
 
+import app.database.dao.OverallRepository;
+import app.feignclient.GatewayManager;
+import app.feignclient.entity.Group;
 import app.webInterface.RestInter;
 import app.webInterface.entity.list.Details;
 import app.webInterface.entity.list.Details_group;
@@ -12,6 +15,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/10.
@@ -101,7 +107,13 @@ public class RestControl {
         return restInter.method_tps(id);
     }
 
-
-
-
+    @Autowired
+    OverallRepository overallRepository;
+    @RequestMapping("/test2")
+    public String test2(){
+        Date date = new Date();
+        Date before = new Date(date.getTime()-(long)20*1000);
+        overallRepository.deleteAllByCreateTimeBefore(before);
+        return "ok";
+    }
 }

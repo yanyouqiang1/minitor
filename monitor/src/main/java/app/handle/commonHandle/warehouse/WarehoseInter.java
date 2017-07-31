@@ -1,10 +1,6 @@
 package app.handle.commonHandle.warehouse;
 
-import entitylib.MsgEntity;
-
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.LinkedBlockingDeque;
+import entitylib.MonitorMessage;
 
 /**
  * Created by Administrator on 2017/7/4 0004.
@@ -12,9 +8,9 @@ import java.util.concurrent.LinkedBlockingDeque;
 public interface WarehoseInter {
     /**
      *  仓库加入信息
-     * @param msgEntity
+     * @param monitorMessage
      */
-    public void putMsg(MsgEntity msgEntity);
+    public void putMsg(MonitorMessage monitorMessage);
 
 
     /**
@@ -27,4 +23,5 @@ public interface WarehoseInter {
      *  服务有更新
      */
     public void statisticsUpdate();
+
 }

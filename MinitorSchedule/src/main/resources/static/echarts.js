@@ -138,11 +138,11 @@
         return mod.exports;
     }
 }());
-define('echarts/component/title', ['require', '../echarts', '../util/graphic', '../util/layout'], function (require) {
+define('echarts/component/title', ['require', '../echarts', '../entity/graphic', '../entity/layout'], function (require) {
     'use strict';
     var echarts = require('../echarts');
-    var graphic = require('../util/graphic');
-    var layout = require('../util/layout');
+    var graphic = require('../entity/graphic');
+    var layout = require('../entity/layout');
     // Model
     echarts.extendComponentModel({
         type: 'title',
@@ -291,8 +291,8 @@ define('echarts/component/title', ['require', '../echarts', '../util/graphic', '
         }
     });
 });
-define('echarts/chart/pie', ['require', 'zrender/core/util', '../echarts', './pie/PieSeries', './pie/PieView', '../action/createDataSelectAction', '../visual/dataColor', './pie/pieLayout', '../processor/dataFilter'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/chart/pie', ['require', 'zrender/core/entity', '../echarts', './pie/PieSeries', './pie/PieView', '../action/createDataSelectAction', '../visual/dataColor', './pie/pieLayout', '../processor/dataFilter'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var echarts = require('../echarts');
     require('./pie/PieSeries');
     require('./pie/PieView');
@@ -317,10 +317,10 @@ define('echarts/chart/pie', ['require', 'zrender/core/util', '../echarts', './pi
     echarts.registerLayout(zrUtil.curry(require('./pie/pieLayout'), 'pie'));
     echarts.registerProcessor(zrUtil.curry(require('../processor/dataFilter'), 'pie'));
 });
-define('echarts/component/gridSimple', ['require', '../util/graphic', 'zrender/core/util', '../echarts', '../coord/cartesian/Grid', './axis'], function (require) {
+define('echarts/component/gridSimple', ['require', '../entity/graphic', 'zrender/core/entity', '../echarts', '../coord/cartesian/Grid', './axis'], function (require) {
     'use strict';
-    var graphic = require('../util/graphic');
-    var zrUtil = require('zrender/core/util');
+    var graphic = require('../entity/graphic');
+    var zrUtil = require('zrender/core/entity');
     var echarts = require('../echarts');
     require('../coord/cartesian/Grid');
     require('./axis');
@@ -346,8 +346,8 @@ define('echarts/component/gridSimple', ['require', '../util/graphic', 'zrender/c
         }
     });
 });
-define('echarts/chart/line', ['require', 'zrender/core/util', '../echarts', './line/LineSeries', './line/LineView', '../visual/symbol', '../layout/points', '../processor/dataSample', '../component/gridSimple'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/chart/line', ['require', 'zrender/core/entity', '../echarts', './line/LineSeries', './line/LineView', '../visual/symbol', '../layout/points', '../processor/dataSample', '../component/gridSimple'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var echarts = require('../echarts');
     var PRIORITY = echarts.PRIORITY;
     require('./line/LineSeries');
@@ -359,8 +359,8 @@ define('echarts/chart/line', ['require', 'zrender/core/util', '../echarts', './l
     // In case developer forget to include grid component
     require('../component/gridSimple');
 });
-define('echarts/chart/bar', ['require', 'zrender/core/util', '../coord/cartesian/Grid', './bar/BarSeries', './bar/BarView', '../layout/barGrid', '../echarts', '../component/gridSimple'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/chart/bar', ['require', 'zrender/core/entity', '../coord/cartesian/Grid', './bar/BarSeries', './bar/BarView', '../layout/barGrid', '../echarts', '../component/gridSimple'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     require('../coord/cartesian/Grid');
     require('./bar/BarSeries');
     require('./bar/BarView');
@@ -377,7 +377,7 @@ define('echarts/chart/bar', ['require', 'zrender/core/util', '../coord/cartesian
     // In case developer forget to include grid component
     require('../component/gridSimple');
 });
-define('echarts/echarts', ['require', 'zrender/core/env', './model/Global', './ExtensionAPI', './CoordinateSystem', './model/OptionManager', './model/Component', './model/Series', './view/Component', './view/Chart', './util/graphic', './util/model', './util/throttle', 'zrender', 'zrender/core/util', 'zrender/tool/color', 'zrender/mixin/Eventful', 'zrender/core/timsort', './visual/seriesColor', './preprocessor/backwardCompat', './loading/default', './data/List', './model/Model', './coord/Axis', './util/number', './util/format', 'zrender/core/matrix', 'zrender/core/vector', './helper'], function (require) {
+define('echarts/echarts', ['require', 'zrender/core/env', './model/Global', './ExtensionAPI', './CoordinateSystem', './model/OptionManager', './model/Component', './model/Series', './view/Component', './view/Chart', './entity/graphic', './entity/model', './entity/throttle', 'zrender', 'zrender/core/entity', 'zrender/tool/color', 'zrender/mixin/Eventful', 'zrender/core/timsort', './visual/seriesColor', './preprocessor/backwardCompat', './loading/default', './data/List', './model/Model', './coord/Axis', './entity/number', './entity/format', 'zrender/core/matrix', 'zrender/core/vector', './entity'], function (require) {
     var env = require('zrender/core/env');
     var GlobalModel = require('./model/Global');
     var ExtensionAPI = require('./ExtensionAPI');
@@ -387,11 +387,11 @@ define('echarts/echarts', ['require', 'zrender/core/env', './model/Global', './E
     var SeriesModel = require('./model/Series');
     var ComponentView = require('./view/Component');
     var ChartView = require('./view/Chart');
-    var graphic = require('./util/graphic');
-    var modelUtil = require('./util/model');
-    var throttle = require('./util/throttle');
+    var graphic = require('./entity/graphic');
+    var modelUtil = require('./entity/model');
+    var throttle = require('./entity/throttle');
     var zrender = require('zrender');
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var colorTool = require('zrender/tool/color');
     var Eventful = require('zrender/mixin/Eventful');
     var timsort = require('zrender/core/timsort');
@@ -1105,7 +1105,7 @@ define('echarts/echarts', ['require', 'zrender/core/env', './model/Global', './E
         } else if (opt.flush !== false && env.browser.weChat) {
             // In WeChat embeded browser, `requestAnimationFrame` and `setInterval`
             // hang when sliding page (on touch event), which cause that zr does not
-            // refresh util user interaction finished, which is not expected.
+            // refresh entity user interaction finished, which is not expected.
             // But `dispatchAction` may be called too frequently when pan on touch
             // screen, which impacts performance if do not throttle them.
             this._throttledZrFlush();
@@ -1959,9 +1959,9 @@ define('echarts/echarts', ['require', 'zrender/core/env', './model/Global', './E
     echarts.List = require('./data/List');
     echarts.Model = require('./model/Model');
     echarts.Axis = require('./coord/Axis');
-    echarts.graphic = require('./util/graphic');
-    echarts.number = require('./util/number');
-    echarts.format = require('./util/format');
+    echarts.graphic = require('./entity/graphic');
+    echarts.number = require('./entity/number');
+    echarts.format = require('./entity/format');
     echarts.throttle = throttle.throttle;
     echarts.matrix = require('zrender/core/matrix');
     echarts.vector = require('zrender/core/vector');
@@ -1988,7 +1988,7 @@ define('echarts/echarts', ['require', 'zrender/core/env', './model/Global', './E
     ], function (name) {
         echarts.util[name] = zrUtil[name];
     });
-    echarts.helper = require('./helper');
+    echarts.helper = require('./entity');
     // PRIORITY
     echarts.PRIORITY = {
         PROCESSOR: {
@@ -2013,7 +2013,7 @@ define('echarts/component/legend', ['require', './legend/LegendModel', './legend
     // Series Filter
     echarts.registerProcessor(require('./legend/legendFilter'));
 });
-define('echarts/scale/Time', ['require', 'zrender/core/util', '../util/number', '../util/format', './helper', './Interval'], function (require) {
+define('echarts/scale/Time', ['require', 'zrender/core/entity', '../entity/number', '../entity/format', './entity', './Interval'], function (require) {
     // [About UTC and local time zone]:
     // In most cases, `number.parseDate` will treat input data string as local time
     // (except time zone is specified in time string). And `format.formateTime` returns
@@ -2023,10 +2023,10 @@ define('echarts/scale/Time', ['require', 'zrender/core/util', '../util/number', 
     // in local time by default.
     // (2) By default, the input data string (e.g., '2011-01-02') should be displayed
     // as its original time, without any time difference.
-    var zrUtil = require('zrender/core/util');
-    var numberUtil = require('../util/number');
-    var formatUtil = require('../util/format');
-    var scaleHelper = require('./helper');
+    var zrUtil = require('zrender/core/entity');
+    var numberUtil = require('../entity/number');
+    var formatUtil = require('../entity/format');
+    var scaleHelper = require('./entity');
     var IntervalScale = require('./Interval');
     var intervalScaleProto = IntervalScale.prototype;
     var mathCeil = Math.ceil;
@@ -2262,10 +2262,10 @@ define('echarts/component/tooltip', ['require', './axisPointer', './tooltip/Tool
     }, function () {
     });
 });
-define('echarts/scale/Log', ['require', 'zrender/core/util', './Scale', '../util/number', './Interval'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/scale/Log', ['require', 'zrender/core/entity', './Scale', '../entity/number', './Interval'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var Scale = require('./Scale');
-    var numberUtil = require('../util/number');
+    var numberUtil = require('../entity/number');
     // Use some method of IntervalScale
     var IntervalScale = require('./Interval');
     var scaleProto = Scale.prototype;
@@ -2382,9 +2382,9 @@ define('zrender/vml/vml', ['require', './graphic', '../zrender', './Painter'], f
     require('./graphic');
     require('../zrender').registerPainter('vml', require('./Painter'));
 });
-define('echarts/util/layout', ['require', 'zrender/core/util', 'zrender/core/BoundingRect', './number', './format'], function (require) {
+define('echarts/util/layout', ['require', 'zrender/core/entity', 'zrender/core/BoundingRect', './number', './format'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var BoundingRect = require('zrender/core/BoundingRect');
     var numberUtil = require('./number');
     var formatUtil = require('./format');
@@ -2817,9 +2817,9 @@ define('echarts/util/layout', ['require', 'zrender/core/util', 'zrender/core/Bou
     };
     return layout;
 });
-define('echarts/util/graphic', ['require', 'zrender/core/util', 'zrender/tool/path', 'zrender/graphic/Path', 'zrender/tool/color', 'zrender/core/matrix', 'zrender/core/vector', 'zrender/mixin/Transformable', 'zrender/core/BoundingRect', 'zrender/container/Group', 'zrender/graphic/Image', 'zrender/graphic/Text', 'zrender/graphic/shape/Circle', 'zrender/graphic/shape/Sector', 'zrender/graphic/shape/Ring', 'zrender/graphic/shape/Polygon', 'zrender/graphic/shape/Polyline', 'zrender/graphic/shape/Rect', 'zrender/graphic/shape/Line', 'zrender/graphic/shape/BezierCurve', 'zrender/graphic/shape/Arc', 'zrender/graphic/CompoundPath', 'zrender/graphic/LinearGradient', 'zrender/graphic/RadialGradient'], function (require) {
+define('echarts/util/graphic', ['require', 'zrender/core/entity', 'zrender/tool/path', 'zrender/graphic/Path', 'zrender/tool/color', 'zrender/core/matrix', 'zrender/core/vector', 'zrender/mixin/Transformable', 'zrender/core/BoundingRect', 'zrender/container/Group', 'zrender/graphic/Image', 'zrender/graphic/Text', 'zrender/graphic/shape/Circle', 'zrender/graphic/shape/Sector', 'zrender/graphic/shape/Ring', 'zrender/graphic/shape/Polygon', 'zrender/graphic/shape/Polyline', 'zrender/graphic/shape/Rect', 'zrender/graphic/shape/Line', 'zrender/graphic/shape/BezierCurve', 'zrender/graphic/shape/Arc', 'zrender/graphic/CompoundPath', 'zrender/graphic/LinearGradient', 'zrender/graphic/RadialGradient'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var pathTool = require('zrender/tool/path');
     var Path = require('zrender/graphic/Path');
     var colorTool = require('zrender/tool/color');
@@ -3335,9 +3335,9 @@ define('echarts/util/graphic', ['require', 'zrender/core/util', 'zrender/tool/pa
     };
     return graphic;
 });
-define('echarts/action/createDataSelectAction', ['require', '../echarts', 'zrender/core/util'], function (require) {
+define('echarts/action/createDataSelectAction', ['require', '../echarts', 'zrender/core/entity'], function (require) {
     var echarts = require('../echarts');
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     return function (seriesType, actionInfos) {
         zrUtil.each(actionInfos, function (actionInfo) {
             actionInfo.update = 'updateView';
@@ -3371,13 +3371,13 @@ define('echarts/action/createDataSelectAction', ['require', '../echarts', 'zrend
         });
     };
 });
-define('echarts/chart/pie/PieSeries', ['require', '../../data/List', 'zrender/core/util', '../../util/model', '../../data/helper/completeDimensions', '../../component/helper/selectableMixin', '../../echarts'], function (require) {
+define('echarts/chart/pie/PieSeries', ['require', '../../data/List', 'zrender/core/entity', '../../entity/model', '../../data/entity/completeDimensions', '../../component/entity/selectableMixin', '../../echarts'], function (require) {
     'use strict';
     var List = require('../../data/List');
-    var zrUtil = require('zrender/core/util');
-    var modelUtil = require('../../util/model');
-    var completeDimensions = require('../../data/helper/completeDimensions');
-    var dataSelectableMixin = require('../../component/helper/selectableMixin');
+    var zrUtil = require('zrender/core/entity');
+    var modelUtil = require('../../entity/model');
+    var completeDimensions = require('../../data/entity/completeDimensions');
+    var dataSelectableMixin = require('../../component/entity/selectableMixin');
     var PieSeries = require('../../echarts').extendSeriesModel({
             type: 'series.pie',
             init: function (option) {
@@ -3471,9 +3471,9 @@ define('echarts/chart/pie/PieSeries', ['require', '../../data/List', 'zrender/co
     zrUtil.mixin(PieSeries, dataSelectableMixin);
     return PieSeries;
 });
-define('echarts/chart/pie/PieView', ['require', '../../util/graphic', 'zrender/core/util', '../../view/Chart'], function (require) {
-    var graphic = require('../../util/graphic');
-    var zrUtil = require('zrender/core/util');
+define('echarts/chart/pie/PieView', ['require', '../../entity/graphic', 'zrender/core/entity', '../../view/Chart'], function (require) {
+    var graphic = require('../../entity/graphic');
+    var zrUtil = require('zrender/core/entity');
     /**
      * @param {module:echarts/model/Series} seriesModel
      * @param {boolean} hasAnimation
@@ -3889,7 +3889,7 @@ define('zrender/core/util', ['require'], function (require) {
     var _ctx;
     function getContext() {
         if (!_ctx) {
-            // Use util.createCanvas instead of createCanvas
+            // Use entity.createCanvas instead of createCanvas
             // because createCanvas may be overwritten in different environment
             _ctx = util.createCanvas().getContext('2d');
         }
@@ -4297,11 +4297,11 @@ define('echarts/visual/dataColor', ['require'], function (require) {
         });
     };
 });
-define('echarts/chart/pie/pieLayout', ['require', '../../util/number', './labelLayout', 'zrender/core/util'], function (require) {
-    var numberUtil = require('../../util/number');
+define('echarts/chart/pie/pieLayout', ['require', '../../entity/number', './labelLayout', 'zrender/core/entity'], function (require) {
+    var numberUtil = require('../../entity/number');
     var parsePercent = numberUtil.parsePercent;
     var labelLayout = require('./labelLayout');
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var PI2 = Math.PI * 2;
     var RADIAN = Math.PI / 180;
     return function (seriesType, ecModel, api, payload) {
@@ -4450,10 +4450,10 @@ define('echarts/component/axis', ['require', '../coord/cartesian/AxisModel', './
     require('../coord/cartesian/AxisModel');
     require('./axis/CartesianAxisView');
 });
-define('echarts/coord/cartesian/Grid', ['require', 'exports', '../../util/layout', '../../coord/axisHelper', 'zrender/core/util', './Cartesian2D', './Axis2D', './GridModel', '../../CoordinateSystem'], function (require, factory) {
-    var layout = require('../../util/layout');
+define('echarts/coord/cartesian/Grid', ['require', 'exports', '../../entity/layout', '../../coord/axisHelper', 'zrender/core/entity', './Cartesian2D', './Axis2D', './GridModel', '../../CoordinateSystem'], function (require, factory) {
+    var layout = require('../../entity/layout');
     var axisHelper = require('../../coord/axisHelper');
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var Cartesian2D = require('./Cartesian2D');
     var Axis2D = require('./Axis2D');
     var each = zrUtil.each;
@@ -4938,9 +4938,9 @@ define('echarts/coord/cartesian/Grid', ['require', 'exports', '../../util/layout
     require('../../CoordinateSystem').register('cartesian2d', Grid);
     return Grid;
 });
-define('echarts/chart/line/LineSeries', ['require', '../helper/createListFromArray', '../../model/Series'], function (require) {
+define('echarts/chart/line/LineSeries', ['require', '../entity/createListFromArray', '../../model/Series'], function (require) {
     'use strict';
-    var createListFromArray = require('../helper/createListFromArray');
+    var createListFromArray = require('../entity/createListFromArray');
     var SeriesModel = require('../../model/Series');
     return SeriesModel.extend({
         type: 'series.line',
@@ -4987,14 +4987,14 @@ define('echarts/chart/line/LineSeries', ['require', '../helper/createListFromArr
         }
     });
 });
-define('echarts/chart/line/LineView', ['require', 'zrender/core/util', '../helper/SymbolDraw', '../helper/Symbol', './lineAnimationDiff', '../../util/graphic', '../../util/model', './poly', '../../view/Chart'], function (require) {
+define('echarts/chart/line/LineView', ['require', 'zrender/core/entity', '../entity/SymbolDraw', '../entity/Symbol', './lineAnimationDiff', '../../entity/graphic', '../../entity/model', './poly', '../../view/Chart'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
-    var SymbolDraw = require('../helper/SymbolDraw');
-    var Symbol = require('../helper/Symbol');
+    var zrUtil = require('zrender/core/entity');
+    var SymbolDraw = require('../entity/SymbolDraw');
+    var Symbol = require('../entity/Symbol');
     var lineAnimationDiff = require('./lineAnimationDiff');
-    var graphic = require('../../util/graphic');
-    var modelUtil = require('../../util/model');
+    var graphic = require('../../entity/graphic');
+    var modelUtil = require('../../entity/model');
     var polyHelper = require('./poly');
     var ChartView = require('../../view/Chart');
     function isPointsSame(points1, points2) {
@@ -5675,11 +5675,11 @@ define('echarts/processor/dataSample', [], function () {
         }, this);
     };
 });
-define('echarts/chart/bar/BarView', ['require', 'zrender/core/util', '../../util/graphic', './helper', '../../model/Model', './barItemStyle', '../../echarts'], function (require) {
+define('echarts/chart/bar/BarView', ['require', 'zrender/core/entity', '../../entity/graphic', './entity', '../../model/Model', './barItemStyle', '../../echarts'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
-    var graphic = require('../../util/graphic');
-    var helper = require('./helper');
+    var zrUtil = require('zrender/core/entity');
+    var graphic = require('../../entity/graphic');
+    var helper = require('./entity');
     var BAR_BORDER_WIDTH_QUERY = [
             'itemStyle',
             'normal',
@@ -5861,10 +5861,10 @@ define('echarts/chart/bar/BarView', ['require', 'zrender/core/util', '../../util
     }
     return BarView;
 });
-define('echarts/layout/barGrid', ['require', 'zrender/core/util', '../util/number'], function (require) {
+define('echarts/layout/barGrid', ['require', 'zrender/core/entity', '../entity/number'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
-    var numberUtil = require('../util/number');
+    var zrUtil = require('zrender/core/entity');
+    var numberUtil = require('../entity/number');
     var parsePercent = numberUtil.parsePercent;
     var STACK_PREFIX = '__ec_stack_';
     function getSeriesStackId(seriesModel) {
@@ -6207,7 +6207,7 @@ define('zrender/core/env', [], function () {
         };
     }
 });
-define('echarts/model/Global', ['require', 'zrender/core/util', '../util/model', './Model', './Component', './globalDefault', './mixin/colorPalette'], function (require) {
+define('echarts/model/Global', ['require', 'zrender/core/entity', '../entity/model', './Model', './Component', './globalDefault', './mixin/colorPalette'], function (require) {
     /**
      * Caution: If the mechanism should be changed some day, these cases
      * should be considered:
@@ -6220,8 +6220,8 @@ define('echarts/model/Global', ['require', 'zrender/core/util', '../util/model',
      * (3) `reset` feature (in toolbox). Find detailed info in comments about
      * `mergeOption` in module:echarts/model/OptionManager.
      */
-    var zrUtil = require('zrender/core/util');
-    var modelUtil = require('../util/model');
+    var zrUtil = require('zrender/core/entity');
+    var modelUtil = require('../entity/model');
     var Model = require('./Model');
     var each = zrUtil.each;
     var filter = zrUtil.filter;
@@ -6630,9 +6630,9 @@ define('echarts/model/Global', ['require', 'zrender/core/util', '../util/model',
     zrUtil.mixin(GlobalModel, require('./mixin/colorPalette'));
     return GlobalModel;
 });
-define('echarts/CoordinateSystem', ['require', 'zrender/core/util'], function (require) {
+define('echarts/CoordinateSystem', ['require', 'zrender/core/entity'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var coordinateSystemCreators = {};
     function CoordinateSystemManager() {
         this._coordinateSystems = [];
@@ -6665,9 +6665,9 @@ define('echarts/CoordinateSystem', ['require', 'zrender/core/util'], function (r
     };
     return CoordinateSystemManager;
 });
-define('echarts/ExtensionAPI', ['require', 'zrender/core/util'], function (require) {
+define('echarts/ExtensionAPI', ['require', 'zrender/core/entity'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var echartsAPIList = [
             'getDom',
             'getZr',
@@ -6693,9 +6693,9 @@ define('echarts/ExtensionAPI', ['require', 'zrender/core/util'], function (requi
     }
     return ExtensionAPI;
 });
-define('echarts/model/OptionManager', ['require', 'zrender/core/util', '../util/model', './Component'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var modelUtil = require('../util/model');
+define('echarts/model/OptionManager', ['require', 'zrender/core/entity', '../entity/model', './Component'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var modelUtil = require('../entity/model');
     var ComponentModel = require('./Component');
     var each = zrUtil.each;
     var clone = zrUtil.clone;
@@ -7023,13 +7023,13 @@ define('echarts/model/OptionManager', ['require', 'zrender/core/util', '../util/
     }
     return OptionManager;
 });
-define('echarts/model/Component', ['require', './Model', 'zrender/core/util', '../util/component', '../util/clazz', '../util/layout', './mixin/boxLayout'], function (require) {
+define('echarts/model/Component', ['require', './Model', 'zrender/core/entity', '../entity/component', '../entity/clazz', '../entity/layout', './mixin/boxLayout'], function (require) {
     var Model = require('./Model');
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var arrayPush = Array.prototype.push;
-    var componentUtil = require('../util/component');
-    var clazzUtil = require('../util/clazz');
-    var layout = require('../util/layout');
+    var componentUtil = require('../entity/component');
+    var clazzUtil = require('../entity/clazz');
+    var layout = require('../entity/layout');
     /**
      * @alias module:echarts/model/Component
      * @constructor
@@ -7131,16 +7131,16 @@ define('echarts/model/Component', ['require', './Model', 'zrender/core/util', '.
     zrUtil.mixin(ComponentModel, require('./mixin/boxLayout'));
     return ComponentModel;
 });
-define('echarts/model/Series', ['require', 'zrender/core/util', '../util/format', '../util/clazz', '../util/model', './Component', './mixin/colorPalette', 'zrender/core/env', '../util/layout'], function (require) {
+define('echarts/model/Series', ['require', 'zrender/core/entity', '../entity/format', '../entity/clazz', '../entity/model', './Component', './mixin/colorPalette', 'zrender/core/env', '../entity/layout'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
-    var formatUtil = require('../util/format');
-    var classUtil = require('../util/clazz');
-    var modelUtil = require('../util/model');
+    var zrUtil = require('zrender/core/entity');
+    var formatUtil = require('../entity/format');
+    var classUtil = require('../entity/clazz');
+    var modelUtil = require('../entity/model');
     var ComponentModel = require('./Component');
     var colorPaletteMixin = require('./mixin/colorPalette');
     var env = require('zrender/core/env');
-    var layout = require('../util/layout');
+    var layout = require('../entity/layout');
     var set = classUtil.set;
     var get = classUtil.get;
     var encodeHTML = formatUtil.encodeHTML;
@@ -7173,7 +7173,7 @@ define('echarts/model/Series', ['require', 'zrender/core/util', '../util/format'
                 // dataBeforeProcessed by cloneShallow), cloneShallow will
                 // cause data.graph.data !== data when using
                 // module:echarts/data/Graph or module:echarts/data/Tree.
-                // See module:echarts/data/helper/linkList
+                // See module:echarts/data/entity/linkList
                 this.restoreData();
             },
             mergeDefaultAndTheme: function (option, ecModel) {
@@ -7310,10 +7310,10 @@ define('echarts/model/Series', ['require', 'zrender/core/util', '../util/format'
     zrUtil.mixin(SeriesModel, colorPaletteMixin);
     return SeriesModel;
 });
-define('echarts/view/Component', ['require', 'zrender/container/Group', '../util/component', '../util/clazz'], function (require) {
+define('echarts/view/Component', ['require', 'zrender/container/Group', '../entity/component', '../entity/clazz'], function (require) {
     var Group = require('zrender/container/Group');
-    var componentUtil = require('../util/component');
-    var clazzUtil = require('../util/clazz');
+    var componentUtil = require('../entity/component');
+    var clazzUtil = require('../entity/clazz');
     var Component = function () {
         /**
          * @type {module:zrender/container/Group}
@@ -7344,12 +7344,12 @@ define('echarts/view/Component', ['require', 'zrender/container/Group', '../util
     clazzUtil.enableClassManagement(Component, { registerWhenExtend: true });
     return Component;
 });
-define('echarts/view/Chart', ['require', 'zrender/container/Group', '../util/component', '../util/clazz', '../util/model', 'zrender/core/util'], function (require) {
+define('echarts/view/Chart', ['require', 'zrender/container/Group', '../entity/component', '../entity/clazz', '../entity/model', 'zrender/core/entity'], function (require) {
     var Group = require('zrender/container/Group');
-    var componentUtil = require('../util/component');
-    var clazzUtil = require('../util/clazz');
-    var modelUtil = require('../util/model');
-    var zrUtil = require('zrender/core/util');
+    var componentUtil = require('../entity/component');
+    var clazzUtil = require('../entity/clazz');
+    var modelUtil = require('../entity/model');
+    var zrUtil = require('zrender/core/entity');
     function Chart() {
         /**
          * @type {module:zrender/container/Group}
@@ -7429,11 +7429,11 @@ define('echarts/view/Chart', ['require', 'zrender/container/Group', '../util/com
     clazzUtil.enableClassManagement(Chart, { registerWhenExtend: true });
     return Chart;
 });
-define('echarts/util/model', ['require', './format', './number', '../model/Model', 'zrender/core/util'], function (require) {
+define('echarts/util/model', ['require', './format', './number', '../model/Model', 'zrender/core/entity'], function (require) {
     var formatUtil = require('./format');
     var nubmerUtil = require('./number');
     var Model = require('../model/Model');
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var each = zrUtil.each;
     var isObject = zrUtil.isObject;
     var modelUtil = {};
@@ -7486,7 +7486,7 @@ define('echarts/util/model', ['require', './format', './number', '../model/Model
     ];
     /**
      * data could be [12, 2323, {value: 223}, [1221, 23], {value: [2, 23]}]
-     * This helper method retieves value from data.
+     * This entity method retieves value from data.
      * @param {string|number|Date|Array|Object} dataItem
      * @return {number|string|Date|Array.<number|string|Date>}
      */
@@ -7496,7 +7496,7 @@ define('echarts/util/model', ['require', './format', './number', '../model/Model
     };
     /**
      * data could be [12, 2323, {value: 223}, [1221, 23], {value: [2, 23]}]
-     * This helper method determine if dataItem has extra option besides value
+     * This entity method determine if dataItem has extra option besides value
      * @param {string|number|Date|Array|Object} dataItem
      */
     modelUtil.isDataItemOption = function (dataItem) {
@@ -7504,7 +7504,7 @@ define('echarts/util/model', ['require', './format', './number', '../model/Model
                                                                       // && !(dataItem[0] && isObject(dataItem[0]) && !(dataItem[0] instanceof Array));
     };
     /**
-     * This helper method convert value in data.
+     * This entity method convert value in data.
      * @param {string|number|Date} value
      * @param {Object|string} [dimInfo] If string (like 'x'), dimType defaults 'number'.
      */
@@ -7734,7 +7734,7 @@ define('echarts/util/model', ['require', './format', './number', '../model/Model
         return isObject(cptOption) && cptOption.id && (cptOption.id + '').indexOf(' _ec_ ') === 0;
     };
     /**
-     * A helper for removing duplicate items between batchA and batchB,
+     * A entity for removing duplicate items between batchA and batchB,
      * and in themselves, and categorize by series.
      *
      * @param {Array.<Object>} batchA Like: [{seriesId: 2, dataIndex: [32, 4, 5]}, ...]
@@ -8078,10 +8078,10 @@ define('echarts/util/throttle', [], function () {
     };
     return lib;
 });
-define('zrender/zrender', ['require', './core/guid', './core/env', './core/util', './Handler', './Storage', './animation/Animation', './dom/HandlerProxy', './Painter'], function (require) {
+define('zrender/zrender', ['require', './core/guid', './core/env', './core/entity', './Handler', './Storage', './animation/Animation', './dom/HandlerProxy', './Painter'], function (require) {
     var guid = require('./core/guid');
     var env = require('./core/env');
-    var zrUtil = require('./core/util');
+    var zrUtil = require('./core/entity');
     var Handler = require('./Handler');
     var Storage = require('./Storage');
     var Animation = require('./animation/Animation');
@@ -10371,9 +10371,9 @@ define('zrender/tool/color', ['require', '../core/LRU'], function (require) {
         stringify: stringify
     };
 });
-define('echarts/loading/default', ['require', '../util/graphic', 'zrender/core/util'], function (require) {
-    var graphic = require('../util/graphic');
-    var zrUtil = require('zrender/core/util');
+define('echarts/loading/default', ['require', '../entity/graphic', 'zrender/core/entity'], function (require) {
+    var graphic = require('../entity/graphic');
+    var zrUtil = require('zrender/core/entity');
     var PI = Math.PI;
     /**
      * @param {module:echarts/ExtensionAPI} api
@@ -10454,9 +10454,9 @@ define('echarts/loading/default', ['require', '../util/graphic', 'zrender/core/u
         return group;
     };
 });
-define('echarts/preprocessor/backwardCompat', ['require', 'zrender/core/util', './helper/compatStyle'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var compatStyle = require('./helper/compatStyle');
+define('echarts/preprocessor/backwardCompat', ['require', 'zrender/core/entity', './entity/compatStyle'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var compatStyle = require('./entity/compatStyle');
     function get(opt, path) {
         path = path.split(',');
         var obj = opt;
@@ -10580,9 +10580,9 @@ define('echarts/preprocessor/backwardCompat', ['require', 'zrender/core/util', '
         });
     };
 });
-define('echarts/model/Model', ['require', 'zrender/core/util', '../util/clazz', 'zrender/core/env', './mixin/lineStyle', './mixin/areaStyle', './mixin/textStyle', './mixin/itemStyle'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var clazzUtil = require('../util/clazz');
+define('echarts/model/Model', ['require', 'zrender/core/entity', '../entity/clazz', 'zrender/core/env', './mixin/lineStyle', './mixin/areaStyle', './mixin/textStyle', './mixin/itemStyle'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var clazzUtil = require('../entity/clazz');
     var env = require('zrender/core/env');
     /**
      * @alias module:echarts/model/Model
@@ -10704,10 +10704,10 @@ define('echarts/model/Model', ['require', 'zrender/core/util', '../util/clazz', 
     mixin(Model, require('./mixin/itemStyle'));
     return Model;
 });
-define('echarts/coord/Axis', ['require', '../util/number', 'zrender/core/util', './axisHelper'], function (require) {
-    var numberUtil = require('../util/number');
+define('echarts/coord/Axis', ['require', '../entity/number', 'zrender/core/entity', './axisHelper'], function (require) {
+    var numberUtil = require('../entity/number');
     var linearMap = numberUtil.linearMap;
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var axisHelper = require('./axisHelper');
     function fixExtentWithBands(extent, nTick) {
         var size = extent[1] - extent[0];
@@ -10885,7 +10885,7 @@ define('echarts/util/number', ['require'], function (require) {
         }
         // Avoid accuracy problem in edge, such as
         // 146.39 - 62.83 === 83.55999999999999.
-        // See echarts/test/ut/spec/util/number.js#linearMap#accuracyError
+        // See echarts/test/ut/spec/entity/number.js#linearMap#accuracyError
         // It is a little verbose for efficiency considering this method
         // is a hotspot.
         if (clamp) {
@@ -11315,8 +11315,8 @@ define('zrender/core/matrix', [], function () {
         };
     return matrix;
 });
-define('echarts/util/format', ['require', 'zrender/core/util', './number', 'zrender/contain/text'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/util/format', ['require', 'zrender/core/entity', './number', 'zrender/contain/text'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var numberUtil = require('./number');
     var textContain = require('zrender/contain/text');
     var formatUtil = {};
@@ -11462,7 +11462,7 @@ define('echarts/util/format', ['require', 'zrender/core/util', './number', 'zren
      * @param {number} value
      * @param {boolean} [isUTC=false] Default in local time.
      *           see `module:echarts/scale/Time`
-     *           and `module:echarts/util/number#parseDate`.
+     *           and `module:echarts/entity/number#parseDate`.
      * @inner
      */
     formatUtil.formatTime = function (tpl, value, isUTC) {
@@ -11491,7 +11491,7 @@ define('echarts/util/format', ['require', 'zrender/core/util', './number', 'zren
     formatUtil.truncateText = textContain.truncateText;
     return formatUtil;
 });
-define('echarts/data/List', ['require', '../model/Model', './DataDiffer', 'zrender/core/util', '../util/model'], function (require) {
+define('echarts/data/List', ['require', '../model/Model', './DataDiffer', 'zrender/core/entity', '../entity/model'], function (require) {
     var UNDEFINED = 'undefined';
     var globalObj = typeof window === 'undefined' ? global : window;
     var Float64Array = typeof globalObj.Float64Array === UNDEFINED ? Array : globalObj.Float64Array;
@@ -11505,8 +11505,8 @@ define('echarts/data/List', ['require', '../model/Model', './DataDiffer', 'zrend
         };
     var Model = require('../model/Model');
     var DataDiffer = require('./DataDiffer');
-    var zrUtil = require('zrender/core/util');
-    var modelUtil = require('../util/model');
+    var zrUtil = require('zrender/core/entity');
+    var modelUtil = require('../entity/model');
     var isObject = zrUtil.isObject;
     var TRANSFERABLE_PROPERTIES = [
             'stackedOn',
@@ -12387,7 +12387,7 @@ define('echarts/data/List', ['require', '../model/Model', './DataDiffer', 'zrend
         var itemVisual = this._itemVisuals[idx];
         var val = itemVisual && itemVisual[key];
         if (val == null && !ignoreParent) {
-            // Use global visual property
+            // Use globalUtil visual property
             return this.getVisual(key);
         }
         return val;
@@ -12640,19 +12640,19 @@ define('zrender/core/vector', [], function () {
     vector.distSquare = vector.distanceSquare;
     return vector;
 });
-define('echarts/helper', ['require', './chart/helper/createListFromArray', './util/symbol', './coord/axisHelper', './coord/axisModelCommonMixin', './model/Model', 'zrender/core/util', './data/helper/completeDimensions'], function (require) {
-    var createListFromArray = require('./chart/helper/createListFromArray');
-    var symbolUtil = require('./util/symbol');
+define('echarts/helper', ['require', './chart/entity/createListFromArray', './entity/symbol', './coord/axisHelper', './coord/axisModelCommonMixin', './model/Model', 'zrender/core/entity', './data/entity/completeDimensions'], function (require) {
+    var createListFromArray = require('./chart/entity/createListFromArray');
+    var symbolUtil = require('./entity/symbol');
     var axisHelper = require('./coord/axisHelper');
     var axisModelCommonMixin = require('./coord/axisModelCommonMixin');
     var Model = require('./model/Model');
-    var util = require('zrender/core/util');
+    var util = require('zrender/core/entity');
     return {
         createList: function (seriesModel) {
             var data = seriesModel.get('data');
             return createListFromArray(data, seriesModel, seriesModel.ecModel);
         },
-        completeDimensions: require('./data/helper/completeDimensions'),
+        completeDimensions: require('./data/entity/completeDimensions'),
         createSymbol: symbolUtil.createSymbol,
         createScale: function (dataExtent, option) {
             var axisModel = option;
@@ -12670,9 +12670,9 @@ define('echarts/helper', ['require', './chart/helper/createListFromArray', './ut
         }
     };
 });
-define('echarts/component/legend/LegendModel', ['require', 'zrender/core/util', '../../model/Model', '../../echarts'], function (require) {
+define('echarts/component/legend/LegendModel', ['require', 'zrender/core/entity', '../../model/Model', '../../echarts'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var Model = require('../../model/Model');
     var LegendModel = require('../../echarts').extendComponentModel({
             type: 'legend',
@@ -12786,9 +12786,9 @@ define('echarts/component/legend/LegendModel', ['require', 'zrender/core/util', 
         });
     return LegendModel;
 });
-define('echarts/component/legend/legendAction', ['require', '../../echarts', 'zrender/core/util'], function (require) {
+define('echarts/component/legend/legendAction', ['require', '../../echarts', 'zrender/core/entity'], function (require) {
     var echarts = require('../../echarts');
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     function legendSelectActionHandler(methodName, payload, ecModel) {
         var selectedMap = {};
         var isToggleSelect = methodName === 'toggleSelected';
@@ -12867,11 +12867,11 @@ define('echarts/component/legend/legendFilter', [], function () {
         }
     };
 });
-define('echarts/component/legend/LegendView', ['require', 'zrender/core/util', '../../util/symbol', '../../util/graphic', '../helper/listComponent', '../../echarts'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var symbolCreator = require('../../util/symbol');
-    var graphic = require('../../util/graphic');
-    var listComponentHelper = require('../helper/listComponent');
+define('echarts/component/legend/LegendView', ['require', 'zrender/core/entity', '../../entity/symbol', '../../entity/graphic', '../entity/listComponent', '../../echarts'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var symbolCreator = require('../../entity/symbol');
+    var graphic = require('../../entity/graphic');
+    var listComponentHelper = require('../entity/listComponent');
     var curry = zrUtil.curry;
     function dispatchSelectAction(name, api) {
         api.dispatchAction({
@@ -13050,8 +13050,8 @@ define('echarts/component/legend/LegendView', ['require', 'zrender/core/util', '
         }
     });
 });
-define('echarts/scale/helper', ['require', '../util/number'], function (require) {
-    var numberUtil = require('../util/number');
+define('echarts/scale/helper', ['require', '../entity/number'], function (require) {
+    var numberUtil = require('../entity/number');
     var roundNumber = numberUtil.round;
     var helper = {};
     /**
@@ -13125,11 +13125,11 @@ define('echarts/scale/helper', ['require', '../util/number'], function (require)
     };
     return helper;
 });
-define('echarts/scale/Interval', ['require', '../util/number', '../util/format', './Scale', './helper'], function (require) {
-    var numberUtil = require('../util/number');
-    var formatUtil = require('../util/format');
+define('echarts/scale/Interval', ['require', '../entity/number', '../entity/format', './Scale', './entity'], function (require) {
+    var numberUtil = require('../entity/number');
+    var formatUtil = require('../entity/format');
     var Scale = require('./Scale');
-    var helper = require('./helper');
+    var helper = require('./entity');
     var roundNumber = numberUtil.round;
     /**
      * @alias module:echarts/coord/scale/Interval
@@ -13257,11 +13257,11 @@ define('echarts/scale/Interval', ['require', '../util/number', '../util/format',
     };
     return IntervalScale;
 });
-define('echarts/component/axisPointer', ['require', '../echarts', './axisPointer/modelHelper', './axisPointer/axisTrigger', 'zrender/core/util', './axisPointer/AxisPointerModel', './axisPointer/AxisPointerView', './axisPointer/CartesianAxisPointer'], function (require) {
+define('echarts/component/axisPointer', ['require', '../echarts', './axisPointer/modelHelper', './axisPointer/axisTrigger', 'zrender/core/entity', './axisPointer/AxisPointerModel', './axisPointer/AxisPointerView', './axisPointer/CartesianAxisPointer'], function (require) {
     var echarts = require('../echarts');
     var axisPointerModelHelper = require('./axisPointer/modelHelper');
     var axisTrigger = require('./axisPointer/axisTrigger');
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     require('./axisPointer/AxisPointerModel');
     require('./axisPointer/AxisPointerView');
     // CartesianAxisPointer is not supposed to be required here. But consider
@@ -13269,7 +13269,7 @@ define('echarts/component/axisPointer', ['require', '../echarts', './axisPointer
     // CartesianAxisPointer should be able to required somewhere.
     require('./axisPointer/CartesianAxisPointer');
     echarts.registerPreprocessor(function (option) {
-        // Always has a global axisPointerModel for default setting.
+        // Always has a globalUtil axisPointerModel for default setting.
         if (option) {
             (!option.axisPointer || option.axisPointer.length === 0) && (option.axisPointer = {});
             var link = option.axisPointer.link;
@@ -13345,14 +13345,14 @@ define('echarts/component/tooltip/TooltipModel', ['require', '../../echarts'], f
         }
     });
 });
-define('echarts/component/tooltip/TooltipView', ['require', './TooltipContent', 'zrender/core/util', '../../util/format', '../../util/number', '../../util/graphic', '../axisPointer/findPointFromSeries', '../../util/layout', 'zrender/core/env', '../../model/Model', '../axisPointer/globalListener', '../../coord/axisHelper', '../axisPointer/viewHelper', '../../echarts'], function (require) {
+define('echarts/component/tooltip/TooltipView', ['require', './TooltipContent', 'zrender/core/entity', '../../entity/format', '../../entity/number', '../../entity/graphic', '../axisPointer/findPointFromSeries', '../../entity/layout', 'zrender/core/env', '../../model/Model', '../axisPointer/globalListener', '../../coord/axisHelper', '../axisPointer/viewHelper', '../../echarts'], function (require) {
     var TooltipContent = require('./TooltipContent');
-    var zrUtil = require('zrender/core/util');
-    var formatUtil = require('../../util/format');
-    var numberUtil = require('../../util/number');
-    var graphic = require('../../util/graphic');
+    var zrUtil = require('zrender/core/entity');
+    var formatUtil = require('../../entity/format');
+    var numberUtil = require('../../entity/number');
+    var graphic = require('../../entity/graphic');
     var findPointFromSeries = require('../axisPointer/findPointFromSeries');
-    var layoutUtil = require('../../util/layout');
+    var layoutUtil = require('../../entity/layout');
     var env = require('zrender/core/env');
     var Model = require('../../model/Model');
     var globalListener = require('../axisPointer/globalListener');
@@ -13941,8 +13941,8 @@ define('echarts/component/tooltip/TooltipView', ['require', './TooltipContent', 
         return align === 'center' || align === 'middle';
     }
 });
-define('echarts/scale/Scale', ['require', '../util/clazz'], function (require) {
-    var clazzUtil = require('../util/clazz');
+define('echarts/scale/Scale', ['require', '../entity/clazz'], function (require) {
+    var clazzUtil = require('../entity/clazz');
     /**
      * @param {Object} [setting]
      */
@@ -14565,9 +14565,9 @@ define('zrender/tool/path', ['require', '../graphic/Path', '../core/PathProxy', 
         }
     };
 });
-define('zrender/graphic/Path', ['require', './Displayable', '../core/util', '../core/PathProxy', '../contain/path', './Pattern'], function (require) {
+define('zrender/graphic/Path', ['require', './Displayable', '../core/entity', '../core/PathProxy', '../contain/path', './Pattern'], function (require) {
     var Displayable = require('./Displayable');
-    var zrUtil = require('../core/util');
+    var zrUtil = require('../core/entity');
     var PathProxy = require('../core/PathProxy');
     var pathContain = require('../contain/path');
     var Pattern = require('./Pattern');
@@ -15001,7 +15001,7 @@ define('zrender/mixin/Transformable', ['require', '../core/matrix', '../core/vec
         this.rotation = Math.atan2(-m[1] / sy, m[0] / sx);
     };
     /**
-     * Get global scale
+     * Get globalUtil scale
      * @return {Array.<number>}
      */
     transformableProto.getGlobalScale = function () {
@@ -15250,8 +15250,8 @@ define('zrender/core/BoundingRect', ['require', './vector', './matrix'], functio
     };
     return BoundingRect;
 });
-define('zrender/container/Group', ['require', '../core/util', '../Element', '../core/BoundingRect'], function (require) {
-    var zrUtil = require('../core/util');
+define('zrender/container/Group', ['require', '../core/entity', '../Element', '../core/BoundingRect'], function (require) {
+    var zrUtil = require('../core/entity');
     var Element = require('../Element');
     var BoundingRect = require('../core/BoundingRect');
     /**
@@ -15441,10 +15441,10 @@ define('zrender/container/Group', ['require', '../core/util', '../Element', '../
     zrUtil.inherits(Group, Element);
     return Group;
 });
-define('zrender/graphic/Image', ['require', './Displayable', '../core/BoundingRect', '../core/util', '../core/LRU'], function (require) {
+define('zrender/graphic/Image', ['require', './Displayable', '../core/BoundingRect', '../core/entity', '../core/LRU'], function (require) {
     var Displayable = require('./Displayable');
     var BoundingRect = require('../core/BoundingRect');
-    var zrUtil = require('../core/util');
+    var zrUtil = require('../core/entity');
     var LRU = require('../core/LRU');
     var globalImageCache = new LRU(50);
     /**
@@ -15474,7 +15474,7 @@ define('zrender/graphic/Image', ['require', './Displayable', '../core/BoundingRe
             }
             // FIXME Case create many images with src
             if (!image && src) {
-                // Try get from global image cache
+                // Try get from globalUtil image cache
                 var cachedImgObj = globalImageCache.get(src);
                 if (!cachedImgObj) {
                     // Create a new image
@@ -15562,9 +15562,9 @@ define('zrender/graphic/Image', ['require', './Displayable', '../core/BoundingRe
     zrUtil.inherits(ZImage, Displayable);
     return ZImage;
 });
-define('zrender/graphic/Text', ['require', './Displayable', '../core/util', '../contain/text'], function (require) {
+define('zrender/graphic/Text', ['require', './Displayable', '../core/entity', '../contain/text'], function (require) {
     var Displayable = require('./Displayable');
-    var zrUtil = require('../core/util');
+    var zrUtil = require('../core/entity');
     var textContain = require('../contain/text');
     /**
      * @alias zrender/graphic/Text
@@ -16690,8 +16690,8 @@ define('zrender/graphic/shape/Ring', ['require', '../Path'], function (require) 
         }
     });
 });
-define('zrender/graphic/shape/Polygon', ['require', '../helper/poly', '../Path'], function (require) {
-    var polyHelper = require('../helper/poly');
+define('zrender/graphic/shape/Polygon', ['require', '../entity/poly', '../Path'], function (require) {
+    var polyHelper = require('../entity/poly');
     return require('../Path').extend({
         type: 'polygon',
         shape: {
@@ -16704,8 +16704,8 @@ define('zrender/graphic/shape/Polygon', ['require', '../helper/poly', '../Path']
         }
     });
 });
-define('zrender/graphic/shape/Polyline', ['require', '../helper/poly', '../Path'], function (require) {
-    var polyHelper = require('../helper/poly');
+define('zrender/graphic/shape/Polyline', ['require', '../entity/poly', '../Path'], function (require) {
+    var polyHelper = require('../entity/poly');
     return require('../Path').extend({
         type: 'polyline',
         shape: {
@@ -16722,8 +16722,8 @@ define('zrender/graphic/shape/Polyline', ['require', '../helper/poly', '../Path'
         }
     });
 });
-define('zrender/graphic/shape/Rect', ['require', '../helper/roundRect', '../Path'], function (require) {
-    var roundRectHelper = require('../helper/roundRect');
+define('zrender/graphic/shape/Rect', ['require', '../entity/roundRect', '../Path'], function (require) {
+    var roundRectHelper = require('../entity/roundRect');
     return require('../Path').extend({
         type: 'rect',
         shape: {
@@ -16949,9 +16949,9 @@ define('zrender/graphic/CompoundPath', ['require', './Path'], function (require)
         }
     });
 });
-define('zrender/graphic/LinearGradient', ['require', '../core/util', './Gradient'], function (require) {
+define('zrender/graphic/LinearGradient', ['require', '../core/entity', './Gradient'], function (require) {
     'use strict';
-    var zrUtil = require('../core/util');
+    var zrUtil = require('../core/entity');
     var Gradient = require('./Gradient');
     /**
      * x, y, x2, y2 are all percent from 0 to 1
@@ -16972,7 +16972,7 @@ define('zrender/graphic/LinearGradient', ['require', '../core/util', './Gradient
         this.y2 = y2 == null ? 0 : y2;
         // Can be cloned
         this.type = 'linear';
-        // If use global coord
+        // If use globalUtil coord
         this.global = globalCoord || false;
         Gradient.call(this, colorStops);
     };
@@ -16980,9 +16980,9 @@ define('zrender/graphic/LinearGradient', ['require', '../core/util', './Gradient
     zrUtil.inherits(LinearGradient, Gradient);
     return LinearGradient;
 });
-define('echarts/coord/cartesian/Cartesian2D', ['require', 'zrender/core/util', './Cartesian'], function (require) {
+define('echarts/coord/cartesian/Cartesian2D', ['require', 'zrender/core/entity', './Cartesian'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var Cartesian = require('./Cartesian');
     function Cartesian2D(name) {
         Cartesian.call(this, name);
@@ -17039,9 +17039,9 @@ define('echarts/coord/cartesian/Cartesian2D', ['require', 'zrender/core/util', '
     zrUtil.inherits(Cartesian2D, Cartesian);
     return Cartesian2D;
 });
-define('zrender/graphic/RadialGradient', ['require', '../core/util', './Gradient'], function (require) {
+define('zrender/graphic/RadialGradient', ['require', '../core/entity', './Gradient'], function (require) {
     'use strict';
-    var zrUtil = require('../core/util');
+    var zrUtil = require('../core/entity');
     var Gradient = require('./Gradient');
     /**
      * x, y, r are all percent from 0 to 1
@@ -17060,7 +17060,7 @@ define('zrender/graphic/RadialGradient', ['require', '../core/util', './Gradient
         this.r = r == null ? 0.5 : r;
         // Can be cloned
         this.type = 'radial';
-        // If use global coord
+        // If use globalUtil coord
         this.global = globalCoord || false;
         Gradient.call(this, colorStops);
     };
@@ -17068,14 +17068,14 @@ define('zrender/graphic/RadialGradient', ['require', '../core/util', './Gradient
     zrUtil.inherits(RadialGradient, Gradient);
     return RadialGradient;
 });
-define('echarts/coord/axisHelper', ['require', '../scale/Ordinal', '../scale/Interval', '../scale/Time', '../scale/Log', '../scale/Scale', '../util/number', 'zrender/core/util', 'zrender/contain/text'], function (require) {
+define('echarts/coord/axisHelper', ['require', '../scale/Ordinal', '../scale/Interval', '../scale/Time', '../scale/Log', '../scale/Scale', '../entity/number', 'zrender/core/entity', 'zrender/contain/text'], function (require) {
     var OrdinalScale = require('../scale/Ordinal');
     var IntervalScale = require('../scale/Interval');
     require('../scale/Time');
     require('../scale/Log');
     var Scale = require('../scale/Scale');
-    var numberUtil = require('../util/number');
-    var zrUtil = require('zrender/core/util');
+    var numberUtil = require('../entity/number');
+    var zrUtil = require('zrender/core/entity');
     var textContain = require('zrender/contain/text');
     var axisHelper = {};
     /**
@@ -17290,8 +17290,8 @@ define('echarts/coord/axisHelper', ['require', '../scale/Ordinal', '../scale/Int
     };
     return axisHelper;
 });
-define('echarts/coord/cartesian/Axis2D', ['require', 'zrender/core/util', '../Axis'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/coord/cartesian/Axis2D', ['require', 'zrender/core/entity', '../Axis'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var Axis = require('../Axis');
     /**
      * Extend axis 2d
@@ -17357,8 +17357,8 @@ define('echarts/coord/cartesian/Axis2D', ['require', 'zrender/core/util', '../Ax
     zrUtil.inherits(Axis2D, Axis);
     return Axis2D;
 });
-define('echarts/model/mixin/colorPalette', ['require', '../../util/clazz'], function (require) {
-    var classUtil = require('../../util/clazz');
+define('echarts/model/mixin/colorPalette', ['require', '../../entity/clazz'], function (require) {
+    var classUtil = require('../../entity/clazz');
     var set = classUtil.set;
     var get = classUtil.get;
     return {
@@ -17453,8 +17453,8 @@ define('echarts/model/globalDefault', [], function () {
         useUTC: false
     };
 });
-define('echarts/util/clazz', ['require', 'zrender/core/util'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/util/clazz', ['require', 'zrender/core/entity'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var clazz = {};
     var TYPE_DELIMITER = '.';
     var IS_CONTAINER = '___EC__COMPONENT__CONTAINER___';
@@ -17658,11 +17658,11 @@ define('echarts/util/clazz', ['require', 'zrender/core/util'], function (require
     };
     return clazz;
 });
-define('zrender/contain/text', ['require', '../core/util', '../core/BoundingRect'], function (require) {
+define('zrender/contain/text', ['require', '../core/entity', '../core/BoundingRect'], function (require) {
     var textWidthCache = {};
     var textWidthCacheCounter = 0;
     var TEXT_CACHE_MAX = 5000;
-    var util = require('../core/util');
+    var util = require('../core/entity');
     var BoundingRect = require('../core/BoundingRect');
     var retrieve = util.retrieve;
     function getTextWidth(text, textFont) {
@@ -17941,9 +17941,9 @@ define('echarts/model/mixin/areaStyle', ['require', './makeStyleMapper'], functi
         ])
     };
 });
-define('echarts/model/mixin/textStyle', ['require', 'zrender/contain/text', '../../util/graphic'], function (require) {
+define('echarts/model/mixin/textStyle', ['require', 'zrender/contain/text', '../../entity/graphic'], function (require) {
     var textContain = require('zrender/contain/text');
-    var graphicUtil = require('../../util/graphic');
+    var graphicUtil = require('../../entity/graphic');
     return {
         getTextColor: function () {
             var ecModel = this.ecModel;
@@ -18006,8 +18006,8 @@ define('echarts/model/mixin/itemStyle', ['require', './makeStyleMapper'], functi
         }
     };
 });
-define('echarts/component/axisPointer/modelHelper', ['require', 'zrender/core/util', '../../model/Model'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/component/axisPointer/modelHelper', ['require', 'zrender/core/entity', '../../model/Model'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var Model = require('../../model/Model');
     var each = zrUtil.each;
     var curry = zrUtil.curry;
@@ -18029,7 +18029,7 @@ define('echarts/component/axisPointer/modelHelper', ['require', 'zrender/core/ut
     function collectAxesInfo(result, ecModel, api) {
         var globalTooltipModel = ecModel.getComponent('tooltip');
         var globalAxisPointerModel = ecModel.getComponent('axisPointer');
-        // links can only be set on global.
+        // links can only be set on globalUtil.
         var linksOption = globalAxisPointerModel.get('link', true) || [];
         var linkGroups = [];
         // Collect axes info.
@@ -18240,9 +18240,9 @@ define('echarts/component/axisPointer/modelHelper', ['require', 'zrender/core/ut
         };
     return helper;
 });
-define('echarts/component/axisPointer/axisTrigger', ['require', 'zrender/core/util', '../../util/model', './modelHelper', './findPointFromSeries'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var modelUtil = require('../../util/model');
+define('echarts/component/axisPointer/axisTrigger', ['require', 'zrender/core/entity', '../../entity/model', './modelHelper', './findPointFromSeries'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var modelUtil = require('../../entity/model');
     var modelHelper = require('./modelHelper');
     var findPointFromSeries = require('./findPointFromSeries');
     var each = zrUtil.each;
@@ -18632,7 +18632,7 @@ define('echarts/component/axisPointer/AxisPointerView', ['require', './globalLis
             render: function (globalAxisPointerModel, ecModel, api) {
                 var globalTooltipModel = ecModel.getComponent('tooltip');
                 var triggerOn = globalAxisPointerModel.get('triggerOn') || (globalTooltipModel && globalTooltipModel.get('triggerOn') || 'mousemove|click');
-                // Register global listener in AxisPointerView to enable
+                // Register globalUtil listener in AxisPointerView to enable
                 // AxisPointerView to be independent to Tooltip.
                 globalListener.register('axisPointer', api, function (currTrigger, e, dispatchAction) {
                     // If 'none', it is not controlled by mouse totally.
@@ -18656,9 +18656,9 @@ define('echarts/component/axisPointer/AxisPointerView', ['require', './globalLis
             }
         });
 });
-define('echarts/component/axisPointer/CartesianAxisPointer', ['require', '../../util/graphic', './BaseAxisPointer', './viewHelper', '../axis/cartesianAxisHelper', '../axis/AxisView'], function (require) {
+define('echarts/component/axisPointer/CartesianAxisPointer', ['require', '../../entity/graphic', './BaseAxisPointer', './viewHelper', '../axis/cartesianAxisHelper', '../axis/AxisView'], function (require) {
     'use strict';
-    var graphic = require('../../util/graphic');
+    var graphic = require('../../entity/graphic');
     var BaseAxisPointer = require('./BaseAxisPointer');
     var viewHelper = require('./viewHelper');
     var cartesianAxisHelper = require('../axis/cartesianAxisHelper');
@@ -18854,8 +18854,8 @@ define('zrender/tool/transformPath', ['require', '../core/PathProxy', '../core/v
     }
     return transformPath;
 });
-define('zrender/graphic/Displayable', ['require', '../core/util', './Style', '../Element', './mixin/RectText'], function (require) {
-    var zrUtil = require('../core/util');
+define('zrender/graphic/Displayable', ['require', '../core/entity', './Style', '../Element', './mixin/RectText'], function (require) {
+    var zrUtil = require('../core/entity');
     var Style = require('./Style');
     var Element = require('../Element');
     var RectText = require('./mixin/RectText');
@@ -18948,14 +18948,14 @@ define('zrender/graphic/Displayable', ['require', '../core/util', './Style', '..
     // zrUtil.mixin(Displayable, Stateful);
     return Displayable;
 });
-define('zrender/contain/path', ['require', '../core/PathProxy', './line', './cubic', './quadratic', './arc', './util', '../core/curve', './windingLine'], function (require) {
+define('zrender/contain/path', ['require', '../core/PathProxy', './line', './cubic', './quadratic', './arc', './entity', '../core/curve', './windingLine'], function (require) {
     'use strict';
     var CMD = require('../core/PathProxy').CMD;
     var line = require('./line');
     var cubic = require('./cubic');
     var quadratic = require('./quadratic');
     var arc = require('./arc');
-    var normalizeRadian = require('./util').normalizeRadian;
+    var normalizeRadian = require('./entity').normalizeRadian;
     var curve = require('../core/curve');
     var windingLine = require('./windingLine');
     var containStroke = line.containStroke;
@@ -20013,8 +20013,8 @@ define('zrender/vml/core', ['require', 'exports', 'module', '../core/env'], func
         };
     }
 });
-define('echarts/model/mixin/makeStyleMapper', ['require', 'zrender/core/util'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/model/mixin/makeStyleMapper', ['require', 'zrender/core/entity'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     return function (properties) {
         // Normalize
         for (var i = 0; i < properties.length; i++) {
@@ -20038,8 +20038,8 @@ define('echarts/model/mixin/makeStyleMapper', ['require', 'zrender/core/util'], 
         };
     };
 });
-define('echarts/scale/Ordinal', ['require', 'zrender/core/util', './Scale'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/scale/Ordinal', ['require', 'zrender/core/entity', './Scale'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var Scale = require('./Scale');
     var scaleProto = Scale.prototype;
     var OrdinalScale = Scale.extend({
@@ -20266,13 +20266,13 @@ define('zrender/graphic/Style', ['require'], function (require) {
     Style.getGradient = styleProto.getGradient;
     return Style;
 });
-define('zrender/Element', ['require', './core/guid', './mixin/Eventful', './mixin/Transformable', './mixin/Animatable', './core/util'], function (require) {
+define('zrender/Element', ['require', './core/guid', './mixin/Eventful', './mixin/Transformable', './mixin/Animatable', './core/entity'], function (require) {
     'use strict';
     var guid = require('./core/guid');
     var Eventful = require('./mixin/Eventful');
     var Transformable = require('./mixin/Transformable');
     var Animatable = require('./mixin/Animatable');
-    var zrUtil = require('./core/util');
+    var zrUtil = require('./core/entity');
     /**
      * @alias module:zrender/Element
      * @constructor
@@ -21094,9 +21094,9 @@ define('zrender/config', [], function () {
         };
     return config;
 });
-define('echarts/coord/cartesian/Cartesian', ['require', 'zrender/core/util'], function (require) {
+define('echarts/coord/cartesian/Cartesian', ['require', 'zrender/core/entity'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     function dimAxisMapper(dim) {
         return this._axes[dim];
     }
@@ -21151,10 +21151,10 @@ define('echarts/coord/cartesian/Cartesian', ['require', 'zrender/core/util'], fu
     };
     return Cartesian;
 });
-define('zrender/mixin/Animatable', ['require', '../animation/Animator', '../core/util', '../core/log'], function (require) {
+define('zrender/mixin/Animatable', ['require', '../animation/Animator', '../core/entity', '../core/log'], function (require) {
     'use strict';
     var Animator = require('../animation/Animator');
-    var util = require('../core/util');
+    var util = require('../core/entity');
     var isString = util.isString;
     var isFunction = util.isFunction;
     var isObject = util.isObject;
@@ -21311,10 +21311,10 @@ define('zrender/core/guid', [], function () {
         return idStart++;
     };
 });
-define('echarts/coord/cartesian/AxisModel', ['require', '../../model/Component', 'zrender/core/util', '../axisModelCreator', '../axisModelCommonMixin'], function (require) {
+define('echarts/coord/cartesian/AxisModel', ['require', '../../model/Component', 'zrender/core/entity', '../axisModelCreator', '../axisModelCommonMixin'], function (require) {
     'use strict';
     var ComponentModel = require('../../model/Component');
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var axisModelCreator = require('../axisModelCreator');
     var AxisModel = ComponentModel.extend({
             type: 'cartesian2dAxis',
@@ -21540,10 +21540,10 @@ define('zrender/core/log', ['require', '../config'], function (require) {
         };
         */
 });
-define('zrender/animation/Animator', ['require', './Clip', '../tool/color', '../core/util'], function (require) {
+define('zrender/animation/Animator', ['require', './Clip', '../tool/color', '../core/entity'], function (require) {
     var Clip = require('./Clip');
     var color = require('../tool/color');
-    var util = require('../core/util');
+    var util = require('../core/entity');
     var isArrayLike = util.isArrayLike;
     var arraySlice = Array.prototype.slice;
     function defaultGetter(target, key) {
@@ -22044,8 +22044,8 @@ define('zrender/animation/Animator', ['require', './Clip', '../tool/color', '../
     };
     return Animator;
 });
-define('echarts/util/component', ['require', 'zrender/core/util', './clazz'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/util/component', ['require', 'zrender/core/entity', './clazz'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var clazz = require('./clazz');
     var parseClassType = clazz.parseClassType;
     var base = 0;
@@ -22213,8 +22213,8 @@ define('echarts/model/mixin/boxLayout', ['require'], function (require) {
         }
     };
 });
-define('echarts/coord/axisModelCommonMixin', ['require', 'zrender/core/util', './axisHelper'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/coord/axisModelCommonMixin', ['require', 'zrender/core/entity', './axisHelper'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var axisHelper = require('./axisHelper');
     function getName(obj) {
         if (zrUtil.isObject(obj) && obj.value != null) {
@@ -22261,11 +22261,11 @@ define('echarts/coord/axisModelCommonMixin', ['require', 'zrender/core/util', '.
         }
     };
 });
-define('echarts/coord/axisModelCreator', ['require', './axisDefault', 'zrender/core/util', '../model/Component', '../util/layout'], function (require) {
+define('echarts/coord/axisModelCreator', ['require', './axisDefault', 'zrender/core/entity', '../model/Component', '../entity/layout'], function (require) {
     var axisDefault = require('./axisDefault');
-    var zrUtil = require('zrender/core/util');
+    var zrUtil = require('zrender/core/entity');
     var ComponentModel = require('../model/Component');
-    var layout = require('../util/layout');
+    var layout = require('../entity/layout');
     // FIXME axisType is fixed ?
     var AXIS_TYPES = [
             'value',
@@ -22645,8 +22645,8 @@ define('zrender/contain/util', ['require'], function (require) {
         }
     };
 });
-define('zrender/contain/arc', ['require', './util'], function (require) {
-    var normalizeRadian = require('./util').normalizeRadian;
+define('zrender/contain/arc', ['require', './entity'], function (require) {
+    var normalizeRadian = require('./entity').normalizeRadian;
     var PI2 = Math.PI * 2;
     return {
         containStroke: function (cx, cy, r, startAngle, endAngle, anticlockwise, lineWidth, x, y) {
@@ -22700,9 +22700,9 @@ define('zrender/contain/cubic', ['require', '../core/curve'], function (require)
         }
     };
 });
-define('zrender/Storage', ['require', './core/util', './core/env', './container/Group', './core/timsort'], function (require) {
+define('zrender/Storage', ['require', './core/entity', './core/env', './container/Group', './core/timsort'], function (require) {
     'use strict';
-    var util = require('./core/util');
+    var util = require('./core/entity');
     var env = require('./core/env');
     var Group = require('./container/Group');
     // Use timsort because in most case elements are partially sorted
@@ -22865,9 +22865,9 @@ define('zrender/Storage', ['require', './core/util', './core/env', './container/
     };
     return Storage;
 });
-define('zrender/Handler', ['require', './core/util', './mixin/Draggable', './mixin/Eventful'], function (require) {
+define('zrender/Handler', ['require', './core/entity', './mixin/Draggable', './mixin/Eventful'], function (require) {
     'use strict';
-    var util = require('./core/util');
+    var util = require('./core/entity');
     var Draggable = require('./mixin/Draggable');
     var Eventful = require('./mixin/Eventful');
     var SILENT = 'silent';
@@ -23127,9 +23127,9 @@ define('zrender/graphic/helper/poly', ['require', './smoothSpline', './smoothBez
         }
     };
 });
-define('zrender/dom/HandlerProxy', ['require', '../core/event', '../core/util', '../mixin/Eventful', '../core/env', '../core/GestureMgr'], function (require) {
+define('zrender/dom/HandlerProxy', ['require', '../core/event', '../core/entity', '../mixin/Eventful', '../core/env', '../core/GestureMgr'], function (require) {
     var eventTool = require('../core/event');
-    var zrUtil = require('../core/util');
+    var zrUtil = require('../core/entity');
     var Eventful = require('../mixin/Eventful');
     var env = require('../core/env');
     var GestureMgr = require('../core/GestureMgr');
@@ -23418,9 +23418,9 @@ define('zrender/dom/HandlerProxy', ['require', '../core/event', '../core/util', 
     zrUtil.mixin(HandlerDomProxy, Eventful);
     return HandlerDomProxy;
 });
-define('zrender/animation/Animation', ['require', '../core/util', '../core/event', './requestAnimationFrame', './Animator'], function (require) {
+define('zrender/animation/Animation', ['require', '../core/entity', '../core/event', './requestAnimationFrame', './Animator'], function (require) {
     'use strict';
-    var util = require('../core/util');
+    var util = require('../core/entity');
     var Dispatcher = require('../core/event').Dispatcher;
     var requestAnimationFrame = require('./requestAnimationFrame');
     var Animator = require('./Animator');
@@ -23572,10 +23572,10 @@ define('zrender/animation/Animation', ['require', '../core/util', '../core/event
     util.mixin(Animation, Dispatcher);
     return Animation;
 });
-define('zrender/Painter', ['require', './config', './core/util', './core/log', './core/BoundingRect', './core/timsort', './Layer', './animation/requestAnimationFrame', './graphic/Image'], function (require) {
+define('zrender/Painter', ['require', './config', './core/entity', './core/log', './core/BoundingRect', './core/timsort', './Layer', './animation/requestAnimationFrame', './graphic/Image'], function (require) {
     'use strict';
     var config = require('./config');
-    var util = require('./core/util');
+    var util = require('./core/entity');
     var log = require('./core/log');
     var BoundingRect = require('./core/BoundingRect');
     var timsort = require('./core/timsort');
@@ -24415,7 +24415,7 @@ define('zrender/graphic/helper/smoothSpline', ['require', '../../core/vector'], 
         return (2 * (p1 - p2) + v0 + v1) * t3 + (-3 * (p1 - p2) - 2 * v0 - v1) * t2 + v0 * t + p1;
     }
     /**
-     * @alias module:zrender/shape/util/smoothSpline
+     * @alias module:zrender/shape/entity/smoothSpline
      * @param {Array} points 线段顶点数组
      * @param {boolean} isLoop
      * @return {Array}
@@ -24532,7 +24532,7 @@ define('zrender/graphic/helper/smoothBezier', ['require', '../../core/vector'], 
     var v2Add = vec2.add;
     /**
      * 贝塞尔平滑曲线
-     * @alias module:zrender/shape/util/smoothBezier
+     * @alias module:zrender/shape/entity/smoothBezier
      * @param {Array} points 线段顶点数组
      * @param {number} smooth 平滑等级, 0-1
      * @param {boolean} isLoop
@@ -24802,8 +24802,8 @@ define('zrender/core/event', ['require', '../mixin/Eventful', './env'], function
         Dispatcher: Eventful
     };
 });
-define('echarts/coord/axisDefault', ['require', 'zrender/core/util'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/coord/axisDefault', ['require', 'zrender/core/entity'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var defaultOption = {
             show: true,
             zlevel: 0,
@@ -24987,10 +24987,10 @@ define('zrender/core/GestureMgr', ['require', './event'], function (require) {
         };
     return GestureMgr;
 });
-define('echarts/chart/bar/BaseBarSeries', ['require', '../../model/Series', '../helper/createListFromArray'], function (require) {
+define('echarts/chart/bar/BaseBarSeries', ['require', '../../model/Series', '../entity/createListFromArray'], function (require) {
     'use strict';
     var SeriesModel = require('../../model/Series');
-    var createListFromArray = require('../helper/createListFromArray');
+    var createListFromArray = require('../entity/createListFromArray');
     return SeriesModel.extend({
         type: 'series.__base_bar__',
         getInitialData: function (option, ecModel) {
@@ -25027,8 +25027,8 @@ define('echarts/chart/bar/BaseBarSeries', ['require', '../../model/Series', '../
         }
     });
 });
-define('zrender/Layer', ['require', './core/util', './config', './graphic/Style', './graphic/Pattern'], function (require) {
-    var util = require('./core/util');
+define('zrender/Layer', ['require', './core/entity', './config', './graphic/Style', './graphic/Pattern'], function (require) {
+    var util = require('./core/entity');
     var config = require('./config');
     var Style = require('./graphic/Style');
     var Pattern = require('./graphic/Pattern');
@@ -25205,12 +25205,12 @@ define('zrender/Layer', ['require', './core/util', './config', './graphic/Style'
     };
     return Layer;
 });
-define('echarts/chart/helper/createListFromArray', ['require', '../../data/List', '../../data/helper/completeDimensions', 'zrender/core/util', '../../util/model', '../../CoordinateSystem'], function (require) {
+define('echarts/chart/helper/createListFromArray', ['require', '../../data/List', '../../data/entity/completeDimensions', 'zrender/core/entity', '../../entity/model', '../../CoordinateSystem'], function (require) {
     'use strict';
     var List = require('../../data/List');
-    var completeDimensions = require('../../data/helper/completeDimensions');
-    var zrUtil = require('zrender/core/util');
-    var modelUtil = require('../../util/model');
+    var completeDimensions = require('../../data/entity/completeDimensions');
+    var zrUtil = require('zrender/core/entity');
+    var modelUtil = require('../../entity/model');
     var CoordinateSystem = require('../../CoordinateSystem');
     var getDataItemValue = modelUtil.getDataItemValue;
     var converDataValue = modelUtil.converDataValue;
@@ -25468,8 +25468,8 @@ define('echarts/chart/helper/createListFromArray', ['require', '../../data/List'
     }
     return createListFromArray;
 });
-define('echarts/preprocessor/helper/compatStyle', ['require', 'zrender/core/util'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/preprocessor/helper/compatStyle', ['require', 'zrender/core/entity'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var POSSIBLE_STYLES = [
             'areaStyle',
             'lineStyle',
@@ -25542,9 +25542,9 @@ define('echarts/preprocessor/helper/compatStyle', ['require', 'zrender/core/util
         }
     };
 });
-define('echarts/data/helper/completeDimensions', ['require', 'zrender/core/util', '../../util/model'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var modelUtil = require('../../util/model');
+define('echarts/data/helper/completeDimensions', ['require', 'zrender/core/entity', '../../entity/model'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var modelUtil = require('../../entity/model');
     var each = zrUtil.each;
     var isString = zrUtil.isString;
     var defaults = zrUtil.defaults;
@@ -26053,7 +26053,7 @@ define('echarts/util/symbol', ['require', './graphic', 'zrender/core/BoundingRec
                 }
             }
         });
-    // Provide setColor helper method to avoid determine if set the fill or stroke outside
+    // Provide setColor entity method to avoid determine if set the fill or stroke outside
     var symbolPathSetColor = function (color) {
         if (this.type !== 'image') {
             var symbolStyle = this.style;
@@ -26110,9 +26110,9 @@ define('echarts/util/symbol', ['require', './graphic', 'zrender/core/BoundingRec
         };
     return symbolUtil;
 });
-define('echarts/chart/bar/helper', ['require', 'zrender/core/util', '../../util/graphic'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var graphic = require('../../util/graphic');
+define('echarts/chart/bar/helper', ['require', 'zrender/core/entity', '../../entity/graphic'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var graphic = require('../../entity/graphic');
     var helper = {};
     helper.setLabel = function (normalStyle, hoverStyle, itemModel, color, seriesModel, dataIndex, labelPositionOutside) {
         var labelModel = itemModel.getModel('label.normal');
@@ -26176,9 +26176,9 @@ define('echarts/chart/bar/barItemStyle', ['require', '../../model/mixin/makeStyl
         }
     };
 });
-define('echarts/component/axis/CartesianAxisView', ['require', 'zrender/core/util', '../../util/graphic', './AxisBuilder', './AxisView', './cartesianAxisHelper'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var graphic = require('../../util/graphic');
+define('echarts/component/axis/CartesianAxisView', ['require', 'zrender/core/entity', '../../entity/graphic', './AxisBuilder', './AxisView', './cartesianAxisHelper'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var graphic = require('../../entity/graphic');
     var AxisBuilder = require('./AxisBuilder');
     var AxisView = require('./AxisView');
     var cartesianAxisHelper = require('./cartesianAxisHelper');
@@ -26528,12 +26528,12 @@ define('echarts/chart/line/poly', ['require', 'zrender/graphic/Path', 'zrender/c
         })
     };
 });
-define('echarts/chart/helper/SymbolDraw', ['require', '../../util/graphic', './Symbol'], function (require) {
-    var graphic = require('../../util/graphic');
+define('echarts/chart/helper/SymbolDraw', ['require', '../../entity/graphic', './Symbol'], function (require) {
+    var graphic = require('../../entity/graphic');
     var Symbol = require('./Symbol');
     /**
      * @constructor
-     * @alias module:echarts/chart/helper/SymbolDraw
+     * @alias module:echarts/chart/entity/SymbolDraw
      * @param {module:zrender/graphic/Group} [symbolCtor]
      */
     function SymbolDraw(symbolCtor) {
@@ -26628,11 +26628,11 @@ define('echarts/chart/helper/SymbolDraw', ['require', '../../util/graphic', './S
     };
     return SymbolDraw;
 });
-define('echarts/chart/helper/Symbol', ['require', 'zrender/core/util', '../../util/symbol', '../../util/graphic', '../../util/number', './labelHelper'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var symbolUtil = require('../../util/symbol');
-    var graphic = require('../../util/graphic');
-    var numberUtil = require('../../util/number');
+define('echarts/chart/helper/Symbol', ['require', 'zrender/core/entity', '../../entity/symbol', '../../entity/graphic', '../../entity/number', './labelHelper'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var symbolUtil = require('../../entity/symbol');
+    var graphic = require('../../entity/graphic');
+    var numberUtil = require('../../entity/number');
     var labelHelper = require('./labelHelper');
     function getSymbolSize(data, idx) {
         var symbolSize = data.getItemVisual(idx, 'symbolSize');
@@ -26649,7 +26649,7 @@ define('echarts/chart/helper/Symbol', ['require', 'zrender/core/util', '../../ut
     }
     /**
      * @constructor
-     * @alias {module:echarts/chart/helper/Symbol}
+     * @alias {module:echarts/chart/entity/Symbol}
      * @param {module:echarts/data/List} data
      * @param {number} idx
      * @extends {module:zrender/graphic/Group}
@@ -27020,8 +27020,8 @@ define('echarts/chart/line/lineAnimationDiff', ['require'], function (require) {
         };
     };
 });
-define('echarts/component/helper/selectableMixin', ['require', 'zrender/core/util'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/component/helper/selectableMixin', ['require', 'zrender/core/entity'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     return {
         updateSelectedMap: function (targetList) {
             this._selectTargetMap = zrUtil.reduce(targetList || [], function (targetMap, target) {
@@ -27059,11 +27059,11 @@ define('echarts/component/helper/selectableMixin', ['require', 'zrender/core/uti
         }
     };
 });
-define('echarts/component/helper/listComponent', ['require', '../../util/layout', '../../util/format', '../../util/graphic'], function (require) {
+define('echarts/component/helper/listComponent', ['require', '../../entity/layout', '../../entity/format', '../../entity/graphic'], function (require) {
     // List layout
-    var layout = require('../../util/layout');
-    var formatUtil = require('../../util/format');
-    var graphic = require('../../util/graphic');
+    var layout = require('../../entity/layout');
+    var formatUtil = require('../../entity/format');
+    var graphic = require('../../entity/graphic');
     function positionGroup(group, model, api) {
         layout.positionElement(group, model.getBoxLayoutParams(), {
             width: api.getWidth(),
@@ -27162,9 +27162,9 @@ define('echarts/component/axis/AxisView', ['require', '../axisPointer/modelHelpe
     };
     return AxisView;
 });
-define('echarts/component/axisPointer/findPointFromSeries', ['require', 'zrender/core/util', '../../util/model'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var modelUtil = require('../../util/model');
+define('echarts/component/axisPointer/findPointFromSeries', ['require', 'zrender/core/entity', '../../entity/model'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var modelUtil = require('../../entity/model');
     /**
      * @param {Object} finder contains {seriesIndex, dataIndex, dataIndexInside}
      * @param {module:echarts/model/Global} ecModel
@@ -27205,8 +27205,8 @@ define('echarts/component/axisPointer/findPointFromSeries', ['require', 'zrender
         };
     };
 });
-define('echarts/component/axis/cartesianAxisHelper', ['require', 'zrender/core/util'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/component/axis/cartesianAxisHelper', ['require', 'zrender/core/entity'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var helper = {};
     /**
      * @param {Object} opt {labelInside}
@@ -27281,10 +27281,10 @@ define('echarts/component/axis/cartesianAxisHelper', ['require', 'zrender/core/u
     };
     return helper;
 });
-define('echarts/chart/helper/labelHelper', ['require', '../../util/graphic', 'zrender/core/util', '../../util/model'], function (require) {
-    var graphic = require('../../util/graphic');
-    var zrUtil = require('zrender/core/util');
-    var modelUtil = require('../../util/model');
+define('echarts/chart/helper/labelHelper', ['require', '../../entity/graphic', 'zrender/core/entity', '../../entity/model'], function (require) {
+    var graphic = require('../../entity/graphic');
+    var zrUtil = require('zrender/core/entity');
+    var modelUtil = require('../../entity/model');
     var helper = {};
     helper.findLabelValueDim = function (data) {
         var valueDim;
@@ -27499,12 +27499,12 @@ define('echarts/chart/pie/labelLayout', ['require', 'zrender/contain/text'], fun
         }
     };
 });
-define('echarts/component/axis/AxisBuilder', ['require', 'zrender/core/util', '../../util/format', '../../util/graphic', '../../model/Model', '../../util/number', 'zrender/core/vector', 'zrender/core/matrix'], function (require) {
-    var zrUtil = require('zrender/core/util');
-    var formatUtil = require('../../util/format');
-    var graphic = require('../../util/graphic');
+define('echarts/component/axis/AxisBuilder', ['require', 'zrender/core/entity', '../../entity/format', '../../entity/graphic', '../../model/Model', '../../entity/number', 'zrender/core/vector', 'zrender/core/matrix'], function (require) {
+    var zrUtil = require('zrender/core/entity');
+    var formatUtil = require('../../entity/format');
+    var graphic = require('../../entity/graphic');
     var Model = require('../../model/Model');
-    var numberUtil = require('../../util/number');
+    var numberUtil = require('../../entity/number');
     var remRadian = numberUtil.remRadian;
     var isRadianAroundZero = numberUtil.isRadianAroundZero;
     var vec2 = require('zrender/core/vector');
@@ -27954,10 +27954,10 @@ define('echarts/component/axis/AxisBuilder', ['require', 'zrender/core/util', '.
         };
     return AxisBuilder;
 });
-define('echarts/component/axisPointer/globalListener', ['require', 'zrender/core/env', 'zrender/core/util', '../../util/model'], function (require) {
+define('echarts/component/axisPointer/globalListener', ['require', 'zrender/core/env', 'zrender/core/entity', '../../entity/model'], function (require) {
     var env = require('zrender/core/env');
-    var zrUtil = require('zrender/core/util');
-    var get = require('../../util/model').makeGetter();
+    var zrUtil = require('zrender/core/entity');
+    var get = require('../../entity/model').makeGetter();
     var each = zrUtil.each;
     var globalListener = {};
     /**
@@ -28056,15 +28056,15 @@ define('echarts/component/axisPointer/globalListener', ['require', 'zrender/core
     };
     return globalListener;
 });
-define('echarts/component/axisPointer/BaseAxisPointer', ['require', 'zrender/core/util', '../../util/clazz', '../../util/graphic', '../../util/model', './modelHelper', 'zrender/core/event', '../../util/throttle'], function (require) {
+define('echarts/component/axisPointer/BaseAxisPointer', ['require', 'zrender/core/entity', '../../entity/clazz', '../../entity/graphic', '../../entity/model', './modelHelper', 'zrender/core/event', '../../entity/throttle'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
-    var clazzUtil = require('../../util/clazz');
-    var graphic = require('../../util/graphic');
-    var get = require('../../util/model').makeGetter();
+    var zrUtil = require('zrender/core/entity');
+    var clazzUtil = require('../../entity/clazz');
+    var graphic = require('../../entity/graphic');
+    var get = require('../../entity/model').makeGetter();
     var axisPointerModelHelper = require('./modelHelper');
     var eventTool = require('zrender/core/event');
-    var throttle = require('../../util/throttle');
+    var throttle = require('../../entity/throttle');
     var clone = zrUtil.clone;
     var bind = zrUtil.bind;
     /**
@@ -28394,12 +28394,12 @@ define('echarts/component/axisPointer/BaseAxisPointer', ['require', 'zrender/cor
     clazzUtil.enableClassExtend(BaseAxisPointer);
     return BaseAxisPointer;
 });
-define('echarts/component/axisPointer/viewHelper', ['require', 'zrender/core/util', '../../util/graphic', 'zrender/contain/text', '../../util/format', 'zrender/core/matrix', '../../coord/axisHelper', '../axis/AxisBuilder'], function (require) {
+define('echarts/component/axisPointer/viewHelper', ['require', 'zrender/core/entity', '../../entity/graphic', 'zrender/contain/text', '../../entity/format', 'zrender/core/matrix', '../../coord/axisHelper', '../axis/AxisBuilder'], function (require) {
     'use strict';
-    var zrUtil = require('zrender/core/util');
-    var graphic = require('../../util/graphic');
+    var zrUtil = require('zrender/core/entity');
+    var graphic = require('../../entity/graphic');
     var textContain = require('zrender/contain/text');
-    var formatUtil = require('../../util/format');
+    var formatUtil = require('../../entity/format');
     var matrix = require('zrender/core/matrix');
     var axisHelper = require('../../coord/axisHelper');
     var AxisBuilder = require('../axis/AxisBuilder');
@@ -28581,11 +28581,11 @@ define('echarts/component/axisPointer/viewHelper', ['require', 'zrender/core/uti
     };
     return helper;
 });
-define('echarts/component/tooltip/TooltipContent', ['require', 'zrender/core/util', 'zrender/tool/color', 'zrender/core/event', '../../util/format', 'zrender/core/env'], function (require) {
-    var zrUtil = require('zrender/core/util');
+define('echarts/component/tooltip/TooltipContent', ['require', 'zrender/core/entity', 'zrender/tool/color', 'zrender/core/event', '../../entity/format', 'zrender/core/env'], function (require) {
+    var zrUtil = require('zrender/core/entity');
     var zrColor = require('zrender/tool/color');
     var eventUtil = require('zrender/core/event');
-    var formatUtil = require('../../util/format');
+    var formatUtil = require('../../entity/format');
     var each = zrUtil.each;
     var toCamelCase = formatUtil.toCamelCase;
     var env = require('zrender/core/env');
@@ -28792,9 +28792,9 @@ define('zrender', ['zrender/zrender'], function (zrender) { return zrender;});
 define('echarts', ['echarts/echarts'], function (echarts) { return echarts;});
 var echarts = require('echarts');
 
-echarts.graphic = require('echarts/util/graphic');
-echarts.number = require('echarts/util/number');
-echarts.format = require('echarts/util/format');
+echarts.graphic = require('echarts/entity/graphic');
+echarts.number = require('echarts/entity/number');
+echarts.format = require('echarts/entity/format');
 
 
 require('echarts/chart/bar');
