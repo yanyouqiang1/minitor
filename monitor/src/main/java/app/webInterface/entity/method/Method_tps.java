@@ -2,12 +2,14 @@ package app.webInterface.entity.method;
 
 import app.database.domain.Monitor_method;
 import app.database.domain.Monitor_overall;
+import lombok.Data;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/10.
  */
+@Data
 public class Method_tps {
     long[] method_TPS;
     public void generate(List<Monitor_method> methods){
@@ -18,11 +20,4 @@ public class Method_tps {
         }
     }
 
-    public long[] getMethod_TPS() {
-        return method_TPS;
-    }
-
-    public void setMethod_TPS(long[] method_TPS) {
-        this.method_TPS = method_TPS;
-    }
 }

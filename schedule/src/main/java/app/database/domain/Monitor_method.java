@@ -23,13 +23,13 @@ public class Monitor_method {
 
     private Long serviceid;
 
-    private Long visitors;
+    private Long request_visitors,response_visitors;
 
     private Long status_100,status_200,status_300,status_400,status_500;
 
     private Float rate_status_100,rate_status_200, rate_status_300, rate_status_400, rate_status_500;
 
-    private Integer response_min, response_max, response_avg;
+    private Integer response_min, response_max, response_avg,response_median,response_90,response_99;
 
     private Long TPS;
 

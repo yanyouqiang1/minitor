@@ -1,8 +1,10 @@
 package app.handle.commonHandle.warehouse.statistics;
 
 import app.util.SpringUtil;
-import entitylib.MonitorMessage;
+import entitylib.RequestMessage;
+import entitylib.ResponseMessage;
 import lombok.Data;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Map;
@@ -17,7 +19,8 @@ public abstract class AbstractResourceStatistics implements Statistics {
     TopologyInter toplogyInter;
 
     //统计属性
-    protected long visitors;
+    @Getter
+    protected long response_visitors,request_visitors;
     //自身属性
     protected Long id;
     protected String name;
@@ -26,20 +29,33 @@ public abstract class AbstractResourceStatistics implements Statistics {
     protected AbstractGroupStatistics parentGroup;
     Map<Long, AbstractMethodStatistics> methodStatisticsMap;
 
-    public void msgRecive(MonitorMessage monitorMessage) {
-        Long methodid = monitorMessage.getMethodId();
+    public void msgReceive(ResponseMessage responseMessage) {
+        Long methodid = responseMessage.getMethodId();
         if (methodStatisticsMap == null) {
             statisticsUpdate();
         }
         AbstractMethodStatistics method = methodStatisticsMap.get(methodid);
         if (method != null) {
-            method.msgRecive(monitorMessage);
+            method.msgReceive(responseMessage);
         }
-        this.visitors++;
-        update(monitorMessage);
+        this.response_visitors++;
+        update(responseMessage);
     }
 
-    public abstract void update(MonitorMessage monitorMessage);
+    @Override
+    public void msgReceive(RequestMessage requestMessage) {
+        Long methodid = requestMessage.getMethodId();
+        if (methodStatisticsMap == null) {
+            statisticsUpdate();
+        }
+        AbstractMethodStatistics method = methodStatisticsMap.get(methodid);
+        if (method != null) {
+            method.msgReceive(requestMessage);
+        }
+        this.request_visitors++;
+    }
+
+    public abstract void update(ResponseMessage responseMessage);
 
     public void sumup() {
         handleResult(this);
@@ -55,7 +71,8 @@ public abstract class AbstractResourceStatistics implements Statistics {
     public abstract void handleResult(AbstractResourceStatistics resource);
 
     public void clear() {
-        this.visitors = 0;
+        this.response_visitors = 0l;
+        this.request_visitors = 0l;
         attributeClear();
     }
 

@@ -17,8 +17,9 @@ import java.util.List;
 @Data
 public class RancherService {
     private String name;
-    private String serviceID;
+    private String serviceId;
     private int scale;
+    private List<String> containerNames = new LinkedList<String>();
     private List<RancherService> linkedServices = new LinkedList<RancherService>();
 
     @JsonIgnore
@@ -30,7 +31,6 @@ public class RancherService {
         scale++;
         System.out.println("服务:"+name+" 容器增加");
     }
-
 
     public void downServcie() {
         if (scale > 1) {

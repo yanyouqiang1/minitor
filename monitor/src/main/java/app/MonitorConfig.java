@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Scope;
  * Created by Administrator on 2017/7/4 0004.
  */
 @Configuration
-public class Config {
+public class MonitorConfig {
 
     @Autowired @Qualifier("httpStatusFilter")
     Msgfilter httpStatusFilter;

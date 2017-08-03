@@ -16,11 +16,13 @@ import java.util.Date;
 public class Schedule_service {
     @Id
     @GeneratedValue
-    private long columnid;
+    private Long columnid;
+
+    private String id;
 
     private String name;
 
-    private int scale;
+    private Integer scale;
 
     private Date time;
 

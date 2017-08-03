@@ -15,4 +15,10 @@ public interface ServiceRepository extends JpaRepository<Monitor_services,Long> 
     @Query("select distinct id from Monitor_services where name=?1")
     public long findDistinctIdFirstByNameEquals(String servcieName);
 
+    @Query("select distinct id from Monitor_services")
+    public List<Long> findDistinctIdByColumnidNotNull();
+
+    public List<Monitor_services> findTop90ByIdEquals(Long id);
+
+    public List<Monitor_services> findTop90ByNameEqualsOrderByColumnidDesc(String serviceName);
 }

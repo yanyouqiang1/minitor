@@ -2,12 +2,14 @@ package app.webInterface.entity.method;
 
 import app.database.domain.Monitor_method;
 import app.database.domain.Monitor_overall;
+import lombok.Data;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/10.
  */
+@Data
 public class Method_success_rate {
     float[] method_success_rate;
     public void generate(List<Monitor_method> methods){
@@ -18,11 +20,4 @@ public class Method_success_rate {
         }
     }
 
-    public float[] getMethod_success_rate() {
-        return method_success_rate;
-    }
-
-    public void setMethod_success_rate(float[] method_success_rate) {
-        this.method_success_rate = method_success_rate;
-    }
 }

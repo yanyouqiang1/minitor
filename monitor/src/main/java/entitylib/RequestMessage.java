@@ -1,28 +1,22 @@
 package entitylib;
 
-import lombok.Data;
-
 /**
- * Created by Administrator on 2017/6/2 0002.
+ * Created by Administrator on 2017/7/31.
  */
-public class MonitorMessage {
+public class RequestMessage {
     private Long groupId; //属于哪个组
     private Long resourceId; //资源
     private Long methodId; //方法 post,get,..
     private Long serviceId; //通俗名称 如搜索服务
-    private Integer httpStatus; //状态码
-    private Integer responseTime; //响应时间
 
-    public MonitorMessage() {
+    public RequestMessage() {
     }
 
-    public MonitorMessage(Long groupId, Long resourceId, Long methodId, Long serviceId, Integer httpStatus, Integer responseTime) {
+    public RequestMessage(Long groupId, Long resourceId, Long methodId, Long serviceId) {
         this.groupId = groupId;
         this.resourceId = resourceId;
         this.methodId = methodId;
         this.serviceId = serviceId;
-        this.httpStatus = httpStatus;
-        this.responseTime = responseTime;
     }
 
     public Long getGroupId() {
@@ -55,22 +49,6 @@ public class MonitorMessage {
 
     public void setServiceId(Long serviceId) {
         this.serviceId = serviceId;
-    }
-
-    public Integer getHttpStatus() {
-        return httpStatus;
-    }
-
-    public void setHttpStatus(Integer httpStatus) {
-        this.httpStatus = httpStatus;
-    }
-
-    public Integer getResponseTime() {
-        return responseTime;
-    }
-
-    public void setResponseTime(Integer responseTime) {
-        this.responseTime = responseTime;
     }
 
 }

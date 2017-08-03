@@ -1,12 +1,14 @@
 package app.webInterface.entity.overview;
 
 import app.database.domain.Monitor_overall;
+import lombok.Data;
 
 import java.util.List;
 
 /**
  * Created by Administrator on 2017/7/10.
  */
+@Data
 public class Overview_success_rate {
     float[] overview_success_rate;
     public void generate(List<Monitor_overall> overalls){
@@ -17,11 +19,4 @@ public class Overview_success_rate {
         }
     }
 
-    public float[] getSuccess_rate() {
-        return overview_success_rate;
-    }
-
-    public void setSuccess_rate(float[] success_rate) {
-        this.overview_success_rate = success_rate;
-    }
 }

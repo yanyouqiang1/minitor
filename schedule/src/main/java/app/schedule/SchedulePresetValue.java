@@ -3,7 +3,6 @@ package app.schedule;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.springframework.stereotype.Component;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -12,38 +11,64 @@ import java.util.List;
  */
 @Component
 public class SchedulePresetValue {
+
     private List<MethodCondition> methodConditions;
+
     public SchedulePresetValue(){
         methodConditions = new LinkedList<MethodCondition>();
     }
 
-    public void setOrUpdateCondition(MethodCondition methodCondition){
+
+    public void setMethodUpperThreshold(long methodId,int upperThreshold){
         for(MethodCondition mc:methodConditions){
-            if(mc.getMethodId()==methodCondition.getMethodId()){
-                mc.setResponseThreshold(methodCondition.getResponseThreshold());
-                mc.setMethodName(methodCondition.getMethodName());
-                System.out.println("更新id:"+methodCondition.getMethodId()+"methodCondition操作");
-                return;
+            if(mc.getMethodId()==methodId){
+                mc.setResponseUpperThreshold(upperThreshold);
             }
         }
+        MethodCondition methodCondition = new MethodCondition();
+        methodCondition.setMethodId(methodId);
+        methodCondition.setResponseUpperThreshold(upperThreshold);
         methodConditions.add(methodCondition);
-        System.out.println("添加id:"+methodCondition.getMethodId()+"methodCondition操作");
     }
 
-    public int getMethodThreshold(long methodId){
-        for(MethodCondition methodCondition:methodConditions){
-            if(methodCondition.getMethodId()==methodId){
-                return methodCondition.getResponseThreshold();
+    public void setMethodLowerThreshold(long methodId,int lowerThreshold){
+        for(MethodCondition mc:methodConditions){
+            if(mc.getMethodId()==methodId){
+                mc.setResponseUpperThreshold(lowerThreshold);
             }
         }
-        System.out.println("没有找到方法id："+methodId+"的阈值设定,是否忘记添加");
+        MethodCondition methodCondition = new MethodCondition();
+        methodCondition.setMethodId(methodId);
+        methodCondition.setResponseLowerTHreashold(lowerThreshold);
+        methodConditions.add(methodCondition);
+    }
+
+    public int getMethodUpperThreshold(long methodId){
+        for(MethodCondition methodCondition:methodConditions){
+            if(methodCondition.getMethodId()==methodId){
+                return methodCondition.getResponseUpperThreshold();
+            }
+        }
+        System.out.println("没有找到方法id："+methodId+"的上阈值设定,是否忘记添加");
+        return Integer.MAX_VALUE;
+    }
+    public int getMethodDownThreshold(long methodId){
+        for(MethodCondition methodCondition:methodConditions){
+            if(methodCondition.getMethodId()==methodId){
+                return methodCondition.getResponseLowerTHreashold();
+            }
+        }
+        System.out.println("没有找到方法id："+methodId+"的下阈值设定,是否忘记添加");
         return -1;
     }
+
+
+
     @Data
     @NoArgsConstructor
     public static class MethodCondition{
         private Long methodId;
-        private String methodName;
-        private int responseThreshold;
+        private int responseUpperThreshold;
+        private int responseLowerTHreashold;
     }
 }

@@ -1,4 +1,4 @@
-package app.schedule.rancherImpl.algorithm.entity;
+package app.schedule.rancherImpl.entity;
 
 import lombok.Data;
 

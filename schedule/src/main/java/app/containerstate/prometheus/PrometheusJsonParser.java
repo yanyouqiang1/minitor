@@ -1,6 +1,6 @@
 package app.containerstate.prometheus;
 
-import app.schedule.rancherImpl.algorithm.entity.ResultData;
+import app.schedule.rancherImpl.entity.ResultData;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;

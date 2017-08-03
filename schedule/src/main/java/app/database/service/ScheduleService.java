@@ -17,7 +17,7 @@ public class ScheduleService {
     ScheduleServiceRepository scheduleServiceRepository;
 
     public List<Schedule_service> getScheduleByServiceName(String serviceName){
-        return scheduleServiceRepository.findTop30ByName(serviceName);
+        return scheduleServiceRepository.findTop90ByName(serviceName);
     }
 
 
@@ -26,6 +26,7 @@ public class ScheduleService {
             Schedule_service ss = new Schedule_service();
             ss.setName(rs.getName());
             ss.setScale(rs.getScale());
+            ss.setId(rs.getServiceId());
             scheduleServiceRepository.save(ss);
         }
     }

@@ -1,12 +1,12 @@
 package app.schedule.rancherImpl;
 
-import app.database.domain.Schedule_service;
 import app.database.service.MethodService;
 import app.database.service.ScheduleService;
 import app.schedule.ScheduleExecuteInter;
 import app.schedule.ScheduleServiceInter;
 import app.schedule.entity.Method;
 import app.schedule.entity.Service;
+import app.schedule.rancherImpl.entity.ResultData;
 import lombok.Data;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +33,21 @@ public class RancherStack implements ScheduleExecuteInter,ScheduleServiceInter {
         try{
             List<String> serviceIds = rancherOS.getStackServices();
             for(String serviceId:serviceIds){
-                RancherService service = findService(serviceId);
+                RancherService service = findServiceById(serviceId);
                 if(service==null){
                     service = new RancherService();
-                    service.setServiceID(serviceId);
+                    service.setServiceId(serviceId);
                     rancherServices.add(service);
                 }
                 service.setName(rancherOS.getServiceName(serviceId));
                 service.setScale(rancherOS.getServiceScale(serviceId));
-                List<String> linkedServices = rancherOS.getlinkedServices(serviceId);
+                service.setContainerNames(rancherOS.getServiceContainerNames(serviceId));
+                List<String> linkedServices = rancherOS.getLinkedServices(serviceId);
                 for(String ls:linkedServices){
-                    RancherService ss = findService(ls);
+                    RancherService ss = findServiceById(ls);
                     if(ss==null){
                         ss = new RancherService();
-                        ss.setServiceID(ls);
+                        ss.setServiceId(ls);
                         rancherServices.add(ss);
                     }
                     service.getLinkedServices().add(ss);
@@ -57,9 +58,9 @@ public class RancherStack implements ScheduleExecuteInter,ScheduleServiceInter {
             e.printStackTrace();
         }
     }
-    private RancherService findService(String serviceId) {
+    private RancherService findServiceById(String serviceId) {
         for(RancherService s:rancherServices){
-            if(s.getServiceID().equals(serviceId)){
+            if(s.getServiceId().equals(serviceId)){
                 return s;
             }
         }
@@ -68,7 +69,7 @@ public class RancherStack implements ScheduleExecuteInter,ScheduleServiceInter {
 
     @Override
     public void upService(Service service) {
-        RancherService rancherService = findService(service.getName());
+        RancherService rancherService = findServiceById(service.getName());
         if(rancherService!=null){
             rancherService.upService();
         }
@@ -76,7 +77,7 @@ public class RancherStack implements ScheduleExecuteInter,ScheduleServiceInter {
 
     @Override
     public void downService(Service service) {
-        RancherService rancherService = findService(service.getName());
+        RancherService rancherService = findServiceById(service.getName());
         if(rancherService!=null){
             rancherService.downServcie();
         }
@@ -90,7 +91,7 @@ public class RancherStack implements ScheduleExecuteInter,ScheduleServiceInter {
     }
 
     @Override
-    public List<Service> getAllServcie() {
+    public List<Service> getAllService() {
         List<Service> services = new LinkedList<Service>();
         for(RancherService rs:rancherServices){
             Service service = RancherService.generate(rs);
@@ -107,25 +108,22 @@ public class RancherStack implements ScheduleExecuteInter,ScheduleServiceInter {
         scheduleService.save(this.rancherServices);
     }
 
-    /***
-     * 服务拓扑图
-     * @return
-     */
-    public int[][] getToplogy(){
-        int[][] toplogy = new int[rancherServices.size()][];
+   //服务拓扑图
+    public int[][] getTopology(){
+        int[][] topology = new int[rancherServices.size()][rancherServices.size()];
         for(int i=0;i<rancherServices.size();i++){
             RancherService rs = rancherServices.get(i);
             List<RancherService> linkService = rs.getLinkedServices();
             if(!linkService.isEmpty()){
                 for(RancherService s:linkService){
-                    toplogy[i][rancherServices.indexOf(s)]=1;
+                    topology[i][rancherServices.indexOf(s)]=1;
                 }
             }
         }
-        return toplogy;
+        return topology;
     }
 
-    public int getIndexofRancherService(Service service){
+    public int getIndexOfRancherService(Service service){
         String serviceName = service.getName();
         for(RancherService rancherService:rancherServices){
             if(rancherService.getName().equals(serviceName)){
@@ -133,5 +131,23 @@ public class RancherStack implements ScheduleExecuteInter,ScheduleServiceInter {
             }
         }
         return -1;
+    }
+
+    public RancherService getServiceByName(String rancherServiceName){
+        for(RancherService s:rancherServices){
+            if(s.getName().equals(rancherServiceName)){
+                return s;
+            }
+        }
+        return null;
+    }
+    //获得某个容器状态
+    @Autowired
+    ContainerInter containerInter;
+    public ResultData getContainerCpuStatusByName(String containerName){
+        return containerInter.getCpuRateByContainerName(containerName);
+    }
+    public ResultData getContainerMemoryStatusByName(String containerName){
+        return containerInter.getMemoryByContainerName(containerName);
     }
 }

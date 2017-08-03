@@ -1,7 +1,8 @@
 package app.handle.commonHandle.warehouse;
 
 import app.handle.commonHandle.warehouse.statistics.AbstractOverallStatistics;
-import entitylib.MonitorMessage;
+import entitylib.RequestMessage;
+import entitylib.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -14,8 +15,13 @@ public class MsgWarehouseImpl implements WarehoseInter {
     AbstractOverallStatistics overallStatistics;
 
     @Override
-    public void putMsg(MonitorMessage monitorMessage) {
-        overallStatistics.msgRecive(monitorMessage);
+    public void putResponseMsg(ResponseMessage responseMessage) {
+        overallStatistics.msgReceive(responseMessage);
+    }
+
+    @Override
+    public void putRequestMsg(RequestMessage requestMessage) {
+        overallStatistics.msgReceive(requestMessage);
     }
 
     @Override

@@ -24,7 +24,7 @@ public class Monitor_overall {
     @GeneratedValue
     private Long id;
 
-    private Long response_visitors;
+    private Long request_visitors,response_visitors;
 
     private Long status_100,status_200,status_300,status_400,status_500;
 
@@ -33,8 +33,6 @@ public class Monitor_overall {
     private Integer response_min,response_max,response_avg,response_median,response_90,response_99;
 
     private Long TPS;
-
-    private Long request_visitors;
 
     private Date createTime;
 

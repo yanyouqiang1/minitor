@@ -1,6 +1,6 @@
-package app.containerstate;
+package app.schedule.rancherImpl;
 
-import app.containerstate.entity.ConsultData;
+import app.schedule.rancherImpl.entity.ResultData;
 
 /**
  * Created by Administrator on 2017/7/28.
@@ -11,13 +11,13 @@ public interface ContainerInter {
      * @param containerName
      * @return
      */
-    public ConsultData getCpuRateByContainerName(String containerName);
+    public ResultData getCpuRateByContainerName(String containerName);
 
     /***
      *  获取 内存使用情况
      * @param containerName
      * @return
      */
-    public ConsultData getMemoryByContainerName(String containerName);
+    public ResultData getMemoryByContainerName(String containerName);
 
 }

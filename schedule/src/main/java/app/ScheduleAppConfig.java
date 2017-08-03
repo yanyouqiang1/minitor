@@ -1,11 +1,10 @@
 package app;
 
 import app.schedule.rancherImpl.RancherPresetValue;
-import app.schedule.rancherImpl.algorithm.ContainerInter;
+import app.schedule.rancherImpl.ContainerInter;
 import app.containerstate.prometheus.PrometheusConfig;
 import app.containerstate.prometheus.PrometheusImpl;
 import app.schedule.rancherImpl.RancherConfig;
-import app.schedule.rancherImpl.RancherOS;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

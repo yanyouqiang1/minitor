@@ -1,7 +1,7 @@
 package app.containerstate.prometheus;
 
-import app.schedule.rancherImpl.algorithm.ContainerInter;
-import app.schedule.rancherImpl.algorithm.entity.ResultData;
+import app.schedule.rancherImpl.ContainerInter;
+import app.schedule.rancherImpl.entity.ResultData;
 
 /**
  * Created by Administrator on 2017/7/28.

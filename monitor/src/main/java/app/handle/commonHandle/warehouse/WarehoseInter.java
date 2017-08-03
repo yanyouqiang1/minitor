@@ -1,6 +1,7 @@
 package app.handle.commonHandle.warehouse;
 
-import entitylib.MonitorMessage;
+import entitylib.RequestMessage;
+import entitylib.ResponseMessage;
 
 /**
  * Created by Administrator on 2017/7/4 0004.
@@ -8,11 +9,11 @@ import entitylib.MonitorMessage;
 public interface WarehoseInter {
     /**
      *  仓库加入信息
-     * @param monitorMessage
+     * @param responseMessage
      */
-    public void putMsg(MonitorMessage monitorMessage);
+    public void putResponseMsg(ResponseMessage responseMessage);
 
-
+    public void putRequestMsg(RequestMessage requestMessage);
     /**
      * 统计消息
      */

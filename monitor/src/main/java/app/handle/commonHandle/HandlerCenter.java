@@ -3,7 +3,8 @@ package app.handle.commonHandle;
 import app.database.dao.OverallRepository;
 import app.handle.HandleInter;
 import app.handle.commonHandle.warehouse.WarehoseInter;
-import entitylib.MonitorMessage;
+import entitylib.RequestMessage;
+import entitylib.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -23,14 +24,19 @@ public class HandlerCenter implements HandleInter {
     WarehoseInter warehoseInter;
 
     @Override
-    public void msgRecive(MonitorMessage monitorMessage) {
+    public void msgReceive(ResponseMessage responseMessage) {
         //消息过滤器
         Iterator iterable = msgfilterChain.iterator();
         while(iterable.hasNext()){
             Msgfilter msgfilter = (Msgfilter) iterable.next();
-            monitorMessage = msgfilter.filter(monitorMessage);
+            responseMessage = msgfilter.filter(responseMessage);
         }
-        warehoseInter.putMsg(monitorMessage);
+        warehoseInter.putResponseMsg(responseMessage);
+    }
+
+    @Override
+    public void msgReceive(RequestMessage requestMessage) {
+        warehoseInter.putRequestMsg(requestMessage);
     }
 
     @Scheduled(initialDelay = 10*1000, fixedDelay = 10000)

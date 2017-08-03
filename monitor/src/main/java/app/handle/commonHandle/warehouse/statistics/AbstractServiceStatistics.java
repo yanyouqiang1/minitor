@@ -1,24 +1,32 @@
 package app.handle.commonHandle.warehouse.statistics;
 
-import entitylib.MonitorMessage;
+import entitylib.RequestMessage;
+import entitylib.ResponseMessage;
+import lombok.Getter;
 
 /**
  * Created by Administrator on 2017/7/11.
  */
 public abstract class AbstractServiceStatistics implements Statistics {
-    protected long visitors;
+    @Getter
+    protected long response_visitors,request_visitors;
 
     protected Long id;
     protected String name;
 
 
     @Override
-    public void msgRecive(MonitorMessage monitorMessage) {
-        this.visitors++;
-        update(monitorMessage);
+    public void msgReceive(ResponseMessage responseMessage) {
+        this.response_visitors++;
+        update(responseMessage);
     }
 
-    public abstract void update(MonitorMessage monitorMessage);
+    @Override
+    public void msgReceive(RequestMessage requestMessage) {
+        this.request_visitors++;
+    }
+
+    public abstract void update(ResponseMessage responseMessage);
 
     @Override
     public void sumup() {
@@ -29,7 +37,8 @@ public abstract class AbstractServiceStatistics implements Statistics {
 
     @Override
     public void clear() {
-        this.visitors = 0;
+        this.response_visitors = 0;
+        this.request_visitors= 0;
         attributeClear();
     }
 
@@ -56,11 +65,4 @@ public abstract class AbstractServiceStatistics implements Statistics {
         this.name = name;
     }
 
-    public long getVisitors() {
-        return visitors;
-    }
-
-    public void setVisitors(long visitors) {
-        this.visitors = visitors;
-    }
 }

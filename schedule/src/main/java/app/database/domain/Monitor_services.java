@@ -17,10 +17,8 @@ public class Monitor_services {
 
     private Long id;
     private String name;
-    private Long visitors;
+    private Long request_visitors,response_visitors;
 
     private Integer response_min,response_max,response_avg;
 
-    public Monitor_services() {
-    }
 }

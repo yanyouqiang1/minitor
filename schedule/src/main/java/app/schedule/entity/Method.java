@@ -28,7 +28,7 @@ public class Method {
         method1.id = method.getId();
         method1.serviceid = method.getServiceid();
         method1.name = method.getName();
-        method1.visitors = method.getVisitors();
+        method1.visitors = method.getResponse_visitors();
         method1.rate_status_100= method.getRate_status_100();
         method1.rate_status_200 = method.getRate_status_200();
         method1.rate_status_300 = method.getRate_status_300();

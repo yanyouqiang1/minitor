@@ -1,7 +1,9 @@
 package app.handle.commonHandle.warehouse.statistics;
 
 import app.util.SpringUtil;
-import entitylib.MonitorMessage;
+import entitylib.RequestMessage;
+import entitylib.ResponseMessage;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -12,7 +14,9 @@ import java.util.concurrent.ConcurrentHashMap;
  */
 public abstract class AbstractOverallStatistics implements Statistics {
     //统计属性
-    protected long visitors;
+    @Getter
+    protected long response_visitor, request_visitor;
+
 
     @Autowired
     TopologyInter toplogyInter;
@@ -22,36 +26,57 @@ public abstract class AbstractOverallStatistics implements Statistics {
     Map<Long, AbstractServiceStatistics> serviceStatisticsMap;
 
     //收到新的消息处理
-    public void msgRecive(MonitorMessage monitorMessage) {
+    public void msgReceive(ResponseMessage responseMessage) {
         if (groupMap == null || serviceStatisticsMap == null) {
             statisticsUpdate();
         }
         //下发到组
-        Long groupid = monitorMessage.getGroupId();
+        Long groupid = responseMessage.getGroupId();
         AbstractGroupStatistics group = groupMap.get(groupid);
         if (group != null) {
-            group.msgRecive(monitorMessage);
+            group.msgReceive(responseMessage);
         }
         //下发到服务
-        long serviceid = monitorMessage.getServiceId();
+        long serviceid = responseMessage.getServiceId();
         AbstractServiceStatistics service = serviceStatisticsMap.get(serviceid);
         if (service != null) {
-            service.msgRecive(monitorMessage);
+            service.msgReceive(responseMessage);
         }
 
-        this.visitors++;
-        update(monitorMessage);
+        this.response_visitor++;
+        update(responseMessage);
+    }
+
+    public void msgReceive(RequestMessage requestMessage) {
+        if (groupMap == null || serviceStatisticsMap == null) {
+            statisticsUpdate();
+        }
+        //下发到组
+        Long groupid = requestMessage.getGroupId();
+        AbstractGroupStatistics group = groupMap.get(groupid);
+        if (group != null) {
+            group.msgReceive(requestMessage);
+        }
+        //下发到服务
+        long serviceid = requestMessage.getServiceId();
+        AbstractServiceStatistics service = serviceStatisticsMap.get(serviceid);
+        if (service != null) {
+            service.msgReceive(requestMessage);
+        }
+        this.request_visitor++;
     }
 
     //更新信息
-    public abstract void update(MonitorMessage monitorMessage);
+    public abstract void update(ResponseMessage responseMessage);
 
     //统计
     public void sumup() {
         handleResult(this);
         //组统计
-        for (AbstractGroupStatistics group : groupMap.values()) {
-            group.sumup();
+        if (groupMap != null) {
+            for (AbstractGroupStatistics group : groupMap.values()) {
+                group.sumup();
+            }
         }
 
         //服务统计
@@ -67,7 +92,8 @@ public abstract class AbstractOverallStatistics implements Statistics {
 
     //清空
     public void clear() {
-        visitors = 0l;
+        response_visitor = 0l;
+        request_visitor = 0l;
         attributeClear();
     }
 
@@ -106,11 +132,5 @@ public abstract class AbstractOverallStatistics implements Statistics {
         }
     }
 
-    public Long getVisitors() {
-        return visitors;
-    }
 
-    public void setVisitors(Long visitors) {
-        this.visitors = visitors;
-    }
 }

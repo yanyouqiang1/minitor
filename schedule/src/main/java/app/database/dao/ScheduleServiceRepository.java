@@ -9,5 +9,5 @@ import java.util.List;
  * Created by Administrator on 2017/7/22 0022.
  */
 public interface ScheduleServiceRepository extends JpaRepository<Schedule_service,Long> {
-    public List findTop30ByName(String serviceName);
+    public List findTop90ByName(String serviceName);
 }

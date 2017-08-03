@@ -1,7 +1,9 @@
 package app.handle.commonHandle.warehouse.statistics;
 
 import app.util.SpringUtil;
-import entitylib.MonitorMessage;
+import entitylib.RequestMessage;
+import entitylib.ResponseMessage;
+import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.*;
@@ -15,7 +17,8 @@ public abstract class AbstractGroupStatistics implements Statistics{
     TopologyInter toplogyInter;
 
     //统计属性
-    protected long visitors;
+    @Getter
+    protected long response_visitors,request_visitors;
 
     //自身属性
     protected String name="";
@@ -27,20 +30,33 @@ public abstract class AbstractGroupStatistics implements Statistics{
     private AbstractOverallStatistics parentOverall;
 
     //收到消息处理
-    public void msgRecive(MonitorMessage monitorMessage){
-        long resourceid = monitorMessage.getResourceId();
+    public void msgReceive(ResponseMessage responseMessage){
+        long resourceid = responseMessage.getResourceId();
         if(resourceStatisticsMap==null){
             statisticsUpdate();
         }
         AbstractResourceStatistics resource = resourceStatisticsMap.get(resourceid);
         if(resource!=null){
-            resource.msgRecive(monitorMessage);
+            resource.msgReceive(responseMessage);
         }
-        this.visitors++;
-        update(monitorMessage);
+        this.response_visitors++;
+        update(responseMessage);
     }
 
-    public abstract void update(MonitorMessage monitorMessage);
+    @Override
+    public void msgReceive(RequestMessage requestMessage) {
+        long resourceid = requestMessage.getResourceId();
+        if(resourceStatisticsMap==null){
+            statisticsUpdate();
+        }
+        AbstractResourceStatistics resource = resourceStatisticsMap.get(resourceid);
+        if(resource!=null){
+            resource.msgReceive(requestMessage);
+        }
+        this.request_visitors++;
+    }
+
+    public abstract void update(ResponseMessage responseMessage);
 
     public void sumup(){
         handleResult(this);
@@ -54,7 +70,8 @@ public abstract class AbstractGroupStatistics implements Statistics{
     public abstract void handleResult(AbstractGroupStatistics group);
 
     public void clear(){
-        this.visitors = 0l;
+        this.response_visitors = 0l;
+        this.request_visitors = 0l;
         attributeClear();
     }
     public abstract void attributeClear();
@@ -75,15 +92,6 @@ public abstract class AbstractGroupStatistics implements Statistics{
                 resourceStatisticsMap.put(resourceEntry.getKey(),resource);
             }
         }
-    }
-
-
-    public Long getVisitors() {
-        return visitors;
-    }
-
-    public void setVisitors(Long visitors) {
-        this.visitors = visitors;
     }
 
 

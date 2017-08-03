@@ -1,6 +1,7 @@
 package app.database.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
 
 import javax.persistence.*;
 
@@ -8,6 +9,7 @@ import javax.persistence.*;
  * Created by Administrator on 2017/7/11.
  */
 @Entity
+@Data
 public class Monitor_resource {
     @Id
     @GeneratedValue
@@ -15,7 +17,7 @@ public class Monitor_resource {
 
     Long id;
 
-    Long visitors;
+    private Long request_visitors,response_visitors;
 
     Long groupId;
 
@@ -28,51 +30,4 @@ public class Monitor_resource {
     public Monitor_resource() {
     }
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getVisitors() {
-        return visitors;
-    }
-
-    public void setVisitors(Long visitors) {
-        this.visitors = visitors;
-    }
-
-    public Long getGroupId() {
-        return groupId;
-    }
-
-    public void setGroupId(Long groupId) {
-        this.groupId = groupId;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Monitor_overall getOverall() {
-        return overall;
-    }
-
-    public void setOverall(Monitor_overall overall) {
-        this.overall = overall;
-    }
-
-    public Long getColumnid() {
-        return columnid;
-    }
-
-    public void setColumnid(Long columnid) {
-        this.columnid = columnid;
-    }
 }

@@ -20,5 +20,5 @@ public interface ScheduleServiceInter {
      *  获取所有服务
      * @return
      */
-    public List<Service> getAllServcie();
+    public List<Service> getAllService();
 }

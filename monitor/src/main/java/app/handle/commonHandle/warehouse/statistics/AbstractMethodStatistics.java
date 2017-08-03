@@ -1,13 +1,16 @@
 package app.handle.commonHandle.warehouse.statistics;
 
-import entitylib.MonitorMessage;
+import entitylib.RequestMessage;
+import entitylib.ResponseMessage;
+import lombok.Getter;
 
 /**
  * Created by Administrator on 2017/7/6.
  */
 public abstract class AbstractMethodStatistics implements Statistics {
     //统计属性
-    protected long visitors;
+    @Getter
+    protected long response_visitors,request_visitors;
 
     //自身属性
     protected Long id;
@@ -17,12 +20,17 @@ public abstract class AbstractMethodStatistics implements Statistics {
     private AbstractResourceStatistics parentResource;
 
 
-    public void msgRecive(MonitorMessage monitorMessage) {
-        this.visitors++;
-        update(monitorMessage);
+    public void msgReceive(ResponseMessage responseMessage) {
+        this.response_visitors++;
+        update(responseMessage);
     }
 
-    public abstract void update(MonitorMessage monitorMessage);
+    @Override
+    public void msgReceive(RequestMessage requestMessage) {
+        this.request_visitors++;
+    }
+
+    public abstract void update(ResponseMessage responseMessage);
 
     public void sumup() {
         handleResult(this);
@@ -37,7 +45,8 @@ public abstract class AbstractMethodStatistics implements Statistics {
     }
 
     public void clear() {
-        visitors = 0l;
+        response_visitors = 0l;
+        request_visitors =0l;
         attributeClear();
     }
 
@@ -67,11 +76,4 @@ public abstract class AbstractMethodStatistics implements Statistics {
         this.parentResource = parentResource;
     }
 
-    public long getVisitors() {
-        return visitors;
-    }
-
-    public void setVisitors(long visitors) {
-        this.visitors = visitors;
-    }
 }
