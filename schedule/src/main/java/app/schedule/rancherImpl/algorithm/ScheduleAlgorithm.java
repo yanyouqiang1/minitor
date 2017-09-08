@@ -112,7 +112,7 @@ public class ScheduleAlgorithm extends AbstractScheduleAlgorithm {
 //    }
 //
 //    @Override
-//    public Boolean isServiceOverload(Service service, List<List<Method>> methods) {
+//    public Boolean isServiceOverload(AbstractService service, List<List<Method>> methods) {
 //        for(List<Method> singleMethod:methods){
 //            // singleMethod 判断是否负载过重
 //            //当前默认有一半超过400ms时 断定负载过重
@@ -132,7 +132,7 @@ public class ScheduleAlgorithm extends AbstractScheduleAlgorithm {
 //
 //
 //    @Override
-//    public Boolean isServiceRelax(Service service, List<List<Method>> methods) {
+//    public Boolean isServiceRelax(AbstractService service, List<List<Method>> methods) {
 //        for(List<Method> singleMethod:methods){
 //            // singleMethod 判断是否负载过重
 //            //当前默认有一半低于200ms时  断定负载轻松
@@ -155,13 +155,13 @@ public class ScheduleAlgorithm extends AbstractScheduleAlgorithm {
 //    RancherStack rancherStack;
 //
 //    @Override
-//    public List<Service> judgeSourceService(List<Service> overloadServices) {
+//    public List<AbstractService> judgeSourceService(List<AbstractService> overloadServices) {
 //        int[][] toplogy = rancherStack.getTopology();
 //
 //        //转化
 //        int[] overIndex = new int[overloadServices.size()];
 //        for(int i=0;i<overIndex.length;i++){
-//            Service service = overloadServices.get(i);
+//            AbstractService service = overloadServices.get(i);
 //            overIndex[i] = rancherStack.getIndexOfRancherService(service);
 //        }
 //
@@ -185,7 +185,7 @@ public class ScheduleAlgorithm extends AbstractScheduleAlgorithm {
 //    }
 //
 //    @Override
-//    public List<Service> adjustRelaxService(List<Service> relaxService) {
+//    public List<AbstractService> adjustRelaxService(List<AbstractService> relaxService) {
 //        return relaxService;
 //    }
 

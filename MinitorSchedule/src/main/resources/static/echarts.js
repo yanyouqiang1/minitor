@@ -5954,7 +5954,7 @@ define('echarts/layout/barGrid', ['require', 'zrender/core/entity', '../entity/n
                 width: 0,
                 maxWidth: 0
             };
-            // Caution: In a single coordinate system, these barGrid attributes
+            // Caution: In a service coordinate system, these barGrid attributes
             // will be shared by series. Consider that they have default values,
             // only the attributes set on the last series will work.
             // Do not change this fact unless there will be a break change.
@@ -7391,7 +7391,7 @@ define('echarts/view/Chart', ['require', 'zrender/container/Group', '../entity/c
         this.render(seriesModel, ecModel, api, payload);
     };
     /**
-     * Set state of single element
+     * Set state of service element
      * @param  {module:zrender/Element} el
      * @param  {string} state
      */
@@ -11005,7 +11005,7 @@ define('echarts/util/number', ['require'], function (require) {
         }
     };
     /**
-     * Minimal dicernible data precisioin according to a single pixel.
+     * Minimal dicernible data precisioin according to a service pixel.
      *
      * @param {Array.<number>} dataExtent
      * @param {Array.<number>} pixelExtent
@@ -12356,14 +12356,14 @@ define('echarts/data/List', ['require', '../model/Model', './DataDiffer', 'zrend
         return this._layout[key];
     };
     /**
-     * Get layout of single data item
+     * Get layout of service data item
      * @param {number} idx
      */
     listProto.getItemLayout = function (idx) {
         return this._itemLayouts[idx];
     };
     /**
-     * Set layout of single data item
+     * Set layout of service data item
      * @param {number} idx
      * @param {Object} layout
      * @param {boolean=} [merge=false]
@@ -12372,13 +12372,13 @@ define('echarts/data/List', ['require', '../model/Model', './DataDiffer', 'zrend
         this._itemLayouts[idx] = merge ? zrUtil.extend(this._itemLayouts[idx] || {}, layout) : layout;
     };
     /**
-     * Clear all layout of single data item
+     * Clear all layout of service data item
      */
     listProto.clearItemLayouts = function () {
         this._itemLayouts.length = 0;
     };
     /**
-     * Get visual property of single data item
+     * Get visual property of service data item
      * @param {number} idx
      * @param {string} key
      * @param {boolean} [ignoreParent=false]
@@ -12393,7 +12393,7 @@ define('echarts/data/List', ['require', '../model/Model', './DataDiffer', 'zrend
         return val;
     };
     /**
-     * Set visual property of single data item
+     * Set visual property of service data item
      *
      * @param {number} idx
      * @param {string|Object} key
@@ -12691,7 +12691,7 @@ define('echarts/component/legend/LegendModel', ['require', 'zrender/core/entity'
             optionUpdated: function () {
                 this._updateData(this.ecModel);
                 var legendData = this._data;
-                // If selectedMode is single, try to select one
+                // If selectedMode is service, try to select one
                 if (legendData[0] && this.get('selectedMode') === 'single') {
                     var hasSelected = false;
                     // If has any selected in option.selected
@@ -12704,7 +12704,7 @@ define('echarts/component/legend/LegendModel', ['require', 'zrender/core/entity'
                             break;
                         }
                     }
-                    // Try select the first if selectedMode is single
+                    // Try select the first if selectedMode is service
                     !hasSelected && this.select(legendData[0].get('name'));
                 }
             },
@@ -13610,7 +13610,7 @@ define('echarts/component/tooltip/TooltipView', ['require', './TooltipContent', 
                 //     globalTooltipModel
                 // ]);
                 // var displayMode = coordTooltipModel.get('displayMode');
-                // var paramsList = displayMode === 'single' ? singleParamsList : [];
+                // var paramsList = displayMode === 'service' ? singleParamsList : [];
                 each(itemCoordSys.dataByAxis, function (item) {
                     var axisModel = ecModel.getComponent(item.axisDim + 'Axis', item.axisIndex);
                     var axisValue = item.value;
@@ -27043,7 +27043,7 @@ define('echarts/component/helper/selectableMixin', ['require', 'zrender/core/ent
         unSelect: function (name) {
             var target = this._selectTargetMap.get(name);
             // var selectedMode = this.get('selectedMode');
-            // selectedMode !== 'single' && target && (target.selected = false);
+            // selectedMode !== 'service' && target && (target.selected = false);
             target && (target.selected = false);
         },
         toggleSelected: function (name) {

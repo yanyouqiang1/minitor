@@ -92,7 +92,7 @@ public class RestImpl implements RestInter {
 
     @Override
     public CommonReply setWebhookUp(String serviceName, String upUrl) {
-        if(rancherPresetValue.setServicUpUrl(serviceName,upUrl)){
+        if(rancherPresetValue.setServiceUpUrl(serviceName,upUrl)){
             return CommonReplyBuilder.buildSuccessReply();
         }
         return CommonReplyBuilder.buildErrorReply("设置失败,请检查你的服务名");

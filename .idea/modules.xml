@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MinitorSchedule/MinitorSchedule.iml" filepath="$PROJECT_DIR$/MinitorSchedule/MinitorSchedule.iml" />
       <module fileurl="file://$PROJECT_DIR$/monitor/monitor.iml" filepath="$PROJECT_DIR$/monitor/monitor.iml" />
+      <module fileurl="file://$PROJECT_DIR$/rancherAdapter/rancherAdapter.iml" filepath="$PROJECT_DIR$/rancherAdapter/rancherAdapter.iml" />
       <module fileurl="file://$PROJECT_DIR$/schedule/schedule.iml" filepath="$PROJECT_DIR$/schedule/schedule.iml" />
       <module fileurl="file://$PROJECT_DIR$/springcloud.iml" filepath="$PROJECT_DIR$/springcloud.iml" />
       <module fileurl="file://$PROJECT_DIR$/streamSender/streamSender.iml" filepath="$PROJECT_DIR$/streamSender/streamSender.iml" />

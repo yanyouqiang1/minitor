@@ -1,0 +1,8 @@
+
+rancher:
+  host: 192.168.0.100
+  port: 8080
+  APIkey:
+    accesskey: 2907A3BA8445D1F9AEB5
+    secret: bfJVo7osJMmxx4gFjAoqGxMvRFTWknXc54Cm6trG
+  stackapisurl: v2-beta/projects/1a5/stacks/1st5

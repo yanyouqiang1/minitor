@@ -7,9 +7,9 @@
       "type": "app.handle.MinitorConfig"
     },
     {
-      "sourceType": "app.schedule.RancherConfig",
-      "name": "rancher",
-      "type": "app.schedule.RancherConfig"
+      "sourceType": "app.schedule.rancherImpl.RancherConfig",
+      "name": "rancherImpl",
+      "type": "app.schedule.rancherImpl.RancherConfig"
     }
   ],
   "properties": [
@@ -25,28 +25,28 @@
       "type": "java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.lang.String>>"
     },
     {
-      "sourceType": "app.schedule.RancherConfig",
-      "name": "rancher.a-p-ikey",
+      "sourceType": "app.schedule.rancherImpl.RancherConfig",
+      "name": "rancherImpl.a-p-ikey",
       "type": "java.util.Map<java.lang.String,java.lang.String>"
     },
     {
-      "sourceType": "app.schedule.RancherConfig",
-      "name": "rancher.host",
+      "sourceType": "app.schedule.rancherImpl.RancherConfig",
+      "name": "rancherImpl.host",
       "type": "java.lang.String"
     },
     {
-      "sourceType": "app.schedule.RancherConfig",
-      "name": "rancher.port",
+      "sourceType": "app.schedule.rancherImpl.RancherConfig",
+      "name": "rancherImpl.port",
       "type": "java.lang.String"
     },
     {
-      "sourceType": "app.schedule.RancherConfig",
-      "name": "rancher.stackapisurl",
+      "sourceType": "app.schedule.rancherImpl.RancherConfig",
+      "name": "rancherImpl.stackapisurl",
       "type": "java.lang.String"
     },
     {
-      "sourceType": "app.schedule.RancherConfig",
-      "name": "rancher.webhooks",
+      "sourceType": "app.schedule.rancherImpl.RancherConfig",
+      "name": "rancherImpl.webhooks",
       "type": "java.util.Map<java.lang.String,java.util.Map<java.lang.String,java.lang.String>>"
     }
   ]

@@ -58,9 +58,11 @@ public class HandlerCenter implements HandleInter {
 
     @Autowired
     OverallRepository overallRepository;
+
     @Scheduled(fixedDelay = 60*60*1000)
     private void doClean(){
-        Date boforeDate = new Date(new Date().getTime()-60*60*1000l);
+        System.out.println("清理数据");
+        Date boforeDate = new Date(new Date().getTime()-60*60*1000);
         overallRepository.deleteAllByCreateTimeBefore(boforeDate);
     }
     public void setMsgHandleListener(MsgHandleListener msgHandleListener) {

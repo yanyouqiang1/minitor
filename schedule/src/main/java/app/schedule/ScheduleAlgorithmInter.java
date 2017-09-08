@@ -30,7 +30,7 @@ public interface ScheduleAlgorithmInter {
      * @param methods 服务下所有方法的监控数据
      * @return 是否负载
      */
-//    public Boolean isServiceOverload(Service service, List<List<Method>> methods);
+//    public Boolean isServiceOverload(AbstractService service, List<List<Method>> methods);
 //
 //    /***
 //     * 判断服务是否轻松
@@ -38,21 +38,21 @@ public interface ScheduleAlgorithmInter {
 //     * @param methods
 //     * @return
 //     */
-//    public Boolean isServiceRelax(Service service, List<List<Method>> methods);
+//    public Boolean isServiceRelax(AbstractService service, List<List<Method>> methods);
 //
 //    /***
 //     *  判断负载根源 ，确认哪些应该扩展
 //     * @param overloadServices 负载服务列表
 //     * @return 应该扩展的服务
 //     */
-//    public List<Service> judgeSourceService(List<Service> overloadServices);
+//    public List<AbstractService> judgeSourceService(List<AbstractService> overloadServices);
 //
 //    /***
 //     *  需要缩小容器的服务
 //     * @param relaxService 负载轻的服务列表
 //     * @return
 //     */
-//    public List<Service> adjustRelaxService(List<Service> relaxService);
+//    public List<AbstractService> adjustRelaxService(List<AbstractService> relaxService);
 
 
 }

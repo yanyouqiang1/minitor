@@ -21,4 +21,5 @@ public interface ServiceRepository extends JpaRepository<Monitor_services,Long> 
     public List<Monitor_services> findTop90ByIdEquals(Long id);
 
     public List<Monitor_services> findTop90ByNameEqualsOrderByColumnidDesc(String serviceName);
+
 }

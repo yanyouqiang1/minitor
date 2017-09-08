@@ -13,6 +13,7 @@
         <module>MinitorSchedule</module>
         <module>schedule</module>
         <module>monitor</module>
+        <module>rancherAdapter</module>
     </modules>
 
     <parent>

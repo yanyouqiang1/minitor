@@ -29,30 +29,20 @@ public class ScheduleCenter {
 
     @Scheduled(initialDelay = 60*1000,fixedRate = 60*1000)
     public void doSchedule(){
-//        List<Service> overLoads = new LinkedList<Service>(); //超载列表
-//        List<Service> relaxs = new LinkedList<Service>(); //轻载列表
-
         //判断服务负载高还是轻
         List<Service> services = scheduleService.getAllService();
         for (Service s:services){
             List<List<Method>> methods = scheduleService.getServiceMethod(s);
             ConcreteData concreteData = scheduleAlgorithm.fullfillDate(s,methods);
             concreteServiceList.add(concreteData);
-//            if(scheduleAlgorithm.isServiceOverload(s,methods)){
-//                overLoads.add(s);
-//            }else if(scheduleAlgorithm.isServiceRelax(s,methods)){
-//                relaxs.add(s);
-//            }
         }
         List<Service> adjustUP = scheduleAlgorithm.judgeUpService(concreteServiceList);
         //寻找根源 执行调度
-//        List<Service> adjustUP = scheduleAlgorithm.judgeSourceService(overLoads);
         for(Service sup:adjustUP){
             scheduleExecute.upService(sup);
             System.out.println("服务："+sup.getName()+"扩大容器");
         }
 //        //调整轻松服务
-//        List<Service> adjustDOWN = scheduleAlgorithm.adjustRelaxService(relaxs);
         List<Service> adjustDOWN = scheduleAlgorithm.judgeDownService(concreteServiceList);
         for(Service sdown:adjustDOWN){
             scheduleExecute.downService(sdown);
@@ -68,8 +58,6 @@ public class ScheduleCenter {
         rancherStack.init();
         System.out.println("同步rancher,"+System.currentTimeMillis());
     }
-
-
     public ScheduleCenter() {
         concreteServiceList = new LinkedList<ConcreteData>();
     }

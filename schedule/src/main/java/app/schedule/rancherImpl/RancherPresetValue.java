@@ -29,7 +29,7 @@ public class RancherPresetValue {
         secret = rancherConfig.getAPIkey().get("secret");
         stackApiUrl = "http://" + host + ":" + port + "/" + rancherConfig.getStackapisurl();
     }
-    public boolean setServicUpUrl(String serviceName,String upUrl){
+    public boolean setServiceUpUrl(String serviceName, String upUrl){
         for(ServiceHook serviceHook:webhooks){
             if(serviceHook.getServiceName().equals(serviceName)){
                 serviceHook.setUpUrl(upUrl);
@@ -37,7 +37,11 @@ public class RancherPresetValue {
                 return true;
             }
         }
-        return false;
+        ServiceHook serviceHook = new ServiceHook();
+        serviceHook.setServiceName(serviceName);
+        serviceHook.setUpUrl(upUrl);
+        webhooks.add(serviceHook);
+        return true;
     }
     public boolean setServiceDownUrl(String serviceName,String downUrl){
         for(ServiceHook serviceHook:webhooks){
@@ -47,7 +51,11 @@ public class RancherPresetValue {
                 return true;
             }
         }
-        return false;
+        ServiceHook serviceHook = new ServiceHook();
+        serviceHook.setServiceName(serviceName);
+        serviceHook.setDownUrl(downUrl);
+        webhooks.add(serviceHook);
+        return true;
     }
     public String getServiceUpUrl(String serviceName){
         for(ServiceHook serviceHook:webhooks){

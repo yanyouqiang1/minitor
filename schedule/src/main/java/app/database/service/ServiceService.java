@@ -35,4 +35,8 @@ public class ServiceService {
     public List<Monitor_services> getTop90ByServiceName(String serviceName){
         return serviceRepository.findTop90ByNameEqualsOrderByColumnidDesc(serviceName);
     }
+
+    public long getLatestRequestVisitor(String serviceName){
+        return 0;
+    }
 }
