@@ -60,7 +60,7 @@ public class RancherOS {
             webhooksURL = rancherPresetValue.getServiceDownUrl(serviceName);
         }
         if (webhooksURL.equals("")) {
-            System.out.println("scale" + serviceName + "容器失败");
+            System.out.println("scale:" + serviceName + "容器失败");
             return false;
         }
         HttpRequest.httpClientPost(webhooksURL, null, "UTF8");

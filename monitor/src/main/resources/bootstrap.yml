@@ -2,4 +2,4 @@ spring:
   application:
     name: monitor
 server:
-  port: 8012
+  port: 9001

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Component;
 /**
  * Created by Administrator on 2017/7/28.
  */
-@Component
 public class PrometheusImpl implements ContainerInter {
 
     PrometheusConfig config;
