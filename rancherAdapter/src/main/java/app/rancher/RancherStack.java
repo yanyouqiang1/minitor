@@ -1,6 +1,7 @@
 package app.rancher;
 
 import app.rancher.entity.ResultData;
+import app.webInterface.targetAdapter.AdapterService;
 import lombok.Data;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +24,13 @@ public class RancherStack {
     @Autowired
     RancherOS rancherOS;
 
-    @Scheduled(initialDelay = 0,fixedRate = 30*1000l)
+    @Scheduled(initialDelay = 0, fixedRate = 30 * 1000l)
     public void initialization() {
-        try{
+        try {
             List<String> serviceIds = rancherOS.getStackServices();
-            for(String serviceId:serviceIds){
+            for (String serviceId : serviceIds) {
                 RancherService service = findServiceById(serviceId);
-                if(service==null){
+                if (service == null) {
                     service = new RancherService();
                     service.setServiceId(serviceId);
                     rancherServices.add(service);
@@ -38,9 +39,9 @@ public class RancherStack {
                 service.setScale(rancherOS.getServiceScale(serviceId));
                 service.setContainerNames(rancherOS.getServiceContainerNames(serviceId));
                 List<String> linkedServices = rancherOS.getLinkedServices(serviceId);
-                for(String ls:linkedServices){
+                for (String ls : linkedServices) {
                     RancherService ss = findServiceById(ls);
-                    if(ss==null){
+                    if (ss == null) {
                         ss = new RancherService();
                         ss.setServiceId(ls);
                         rancherServices.add(ss);
@@ -49,19 +50,36 @@ public class RancherStack {
                 }
             }
 
-        }catch (JSONException e){
+        } catch (JSONException e) {
             e.printStackTrace();
         }
     }
+
     private RancherService findServiceById(String serviceId) {
-        for(RancherService s:rancherServices){
-            if(s.getServiceId().equals(serviceId)){
+        for (RancherService s : rancherServices) {
+            if (s.getServiceId().equals(serviceId)) {
                 return s;
             }
         }
         return null;
     }
 
+    public boolean upService(String serviceName) {
+        RancherService rancherService = findServiceById(serviceName);
+        if (rancherService != null) {
+            return rancherService.upService();
+        }
+        return false;
+    }
+
+    public boolean downService(String serviceName) {
+        RancherService rancherService = findServiceById(serviceName);
+        if (rancherService != null) {
+            return rancherService.downService();
+        }
+        return false;
+
+    }
 //    @Override
 //    public void upService(Service service) {
 //        RancherService rancherService = findServiceById(service.getName());
@@ -74,7 +92,7 @@ public class RancherStack {
 //    public void downService(Service service) {
 //        RancherService rancherService = findServiceById(service.getName());
 //        if(rancherService!=null){
-//            rancherService.downServcie();
+//            rancherService.downService();
 //        }
 //    }
 //
@@ -141,10 +159,20 @@ public class RancherStack {
     @Autowired
     ContainerInter containerInter;
 
-    public ResultData getContainerCpuStatusByName(String containerName){
+    public ResultData getContainerCpuStatusByName(String containerName) {
         return containerInter.getCpuRateByContainerName(containerName);
     }
-    public ResultData getContainerMemoryStatusByName(String containerName){
+
+    public ResultData getContainerMemoryStatusByName(String containerName) {
         return containerInter.getMemoryByContainerName(containerName);
+    }
+
+    public RancherService findService(String serviceName) {
+        for(RancherService s:rancherServices){
+            if(s.getName().equals(serviceName)){
+                return s;
+            }
+        }
+        return null;
     }
 }

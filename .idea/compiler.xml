@@ -13,6 +13,9 @@
         <module name="rancherAdapter" />
         <module name="reciver" />
         <module name="schedule" />
+        <module name="serviceA" />
+        <module name="serviceB" />
+        <module name="serviceC" />
         <module name="streamSender" />
       </profile>
     </annotationProcessing>
@@ -23,6 +26,9 @@
       <module name="rancherAdapter" target="1.6" />
       <module name="reciver" target="1.6" />
       <module name="schedule" target="1.6" />
+      <module name="serviceA" target="1.8" />
+      <module name="serviceB" target="1.8" />
+      <module name="serviceC" target="1.8" />
       <module name="springcloud" target="1.6" />
       <module name="streamSender" target="1.8" />
     </bytecodeTargetLevel>

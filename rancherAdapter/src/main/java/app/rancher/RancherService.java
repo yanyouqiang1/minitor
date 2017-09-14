@@ -22,17 +22,23 @@ public class RancherService {
     @Autowired
     RancherOS rancherOS;
 
-    public void upService() {
-        rancherOS.scaleService(name, true);
-        scale++;
-        System.out.println("服务:"+name+" 容器增加");
+    public boolean upService() {
+        if (rancherOS.scaleService(name, true)) {
+            scale++;
+            System.out.println("服务:" + name + " 容器增加");
+            return true;
+        }
+        return false;
+
     }
 
-    public void downServcie() {
-        if (scale > 1) {
-            rancherOS.scaleService(name, false);
+    public boolean downService() {
+        if (scale > 1 && rancherOS.scaleService(name, false)) {
+            scale--;
+            System.out.println("服务:" + name + " 容器减少");
+            return true;
         }
-        scale--;
-        System.out.println("服务:"+name+" 容器减少");
+        return false;
+
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/7/31.
@@ -14,7 +15,7 @@ import java.util.List;
 @Component
 @Data
 public class RancherPresetValue {
-    private List<ServiceHook> webhooks;
+    private List<ServiceHook> webHooks;
 
     private String accesskey;
     private String secret;
@@ -22,15 +23,25 @@ public class RancherPresetValue {
     private String host,port;
 
     public RancherPresetValue(RancherConfig rancherConfig){
-        webhooks = new LinkedList<ServiceHook>();
+        webHooks = new LinkedList<ServiceHook>();
+        Map<String,Map<String,String>> hooks = rancherConfig.getWebHooks();
+        for(Map.Entry<String,Map<String,String>> entry:hooks.entrySet()){
+            ServiceHook serviceHook =new ServiceHook();
+            serviceHook.setServiceName(entry.getKey());
+            Map<String,String> map = entry.getValue();
+            serviceHook.setUpUrl(map.get("up"));
+            serviceHook.setDownUrl(map.get("down"));
+            webHooks.add(serviceHook);
+        }
+
         host = rancherConfig.getHost();
         port = rancherConfig.getPort();
         accesskey = rancherConfig.getAPIkey().get("accesskey");
         secret = rancherConfig.getAPIkey().get("secret");
-        stackApiUrl = "http://" + host + ":" + port + "/" + rancherConfig.getStackapisurl();
+        stackApiUrl = "http://" + host + ":" + port + "/" + rancherConfig.getStackApiUrl();
     }
     public boolean setServiceUpUrl(String serviceName, String upUrl){
-        for(ServiceHook serviceHook:webhooks){
+        for(ServiceHook serviceHook: webHooks){
             if(serviceHook.getServiceName().equals(serviceName)){
                 serviceHook.setUpUrl(upUrl);
                 System.out.println("设置:"+serviceName+",upUrl 成功！");
@@ -40,11 +51,11 @@ public class RancherPresetValue {
         ServiceHook serviceHook = new ServiceHook();
         serviceHook.setServiceName(serviceName);
         serviceHook.setUpUrl(upUrl);
-        webhooks.add(serviceHook);
+        webHooks.add(serviceHook);
         return true;
     }
     public boolean setServiceDownUrl(String serviceName,String downUrl){
-        for(ServiceHook serviceHook:webhooks){
+        for(ServiceHook serviceHook: webHooks){
             if(serviceHook.getServiceName().equals(serviceName)){
                 serviceHook.setDownUrl(downUrl);
                 System.out.println("设置:"+serviceName+",downUrl 成功！");
@@ -54,11 +65,11 @@ public class RancherPresetValue {
         ServiceHook serviceHook = new ServiceHook();
         serviceHook.setServiceName(serviceName);
         serviceHook.setDownUrl(downUrl);
-        webhooks.add(serviceHook);
+        webHooks.add(serviceHook);
         return true;
     }
     public String getServiceUpUrl(String serviceName){
-        for(ServiceHook serviceHook:webhooks){
+        for(ServiceHook serviceHook: webHooks){
             if(serviceHook.getServiceName().equals(serviceName)){
                 return serviceHook.getUpUrl();
             }
@@ -67,7 +78,7 @@ public class RancherPresetValue {
         return "";
     }
     public String getServiceDownUrl(String serviceName){
-        for(ServiceHook serviceHook:webhooks){
+        for(ServiceHook serviceHook: webHooks){
             if(serviceHook.getServiceName().equals(serviceName)){
                 return serviceHook.getDownUrl();
             }

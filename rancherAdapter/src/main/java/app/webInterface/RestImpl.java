@@ -1,6 +1,9 @@
 package app.webInterface;
 
+import app.rancher.RancherPresetValue;
 import app.webInterface.setting.CommonReply;
+import app.webInterface.setting.CommonReplyBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 /**
@@ -8,13 +11,24 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class RestImpl implements RestInter {
+    @Autowired
+    RancherPresetValue presetValue;
+
     @Override
     public CommonReply setWebhookUp(String serviceName, String upUrl) {
-        return null;
+        if(presetValue.setServiceUpUrl(serviceName,upUrl)) {
+            return CommonReplyBuilder.buildSuccessReply();
+        }else{
+            return CommonReplyBuilder.buildErrorReply("设置消息失败");
+        }
     }
 
     @Override
     public CommonReply setWebhookDown(String serviceName, String downUrl) {
-        return null;
+        if(presetValue.setServiceDownUrl(serviceName,downUrl)) {
+            return CommonReplyBuilder.buildSuccessReply();
+        }else{
+            return CommonReplyBuilder.buildErrorReply("设置消息失败");
+        }
     }
 }

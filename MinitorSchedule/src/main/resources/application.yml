@@ -39,8 +39,8 @@ rancher:
 
   webhooks:
     syslog:
-      up: v1-webhooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
-      down: v1-webhooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
+      up: v1-webHooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
+      down: v1-webHooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
     syslog2:
       up: syslog2up
       down: syslog2down

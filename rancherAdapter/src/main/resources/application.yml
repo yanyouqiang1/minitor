@@ -1,10 +1,6 @@
 server:
   port: 8003
 
-spring:
-  application:
-    name: rancherAdapter
-
 prometheus:
   address: 192.168.0.100:9090
 
@@ -14,11 +10,8 @@ rancher:
   APIkey:
     accesskey: 600846BEC82913C1DD1D
     secret: 5VrwxXgNsWMR1Dz4i2TuvCv7VGGB6n54C5NHrhz2
-  stackapisurl: v2-beta/projects/1a5/stacks/1st5
-  webhooks:
-    syslog:
-      up: http://172.18.218.252:8080/v1-webhooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
-      down: http://172.18.218.252:8080/v1-webhooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
-    syslog2:
-      up: syslog2up
-      down: syslog2down
+  stackApiUrl: v2-beta/projects/1a5/stacks/1st6
+  webHooks:
+    nginx:
+      up: http://192.168.0.100:8080/v1-webhooks/endpoint?key=R5a6Di8zOMbVm5lxC7vbr01mTJj8UDYvTiumLoEp&projectId=1a5
+      down: http://192.168.0.100:8080/v1-webhooks/endpoint?key=F8iVgOkwMRHFFceqqI49Td7KYR2Jq5NOsDBj6agY&projectId=1a5

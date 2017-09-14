@@ -44,16 +44,35 @@ public class RancherAdapter implements Adapter {
     }
     @Override
     public boolean upService(String serviceName) {
-        return false;
+        return rancherStack.upService(serviceName);
     }
 
     @Override
     public boolean downService(String serviceName) {
-        return false;
+        return rancherStack.downService(serviceName);
     }
 
     @Override
     public List<AdapterService> simplifyOverloadList(List<AdapterService> serviceList) {
-        return null;
+        List<RancherService> rancherServiceLinkedList = new LinkedList<RancherService>();
+        for(AdapterService adapterService:serviceList){
+            rancherServiceLinkedList.add(rancherStack.findService(adapterService.getName()));
+        }
+        for(RancherService rancherService:rancherServiceLinkedList){
+            List<RancherService> linkService = rancherService.getLinkedServices();
+            for(RancherService service: linkService){
+                if(rancherServiceLinkedList.contains(service)){
+                    rancherServiceLinkedList.remove(rancherService);
+                    break;
+                }
+            }
+        }
+
+        serviceList.clear();
+        for(RancherService rancherService:rancherServiceLinkedList){
+            serviceList.add(AdapterService.generate(rancherService));
+        }
+
+        return serviceList;
     }
 }

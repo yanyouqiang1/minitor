@@ -13,12 +13,12 @@ public class RestControl {
     @Autowired
     RestInter restInter;
 
-    @RequestMapping(value = "/setting/service/{serviceName}/webhook/up",method = RequestMethod.PUT)
-    public CommonReply setWebhookUp(@PathVariable(name = "serviceName",required = true)String serviceName, @RequestParam(name = "webhookUp",required = false,defaultValue = "")String webhookUp){
+    @RequestMapping(value = "/setting/service/webhook/up",method = RequestMethod.POST)
+    public CommonReply setWebhookUp(@RequestParam(name = "serviceName",required = true)String serviceName, @RequestParam(name = "url",required = false,defaultValue = "")String webhookUp){
         return restInter.setWebhookUp(serviceName,webhookUp);
     }
-    @RequestMapping(value = "/setting/service/{serviceName}/webhook/down",method = RequestMethod.PUT)
-    public CommonReply setWebhookDown(@PathVariable(name = "serviceName",required = true)String serviceName, @RequestParam(name = "webhookDown",required = false,defaultValue = "")String webhookDown){
+    @RequestMapping(value = "/setting/service/webhook/down",method = RequestMethod.POST)
+    public CommonReply setWebhookDown(@RequestParam(name = "serviceName",required = true)String serviceName, @RequestParam(name = "url",required = false,defaultValue = "")String webhookDown){
         return restInter.setWebhookDown(serviceName,webhookDown);
     }
 

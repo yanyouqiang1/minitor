@@ -13,8 +13,9 @@ import java.util.Map;
 @ConfigurationProperties(prefix = "rancher")
 @Data
 public class RancherConfig {
-    private String stackapisurl;
+    private String stackApiUrl;
     private String host;
     private String port;
     private Map<String, String> APIkey = new HashMap<String, String>();
+    private Map<String,Map<String,String>> webHooks = new HashMap<String, Map<String, String>>();
 }

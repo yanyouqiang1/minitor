@@ -1,8 +1,4 @@
 spring:
-  application:
-    name: schedule
-
-spring:
   datasource:
     url: jdbc:mysql://${MYSQL_ADDRESS:192.168.0.100:3306}/monitor?autoReconnect=true&useSSL=false
     username: ${MYSQL_NAME:root}
@@ -18,27 +14,6 @@ spring:
     show-sql: true
     hibernate:
       ddl-auto: update
-
-
-#rancher:
-#  host: 192.168.0.100
-#  port: 8080
-#  APIkey:
-#    accesskey: 2907A3BA8445D1F9AEB5
-#    secret: bfJVo7osJMmxx4gFjAoqGxMvRFTWknXc54Cm6trG
-#  stackapisurl: v2-beta/projects/1a5/stacks/1st5
-#
-#  webhooks:
-#    syslog:
-#      up: http://172.18.218.252:8080/v1-webhooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
-#      down: http://172.18.218.252:8080/v1-webhooks/endpoint?key=zTAUvX07UY4PbmEZ3MHcGHGDLo4N1TRuDUxrFnww&projectId=1a5
-#    syslog2:
-#      up: syslog2up
-#      down: syslog2down
-#
-#prometheus:
-#  address: 192.168.0.100:9090
-
 
 
 
