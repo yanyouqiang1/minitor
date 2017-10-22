@@ -7,27 +7,16 @@ import java.util.Date;
  */
 public class test {
     public static void main(String[] args) {
-        String peak="18:30";
+        String peak="18:14";
         String though = "2:00";
 
+        System.out.println(getFloatTime(peak));
+
     }
-    public static boolean isPeak(String peak,String though,String now){
-        String[] peaks = peak.split(":");
-        int peakHour = Integer.valueOf(peaks[0]);
-        int peakMinute = Integer.valueOf(peaks[1]);
-        String[] thoughs = though.split(":");
-        int thoughHour = Integer.valueOf(thoughs[0]);
-        int thoughMinute = Integer.valueOf(thoughs[1]);
-
-        Calendar calendar = Calendar.getInstance();
-        int nowHour = calendar.get(Calendar.HOUR_OF_DAY);
-        int nowMinute = calendar.get(Calendar.MINUTE);
-
-        boolean is = false;
-
-        if(nowHour>peakHour)
-
-        return is;
+    private static float getFloatTime(String strTime) {
+        String[] times = strTime.split(":");
+        int hour = Integer.valueOf(times[0]);
+        int minute = Integer.valueOf(times[1]);
+        return hour +  minute / 60.0f;
     }
-
 }

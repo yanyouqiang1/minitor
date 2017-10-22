@@ -3,11 +3,13 @@ package app.feignclient;
 import app.feignclient.entity.Group;
 import app.feignclient.entity.Method;
 import app.feignclient.entity.Resource;
-import app.handle.commonHandle.warehouse.statistics.TopologyInter;
+import app.handle.commonHandle.warehouse.statistics.gateway.HandleResource;
+import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -55,21 +57,23 @@ public class TopologyImpl implements TopologyInter {
     }
 
     @Override
-    public Map<Long, String> getResourceByGroupId(long groupid) {
+    public List<HandleResource> getResourceByGroupId(long groupid) {
+        List<HandleResource> handleResources = new LinkedList<>();
         if(groups==null){
             init();
         }
-        Map<Long,String> map = new HashMap<>();
         for(Group g:groups){
             if(g.getId()==groupid){
                 List<Resource> resources = g.getResources();
                 for(Resource r:resources){
-                    map.put(r.getId(),r.getResourceName());
+                    handleResources.add(Resource.change(r));
+//                    map.put(r.getId(),r.getResourceName());
                 }
             }
         }
-        return map;
+        return handleResources;
     }
+
 
     @Override
     public Map<Long, String> getMethodByResourceId(long resourceid) {

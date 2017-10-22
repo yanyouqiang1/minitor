@@ -1,5 +1,6 @@
 package app.feignclient.entity;
 
+import app.handle.commonHandle.warehouse.statistics.gateway.HandleResource;
 import lombok.Data;
 
 import java.util.ArrayList;
@@ -25,4 +26,13 @@ public class Resource {
     private Service service;
     private List<Method> methods = new ArrayList<Method>();
 
+
+    public static HandleResource change(Resource resource){
+        HandleResource handleResource = new HandleResource();
+        handleResource.setId(resource.getId());
+        handleResource.setGroupId(resource.getGroupId());
+        handleResource.setServiceId(resource.getServiceId());
+        handleResource.setResourceName(resource.getResourceName());
+        return handleResource;
+    }
 }

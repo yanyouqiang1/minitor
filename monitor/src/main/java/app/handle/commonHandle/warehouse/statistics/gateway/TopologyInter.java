@@ -1,5 +1,6 @@
-package app.handle.commonHandle.warehouse.statistics;
+package app.handle.commonHandle.warehouse.statistics.gateway;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,7 +15,7 @@ public interface TopologyInter {
     public Map<Long, String> getAllServices();
 
     //根据组ID获得组下所有资源
-    public Map<Long,String> getResourceByGroupId(long groupid);
+    public List<HandleResource> getResourceByGroupId(long groupid);
 
     //根据资源ID获得所有方法
     public Map<Long,String> getMethodByResourceId(long resourceid);

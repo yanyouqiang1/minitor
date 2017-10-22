@@ -13,6 +13,7 @@ import app.feignclient.monitor.Monitor;
 import app.feignclient.monitor.MonitorMethod;
 import app.feignclient.targetAdapter.AdapterService;
 import app.feignclient.targetAdapter.Adapter;
+import app.util.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -87,6 +88,7 @@ public class Heart extends AbstractHeart {
 
     @Autowired
     StrategyOverallSwitchService overallSwitchService;
+
     @Autowired
     StrategyResponseTimeService responseTimeService;
 
@@ -95,10 +97,26 @@ public class Heart extends AbstractHeart {
         List<OverallStrategyInter> overallStrategyInterList = new LinkedList<OverallStrategyInter>();
         if (overallSwitchService.getSwitchStatus(MethodResponseTime.class.getName())) {
             Map<String, MethodResponseTime.MethodParameter> parameterMap = responseTimeService.getParameters();
-            MethodResponseTime methodResponseTime = new MethodResponseTime(parameterMap);
+            MethodResponseTime methodResponseTime = SpringUtil.getBean(MethodResponseTime.class);
+            methodResponseTime.setParameterMap(parameterMap);
+//            MethodResponseTime methodResponseTime = new MethodResponseTime(parameterMap);
             overallStrategyInterList.add(methodResponseTime);
         }
         return overallStrategyInterList;
+    }
+
+    @Override
+    protected void decline(AbstractService service) {
+        if (adapter.upService(service.getName())){
+            System.out.println(service.getName()+"容器提升");
+        }
+    }
+
+    @Override
+    protected void upgrade(AbstractService service) {
+        if (adapter.downService(service.getName())){
+            System.out.println(service.getName()+"容器下降");
+        }
     }
 }
 

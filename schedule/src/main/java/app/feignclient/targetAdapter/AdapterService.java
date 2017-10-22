@@ -16,7 +16,7 @@ public class AdapterService {
 //    private String serviceId;
     private int scale;
     private List<String> containerNames = new LinkedList<String>();
-//    private List<AdapterService> linkedServices = new LinkedList<AdapterService>();
+    private List<String> linkedServices = new LinkedList<>();
 
     public static AdapterService generate(AbstractService abstractService){
         AdapterService adapterService = new AdapterService();

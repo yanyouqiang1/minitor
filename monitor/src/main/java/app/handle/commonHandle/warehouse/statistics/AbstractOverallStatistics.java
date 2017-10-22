@@ -1,5 +1,6 @@
 package app.handle.commonHandle.warehouse.statistics;
 
+import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
 import app.util.SpringUtil;
 import entitylib.RequestMessage;
 import entitylib.ResponseMessage;

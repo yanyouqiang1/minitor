@@ -1,5 +1,6 @@
 package app.handle.commonHandle.warehouse.statistics;
 
+import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
 import app.util.SpringUtil;
 import entitylib.RequestMessage;
 import entitylib.ResponseMessage;
@@ -24,6 +25,7 @@ public abstract class AbstractResourceStatistics implements Statistics {
     //自身属性
     protected Long id;
     protected String name;
+    protected Long serviceId;
 
     //映射属性
     protected AbstractGroupStatistics parentGroup;

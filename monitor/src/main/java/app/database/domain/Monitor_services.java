@@ -25,4 +25,6 @@ public class Monitor_services {
     @ManyToOne(fetch = FetchType.LAZY)
     private Monitor_overall overall;
 
+    public Monitor_services() {
+    }
 }

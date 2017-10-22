@@ -3,7 +3,7 @@ package app.webInterface;
 import app.handle.commonHandle.GlobalResource;
 import app.database.dao.*;
 import app.database.domain.*;
-import app.handle.commonHandle.warehouse.statistics.TopologyInter;
+import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
 import app.webInterface.entity.list.Details;
 import app.webInterface.entity.list.Details_group;
 import app.webInterface.entity.list.Details_resources;

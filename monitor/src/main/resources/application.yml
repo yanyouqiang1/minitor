@@ -17,11 +17,11 @@ spring:
   rabbitmq:
     username: ${RABBIT_NAME:user}
     password: ${RABBIT_PASS:password}
-    addresses: ${RABBIT_ADDRESS:192.168.0.101:5673}
+    addresses: ${RABBIT_ADDRESS:192.168.0.101:5672}
 #    addresses: ${RABBIT_ADDRESS:192.168.0.101:5672}
 
   datasource:
-    url: jdbc:mysql://${MYSQL_ADDRESS:192.168.0.100:3306}/monitor?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://${MYSQL_ADDRESS:192.168.0.102:3306}/monitor?autoReconnect=true&useSSL=false
     username: ${MYSQL_NAME:root}
     password: ${MYSQL_PASS:root}
     driver-class-name: com.mysql.jdbc.Driver
@@ -41,10 +41,7 @@ eureka:
     prefer-ip-address: true
     instance-id: ${spring.cloud.client.ipAddress}:${server.port}
     hostname: ${EUREKA_ADDRESS:192.168.0.100}
-    port:  ${EUREKA_PORT:8093}
+    port:  ${EUREKA_PORT:8001}
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
-
-
-

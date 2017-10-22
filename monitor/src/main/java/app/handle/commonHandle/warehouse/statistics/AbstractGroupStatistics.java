@@ -1,5 +1,7 @@
 package app.handle.commonHandle.warehouse.statistics;
 
+import app.handle.commonHandle.warehouse.statistics.gateway.HandleResource;
+import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
 import app.util.SpringUtil;
 import entitylib.RequestMessage;
 import entitylib.ResponseMessage;
@@ -81,17 +83,29 @@ public abstract class AbstractGroupStatistics implements Statistics{
             resourceStatisticsMap = new ConcurrentHashMap<>();
         }
         resourceStatisticsMap.clear();
-        Map<Long,String> resources = toplogyInter.getResourceByGroupId(this.id);
-        if(resources!=null){
-            for(Map.Entry<Long,String> resourceEntry:resources.entrySet()){
+        List<HandleResource> handleResources = toplogyInter.getResourceByGroupId(this.id);
+        if(handleResources!=null){
+            for(HandleResource handleResource:handleResources){
                 AbstractResourceStatistics resource = SpringUtil.getBean(AbstractResourceStatistics.class);
-                resource.setId(resourceEntry.getKey());
-                resource.setName(resourceEntry.getValue());
+                resource.setId(handleResource.getId());
+                resource.setName(handleResource.getResourceName());
+                resource.setServiceId(handleResource.getServiceId());
                 resource.setParentGroup(this);
                 resource.statisticsUpdate();
-                resourceStatisticsMap.put(resourceEntry.getKey(),resource);
+                resourceStatisticsMap.put(handleResource.getId(),resource);
             }
         }
+//        Map<Long,String> resources = toplogyInter.getResourceByGroupId(this.id);
+//        if(resources!=null){
+//            for(Map.Entry<Long,String> resourceEntry:resources.entrySet()){
+//                AbstractResourceStatistics resource = SpringUtil.getBean(AbstractResourceStatistics.class);
+//                resource.setId(resourceEntry.getKey());
+//                resource.setName(resourceEntry.getValue());
+//                resource.setParentGroup(this);
+//                resource.statisticsUpdate();
+//                resourceStatisticsMap.put(resourceEntry.getKey(),resource);
+//            }
+//        }
     }
 
 

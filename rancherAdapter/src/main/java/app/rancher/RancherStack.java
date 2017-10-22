@@ -74,7 +74,8 @@ public class RancherStack {
 
     public boolean downService(String serviceName) {
         RancherService rancherService = findServiceById(serviceName);
-        if (rancherService != null) {
+        if (rancherService != null&&rancherService.getScale()>1) {
+            rancherService.setScale(rancherService.getScale()-1);
             return rancherService.downService();
         }
         return false;

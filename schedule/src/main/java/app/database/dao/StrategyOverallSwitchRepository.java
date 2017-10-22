@@ -10,5 +10,5 @@ import java.util.List;
  * Created by Administrator on 2017/9/10.
  */
 public interface StrategyOverallSwitchRepository extends JpaRepository<Strategy_overallSwitch,Integer> {
-    public boolean getOnOrOffByStrategyNameEquals(String strategyName);
+    public Strategy_overallSwitch getByStrategyNameEquals(String strategyName);
 }

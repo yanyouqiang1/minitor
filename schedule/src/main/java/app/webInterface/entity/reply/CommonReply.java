@@ -1,4 +1,4 @@
-package app.webInterface.entity.setting;
+package app.webInterface.entity.reply;
 
 import lombok.Data;
 

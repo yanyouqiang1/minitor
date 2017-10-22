@@ -1,6 +1,6 @@
 package app.webInterface.entity.observation;
 
-import app.schedule.rancherImpl.entity.ResultData;
+import app.feignclient.targetAdapter.AdapterResultData;
 import lombok.Data;
 
 import java.util.LinkedList;
@@ -14,7 +14,8 @@ public class RestServiceContainerMemory {
     private String serviceName;
     private List<ContainerMemory> containerMemorys;
 
-    public RestServiceContainerMemory() {
+    public RestServiceContainerMemory(String serviceName) {
+        this.serviceName = serviceName;
         containerMemorys = new LinkedList<ContainerMemory>();
     }
 
@@ -28,11 +29,11 @@ public class RestServiceContainerMemory {
             data = new LinkedList<ContainerMemoryPoint>();
         }
 
-        public void setData(ResultData resultData) {
-            for(ResultData.PrometheusPoint prometheusPoint:resultData.getPoints()){
+        public void setData(AdapterResultData resultData) {
+            for(AdapterResultData.Point point:resultData.getPoints()){
                 ContainerMemoryPoint containerMemoryPoint = new ContainerMemoryPoint();
-                containerMemoryPoint.setTime(prometheusPoint.getTime());
-                containerMemoryPoint.setValue(prometheusPoint.getValue());
+                containerMemoryPoint.setTime(point.getTime());
+                containerMemoryPoint.setValue(point.getValue());
                 this.data.add(containerMemoryPoint);
             }
         }

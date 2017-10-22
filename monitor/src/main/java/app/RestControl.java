@@ -4,6 +4,7 @@ import app.database.dao.OverallRepository;
 import app.feignclient.GatewayManager;
 import app.feignclient.entity.Group;
 import app.webInterface.RestInter;
+import app.webInterface.ScheduleRestControl;
 import app.webInterface.entity.list.Details;
 import app.webInterface.entity.list.Details_group;
 import app.webInterface.entity.list.Details_resources;
@@ -23,7 +24,7 @@ import java.util.List;
  * Created by Administrator on 2017/7/10.
  */
 @RestController
-public class RestControl {
+public class RestControl extends ScheduleRestControl{
     @Autowired
     RestInter restInter;
 

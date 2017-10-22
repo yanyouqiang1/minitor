@@ -24,7 +24,7 @@ public class MethodVisitorAverage implements MethodSingleStrategyInter{
 
     @Override
     public StrategySingleResult doStrategy(AbstractMethod method, AbstractService abstractService) {
-        long visitors = monitor.getMethodLatestVisitor(method.getName());
+        long visitors = monitor.getMethodLatestVisitor(abstractService.getName(),method.getName());
         long avg = visitors/abstractService.getScale();
         if(avg>=upper){
             return StrategySingleResult.UP;

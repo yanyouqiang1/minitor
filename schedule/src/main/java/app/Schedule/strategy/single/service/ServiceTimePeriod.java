@@ -74,13 +74,13 @@ public class ServiceTimePeriod implements ServiceSingleStrategyInter {
         String[] times = strTime.split(":");
         int hour = Integer.valueOf(times[0]);
         int minute = Integer.valueOf(times[1]);
-        return hour + minute / 60;
+        return hour + minute / 60.0f;
     }
 
     private float getFloatNow() {
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        return hour + minute / 60;
+        return hour + minute / 60.0f;
     }
 }

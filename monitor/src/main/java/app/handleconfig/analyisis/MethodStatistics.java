@@ -53,8 +53,8 @@ public class MethodStatistics extends AbstractMethodStatistics {
         if (response_visitors == 1) {
             response_min = responsetime;
             response_avg = responsetime;
-            serviceid = responseMessage.getServiceId();
-            groupid = responseMessage.getGroupId();
+//            serviceid = responseMessage.getServiceId();
+//            groupid = responseMessage.getGroupId();
 
         }
         if (responsetime < response_min) {
@@ -94,6 +94,8 @@ public class MethodStatistics extends AbstractMethodStatistics {
 
     @Override
     public void handleResult(AbstractMethodStatistics method) {
+        serviceid = method.getParentResource().getServiceId();
+        groupid = method.getParentResource().getParentGroup().getId();
         if (method.getResponse_visitors() != 0) {
             rate_status_100 = (float) status_100 / method.getResponse_visitors();
             rate_status_200 = (float) status_200 / method.getResponse_visitors();

@@ -1,5 +1,7 @@
 package app.Schedule;
 
+import app.database.service.StrategyContainerService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
 import java.util.*;
@@ -9,12 +11,16 @@ import java.util.*;
  */
 public abstract class AbstractHeart {
 
-    @Scheduled(initialDelay = 60 * 1000, fixedRate = 60 * 1000)
+    @Autowired
+    StrategyContainerService containerService;
+
+    @Scheduled(initialDelay = 0, fixedRate = 60 * 1000)
     public void heartbeat() {
         Set<AbstractService> upService = new HashSet<AbstractService>();
         Set<AbstractService> downService = new HashSet<AbstractService>();
         //服务调度
         List<AbstractService> allService = getAllStrategyService();
+        containerService.save(allService);//保存服务容器数量
         for (AbstractService service : allService) {
             //服务全局调度
 //            List<OverallStrategyInter> serviceOverallStrategyInterList = service.getServiceOverallStrategyInterList();
@@ -63,7 +69,7 @@ public abstract class AbstractHeart {
                 boolean isMethodHandle = false;
                 while (iterator.hasNext() && !isMethodHandle) {
                     MethodSingleStrategyInter methodSingleStrategyInter = (MethodSingleStrategyInter) iterator.next();
-                    switch (methodSingleStrategyInter.doStrategy(method,service)) {
+                    switch (methodSingleStrategyInter.doStrategy(method, service)) {
                         case UP:
                             upService.add(service);
                             isMethodHandle = true;
@@ -81,7 +87,7 @@ public abstract class AbstractHeart {
 
         //全局策略
         List<OverallStrategyInter> overallStrategyInterList = getOverallStrategy();
-        for(OverallStrategyInter overallStrategyInter:overallStrategyInterList){
+        for (OverallStrategyInter overallStrategyInter : overallStrategyInterList) {
             StrategyOverallResult result = overallStrategyInter.doStrategy(allService);
             upService.addAll(result.getUpList());
             downService.addAll(result.getDownList());
@@ -90,15 +96,22 @@ public abstract class AbstractHeart {
 
         //调度
         for (AbstractService service : upService) {
+            upgrade(service);
             service.up();
         }
 
         for (AbstractService service : downService) {
+            decline(service);
             service.down();
         }
 
 
     }
+
+
+    protected abstract void decline(AbstractService service);
+
+    protected abstract void upgrade(AbstractService service);
 
     protected abstract List<OverallStrategyInter> getOverallStrategy();
 

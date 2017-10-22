@@ -1,7 +1,6 @@
 package app.webInterface.entity.observation;
 
-import app.database.domain.Monitor_services;
-import app.database.domain.Schedule_service;
+import app.database.domain.Strategy_container;
 import lombok.Data;
 
 import java.util.LinkedList;
@@ -19,12 +18,11 @@ public class RestServiceContainer {
         scales = new LinkedList<Integer>();
     }
 
-    public static RestServiceContainer generate(List<Schedule_service> schedule_services){
+    public static RestServiceContainer generate(String serviceName, List<Strategy_container> containers){
         RestServiceContainer serviceContainer = new RestServiceContainer();
-        if(schedule_services!=null){
-            for(Schedule_service services:schedule_services){
-                serviceContainer.getScales().add(services.getScale());
-            }
+        serviceContainer.setName(serviceName);
+        for (Strategy_container container:containers){
+            serviceContainer.scales.add(container.getScale());
         }
         return serviceContainer;
     }

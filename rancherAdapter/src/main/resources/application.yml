@@ -1,16 +1,28 @@
 server:
   port: 8003
 
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    hostname: ${EUREKA_ADDRESS:192.168.0.100}
+#    port:  ${EUREKA_PORT:8093}
+    port:  ${EUREKA_PORT:8001}
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+
+
 prometheus:
-  address: 192.168.0.100:9090
+  address:  ${PROMETHEUS_ADDRESS:192.168.0.100:9090}
 
 rancher:
-  host: 192.168.0.100
-  port: 8080
+  host: ${RANCHER_HOST:192.168.0.100}
+  port: ${RANCHER_PORT:8080}
   APIkey:
-    accesskey: 600846BEC82913C1DD1D
-    secret: 5VrwxXgNsWMR1Dz4i2TuvCv7VGGB6n54C5NHrhz2
-  stackApiUrl: v2-beta/projects/1a5/stacks/1st6
+    accesskey: ${RANCHER_API_KEY:600846BEC82913C1DD1D}
+    secret: ${RANCHER_API_SECRET:5VrwxXgNsWMR1Dz4i2TuvCv7VGGB6n54C5NHrhz2}
+  stackApiUrl: ${RANCHER_STACK_URL:v2-beta/projects/1a5/stacks/1st6}
   webHooks:
     nginx:
       up: http://192.168.0.100:8080/v1-webhooks/endpoint?key=R5a6Di8zOMbVm5lxC7vbr01mTJj8UDYvTiumLoEp&projectId=1a5

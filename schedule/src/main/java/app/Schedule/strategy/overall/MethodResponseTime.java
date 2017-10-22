@@ -9,6 +9,8 @@ import app.feignclient.targetAdapter.Adapter;
 import app.feignclient.targetAdapter.AdapterService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -19,11 +21,12 @@ import java.util.Map;
  * Created by Administrator on 2017/9/7.
  */
 @Data
+@Component
+@Scope("prototype")
 public class MethodResponseTime implements OverallStrategyInter {
     private Map<String,MethodParameter> parameterMap;
 
-    public MethodResponseTime(Map<String, MethodParameter> parameterMap) {
-        this.parameterMap = parameterMap;
+    public MethodResponseTime() {
     }
 
     @Autowired
@@ -57,7 +60,7 @@ public class MethodResponseTime implements OverallStrategyInter {
     private int serviceJudge(AbstractService abstractService) {
         List<AbstractMethod> methods = abstractService.getMethodList();
         for(AbstractMethod method:methods){
-            int[] responseTimes = monitor.getMethodRecentResponseTime(method.getName());
+            int[] responseTimes = monitor.getMethodRecentResponseTime(abstractService.getName(),method.getName());
             if(JudgmentOverLoadAlgorithm(parameterMap.get(method.getName()),responseTimes)){
                 return OVERLOAD;
             }else if(JudgmentRelaxAlgorithm(parameterMap.get(method.getName()),responseTimes)){

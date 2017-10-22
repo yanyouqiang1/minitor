@@ -1,6 +1,6 @@
 package app.webInterface.entity.observation;
 
-import app.database.domain.Monitor_services;
+import app.feignclient.targetAdapter.AdapterService;
 import lombok.Data;
 
 import java.util.LinkedList;
@@ -17,13 +17,10 @@ public class RestServices {
         services = new LinkedList<Service>();
     }
 
-    public static RestServices generate(List<List<Monitor_services>> groupServiceList) {
+    public static RestServices generate(List<AdapterService> adapterServices) {
         RestServices restServices = new RestServices();
-        if (groupServiceList != null) {
-            for (List<Monitor_services> servicesList : groupServiceList) {
-                RestServices.Service service = RestServices.Service.generate(servicesList);
-                restServices.getServices().add(service);
-            }
+        for (AdapterService adapterService:adapterServices){
+            restServices.getServices().add(Service.generate(adapterService));
         }
         return restServices;
     }
@@ -31,22 +28,13 @@ public class RestServices {
     @Data
     public static class Service {
         private String name;
-        private Long id;
-        private List<Integer> responseTime;
-
-        public Service() {
-            responseTime = new LinkedList<Integer>();
-        }
-
-        public static Service generate(List<Monitor_services> monitor_services) {
+        private int scale;
+        private List<String> linkedService;
+        public static Service generate(AdapterService adapterService){
             Service service = new Service();
-            if (!monitor_services.isEmpty()) {
-                service.setName(monitor_services.get(0).getName());
-                service.setId(monitor_services.get(0).getId());
-            }
-            for (Monitor_services services : monitor_services) {
-                service.getResponseTime().add(services.getResponse_avg());
-            }
+            service.setName(adapterService.getName());
+            service.setScale(adapterService.getScale());
+            service.setLinkedService(adapterService.getLinkedServices());
             return service;
         }
     }

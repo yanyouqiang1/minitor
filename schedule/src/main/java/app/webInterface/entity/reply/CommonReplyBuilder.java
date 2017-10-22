@@ -1,10 +1,7 @@
-package app.webInterface.entity.setting;
+package app.webInterface.entity.reply;
 
 
 import lombok.Data;
-
-import java.awt.*;
-import java.util.Date;
 
 /**
  * Created by Administrator on 2017/8/1.

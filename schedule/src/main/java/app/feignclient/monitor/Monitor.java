@@ -2,6 +2,7 @@ package app.feignclient.monitor;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,9 +21,12 @@ public interface Monitor {
 
     //获得方法最近访问量
     @RequestMapping("/schedule/getMethodLatestVisitor")
-    public long getMethodLatestVisitor(String methodName);
+    public long getMethodLatestVisitor(@RequestParam(name = "serviceName") String serviceName, @RequestParam(name = "methodName")String methodName);
 
     //获得方法一段时间的响应时间
     @RequestMapping("/schedule/getMethodRecentResponseTime")
-    public int[] getMethodRecentResponseTime(String methodName);
+    public int[] getMethodRecentResponseTime(@RequestParam(name = "serviceName") String serviceName, @RequestParam(name = "methodName")String methodName);
+
+    @RequestMapping("/schedule/getServiceRecentResponseTime")
+    public int[] getServiceRecentResponseTime(String serviceName);
 }

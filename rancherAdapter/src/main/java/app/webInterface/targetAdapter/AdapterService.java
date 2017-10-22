@@ -14,12 +14,16 @@ public class AdapterService {
     private String name;
     private int scale;
     private List<String> containerNames = new LinkedList<String>();
+    private List<String> linkedServices = new LinkedList<>();
 
     public static AdapterService generate(RancherService rancherService){
         AdapterService adapterService = new AdapterService();
         adapterService.setName(rancherService.getName());
         adapterService.setScale(rancherService.getScale());
         adapterService.setContainerNames(rancherService.getContainerNames());
+        for(RancherService rancherService1:rancherService.getLinkedServices()){
+            adapterService.getLinkedServices().add(rancherService1.getName());
+        }
         return adapterService;
     }
 }

@@ -2747,7 +2747,7 @@ define('echarts/util/layout', ['require', 'zrender/core/entity', 'zrender/core/B
             });
             each(names, function (name) {
                 // Consider case: newOption.width is null, which is
-                // set by user for removing width setting.
+                // set by user for removing width reply.
                 hasProp(newOption, name) && (newParams[name] = merged[name] = newOption[name]);
                 hasValue(newParams, name) && newValueCount++;
                 hasValue(merged, name) && mergedValueCount++;
@@ -13269,13 +13269,13 @@ define('echarts/component/axisPointer', ['require', '../echarts', './axisPointer
     // CartesianAxisPointer should be able to required somewhere.
     require('./axisPointer/CartesianAxisPointer');
     echarts.registerPreprocessor(function (option) {
-        // Always has a globalUtil axisPointerModel for default setting.
+        // Always has a globalUtil axisPointerModel for default reply.
         if (option) {
             (!option.axisPointer || option.axisPointer.length === 0) && (option.axisPointer = {});
             var link = option.axisPointer.link;
             // Normalize to array to avoid object mergin. But if link
             // is not set, remain null/undefined, otherwise it will
-            // override existent link setting.
+            // override existent link reply.
             if (link && !zrUtil.isArray(link)) {
                 option.axisPointer.link = [link];
             }
@@ -13707,7 +13707,7 @@ define('echarts/component/tooltip/TooltipView', ['require', './TooltipContent', 
             var asyncTicket = Math.random();
             // Do not check whether `trigger` is 'none' here, because `trigger`
             // only works on cooridinate system. In fact, we have not found case
-            // that requires setting `trigger` nothing on component yet.
+            // that requires reply `trigger` nothing on component yet.
             this._showOrMove(subTooltipModel, function () {
                 this._showTooltipContent(subTooltipModel, defaultHtml, subTooltipModel.get('formatterParams') || {}, asyncTicket, e.offsetX, e.offsetY, e.position, el);
             });

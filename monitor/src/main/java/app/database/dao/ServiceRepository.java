@@ -1,6 +1,5 @@
 package app.database.dao;
 
-import app.database.domain.Monitor_group;
 import app.database.domain.Monitor_overall;
 import app.database.domain.Monitor_services;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -17,4 +16,9 @@ public interface ServiceRepository extends JpaRepository<Monitor_services,Long> 
 
     public String findDistinctNameById(long id);
 
+    public Long findDistinctIdByName(String serviceName);
+
+    public Monitor_services findFirstByNameOrderByColumnidDesc(String serviceName);
+
+    public List<Monitor_services> findTop30ByNameOrderByColumnid(String serviceName);
 }
