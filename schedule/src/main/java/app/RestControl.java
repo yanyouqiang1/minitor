@@ -39,5 +39,4 @@ public class RestControl {
         return restInter.getRestServiceContainerMemory(serviceName);
     }
 
-
 }
