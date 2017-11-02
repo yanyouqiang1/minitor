@@ -25,4 +25,9 @@ public interface TopologyInter {
 
     //更新了
     public void update();
+
+    //
+    public Long getServiceIDByServiceName(String serviceName);
+
+    public List<String> getMethodsByServiceName(String serviceName);
 }

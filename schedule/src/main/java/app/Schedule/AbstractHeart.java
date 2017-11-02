@@ -36,8 +36,8 @@ public abstract class AbstractHeart {
             Iterator iterator = serviceSingleStrategyInterList.iterator();
             boolean isServiceHandle = false;
             while (iterator.hasNext() && !isServiceHandle) {
-                ServiceSingleStrategyInter strategy = (ServiceSingleStrategyInter) iterator.next();
-                switch (strategy.doStrategy(service)) {
+                ServiceSingleStrategyInter serviceSingleStrategyInter = (ServiceSingleStrategyInter) iterator.next();
+                switch (serviceSingleStrategyInter.doStrategy(service)) {
                     case UP:
                         upService.add(service);
                         isServiceHandle = true;
@@ -49,12 +49,14 @@ public abstract class AbstractHeart {
                     default:
                         break;
                 }
+                serviceSingleStrategyInter.afterStrategy(service);
             }
             //方法调度
             List<AbstractMethod> methods = getStrategyMethods(service);
             service.setMethodList(methods);
-            for (AbstractMethod method : methods) {
-                //方法全局策略
+            if(methods!=null) {
+                for (AbstractMethod method : methods) {
+                    //方法全局策略
 //                List<MethodOverallStrategyInter> methodOverallStrategyInters = method.getMethodOverallStrategyInterList();
 //                iterator = methodOverallStrategyInters.iterator();
 //                while (iterator.hasNext()) {
@@ -63,23 +65,24 @@ public abstract class AbstractHeart {
 //                    upService.addAll(result.getUpList());
 //                    downService.addAll(result.getDownList());
 //                }
-                //方法单个策略
-                List<MethodSingleStrategyInter> methodSingleStrategyInters = method.getMethodSingleStrategyInterList();
-                iterator = methodSingleStrategyInters.iterator();
-                boolean isMethodHandle = false;
-                while (iterator.hasNext() && !isMethodHandle) {
-                    MethodSingleStrategyInter methodSingleStrategyInter = (MethodSingleStrategyInter) iterator.next();
-                    switch (methodSingleStrategyInter.doStrategy(method, service)) {
-                        case UP:
-                            upService.add(service);
-                            isMethodHandle = true;
-                            break;
-                        case DOWN:
-                            isMethodHandle = true;
-                            downService.add(service);
-                            break;
-                        default:
-                            break;
+                    //方法单个策略
+                    List<MethodSingleStrategyInter> methodSingleStrategyInters = method.getMethodSingleStrategyInterList();
+                    iterator = methodSingleStrategyInters.iterator();
+                    boolean isMethodHandle = false;
+                    while (iterator.hasNext() && !isMethodHandle) {
+                        MethodSingleStrategyInter methodSingleStrategyInter = (MethodSingleStrategyInter) iterator.next();
+                        switch (methodSingleStrategyInter.doStrategy(method, service)) {
+                            case UP:
+                                upService.add(service);
+                                isMethodHandle = true;
+                                break;
+                            case DOWN:
+                                isMethodHandle = true;
+                                downService.add(service);
+                                break;
+                            default:
+                                break;
+                        }
                     }
                 }
             }

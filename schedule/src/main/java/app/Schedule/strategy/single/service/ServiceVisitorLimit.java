@@ -34,4 +34,9 @@ public class ServiceVisitorLimit implements ServiceSingleStrategyInter {
         }
         return StrategySingleResult.NORMAL;
     }
+
+    @Override
+    public void afterStrategy(AbstractService service) {
+
+    }
 }

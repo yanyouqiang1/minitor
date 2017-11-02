@@ -3,11 +3,14 @@ package app.database.service;
 import app.database.dao.MethodRepository;
 import app.database.dao.ServiceRepository;
 import app.database.domain.Monitor_method;
+import app.database.domain.Monitor_services;
+import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Administrator on 2017/9/15.
@@ -18,18 +21,6 @@ public class MonitorMethodService {
     ServiceRepository serviceRepository;
     @Autowired
     MethodRepository methodRepository;
-
-    public List<Monitor_method> getMethodsByServiceName(String serviceName) {
-        long serviceID = serviceRepository.findDistinctIdByName(serviceName);
-        List<String> names = methodRepository.findDistinctNameByServiceid(serviceID);
-        List<Monitor_method> monitor_methods = new LinkedList<>();
-        for (String name : names) {
-            Monitor_method monitor_method = new Monitor_method();
-            monitor_method.setName(name);
-            monitor_methods.add(monitor_method);
-        }
-        return monitor_methods;
-    }
 
     public long getMethodLatestVisitor(String serviceName, String methodName) {
         long serviceID = serviceRepository.findDistinctIdByName(serviceName);

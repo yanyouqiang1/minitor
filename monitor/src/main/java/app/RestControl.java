@@ -1,8 +1,10 @@
 package app;
 
 import app.database.dao.OverallRepository;
+import app.database.service.MonitorMethodService;
 import app.feignclient.GatewayManager;
 import app.feignclient.entity.Group;
+import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
 import app.webInterface.RestInter;
 import app.webInterface.ScheduleRestControl;
 import app.webInterface.entity.list.Details;
@@ -109,12 +111,11 @@ public class RestControl extends ScheduleRestControl{
     }
 
     @Autowired
-    OverallRepository overallRepository;
-    @RequestMapping("/test2")
+    TopologyInter topologyInter;
+    @RequestMapping("/test")
     public String test2(){
-        Date date = new Date();
-        Date before = new Date(date.getTime()-(long)20*1000);
-        overallRepository.deleteAllByCreateTimeBefore(before);
-        return "ok";
+        topologyInter.getMethodsByServiceName("123");
+        List e = topologyInter.getMethodsByServiceName("ServiceA");
+        return e.toString();
     }
 }

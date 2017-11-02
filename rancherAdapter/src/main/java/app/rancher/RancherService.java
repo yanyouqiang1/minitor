@@ -19,8 +19,11 @@ public class RancherService {
     private List<RancherService> linkedServices = new LinkedList<RancherService>();
 
     @JsonIgnore
-    @Autowired
     RancherOS rancherOS;
+
+    public RancherService(RancherOS rancherOS) {
+        this.rancherOS = rancherOS;
+    }
 
     public boolean upService() {
         if (rancherOS.scaleService(name, true)) {

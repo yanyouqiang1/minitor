@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 /**
  * Created by Administrator on 2017/9/12.
  */
-@FeignClient("serviceB")
+@FeignClient("ServiceB")
 public interface ServiceB {
     @RequestMapping("/methodB1")
     public String serviceB1();

@@ -5,4 +5,7 @@ package app.Schedule;
  */
 public interface ServiceSingleStrategyInter {
     public StrategySingleResult doStrategy(AbstractService service);
+
+    //after strategy
+    public void afterStrategy(AbstractService service);
 }

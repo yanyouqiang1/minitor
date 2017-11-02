@@ -65,7 +65,13 @@ public class Heart extends AbstractHeart {
 
     @Override
     protected List<AbstractMethod> getStrategyMethods(AbstractService service) {
+        if(service.getName()==null){
+            return null;
+        }
         List<MonitorMethod> monitorMethodList = monitor.getServiceMethods(service.getName());
+        if(monitorMethodList==null){
+            return null;
+        }
         List<AbstractMethod> abstractMethods = new LinkedList<AbstractMethod>();
         for (MonitorMethod monitorMethod : monitorMethodList) {
             AbstractMethod abstractMethod = MonitorMethod.change(monitorMethod);
@@ -107,15 +113,16 @@ public class Heart extends AbstractHeart {
 
     @Override
     protected void decline(AbstractService service) {
-        if (adapter.upService(service.getName())){
-            System.out.println(service.getName()+"容器提升");
+        if (adapter.downService(service.getName())){
+            System.out.println(service.getName()+"容器下降");
         }
+
     }
 
     @Override
     protected void upgrade(AbstractService service) {
-        if (adapter.downService(service.getName())){
-            System.out.println(service.getName()+"容器下降");
+        if (adapter.upService(service.getName())){
+            System.out.println(service.getName()+"容器提升");
         }
     }
 }

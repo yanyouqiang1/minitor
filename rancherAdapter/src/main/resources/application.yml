@@ -22,7 +22,7 @@ rancher:
   APIkey:
     accesskey: ${RANCHER_API_KEY:600846BEC82913C1DD1D}
     secret: ${RANCHER_API_SECRET:5VrwxXgNsWMR1Dz4i2TuvCv7VGGB6n54C5NHrhz2}
-  stackApiUrl: ${RANCHER_STACK_URL:v2-beta/projects/1a5/stacks/1st6}
+  stackApiUrl: ${RANCHER_STACK_URL:v2-beta/projects/1a5/stacks/1st9}
   webHooks:
     nginx:
       up: http://192.168.0.100:8080/v1-webhooks/endpoint?key=R5a6Di8zOMbVm5lxC7vbr01mTJj8UDYvTiumLoEp&projectId=1a5

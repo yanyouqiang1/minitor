@@ -32,7 +32,7 @@
     </properties>
 
     <build>
-        <finalName>serviceC</finalName>
+        <finalName>ServiceC</finalName>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>

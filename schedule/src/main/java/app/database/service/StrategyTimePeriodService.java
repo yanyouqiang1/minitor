@@ -17,7 +17,9 @@ public class StrategyTimePeriodService {
     public ServiceTimePeriod getStrategy(String serviceName){
         Strategy_timePeriod strategyTimePeriod = timePeriodRepository.findByServiceNameAndOnOrOffEquals(serviceName,true);
         if(strategyTimePeriod!=null) {
-            ServiceTimePeriod serviceTimePeriod = new ServiceTimePeriod(strategyTimePeriod.getPeekTime(), strategyTimePeriod.getThoughTime());
+            ServiceTimePeriod serviceTimePeriod = new ServiceTimePeriod(this,strategyTimePeriod.getPeekTime(), strategyTimePeriod.getThoughTime());
+            serviceTimePeriod.setPeakHandle(strategyTimePeriod.getPeekHandle());
+            serviceTimePeriod.setThoughHandle(strategyTimePeriod.getThoughHandle());
             serviceTimePeriod.setPeakHandle(strategyTimePeriod.getPeekHandle());
             serviceTimePeriod.setThoughHandle(strategyTimePeriod.getThoughHandle());
             return serviceTimePeriod;
@@ -36,5 +38,9 @@ public class StrategyTimePeriodService {
         timePeriod.setThoughHandle(false);
         timePeriod.setOnOrOff(true);
         timePeriodRepository.save(timePeriod);
+    }
+
+    public void updateStatus(String serviceName,boolean isPeakHandle,boolean isThoughHandle){
+        timePeriodRepository.updateStatus(isPeakHandle,isThoughHandle,serviceName);
     }
 }

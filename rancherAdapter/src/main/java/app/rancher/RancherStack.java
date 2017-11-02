@@ -31,7 +31,7 @@ public class RancherStack {
             for (String serviceId : serviceIds) {
                 RancherService service = findServiceById(serviceId);
                 if (service == null) {
-                    service = new RancherService();
+                    service = new RancherService(rancherOS);
                     service.setServiceId(serviceId);
                     rancherServices.add(service);
                 }
@@ -42,7 +42,7 @@ public class RancherStack {
                 for (String ls : linkedServices) {
                     RancherService ss = findServiceById(ls);
                     if (ss == null) {
-                        ss = new RancherService();
+                        ss = new RancherService(rancherOS);
                         ss.setServiceId(ls);
                         rancherServices.add(ss);
                     }
@@ -65,17 +65,26 @@ public class RancherStack {
     }
 
     public boolean upService(String serviceName) {
-        RancherService rancherService = findServiceById(serviceName);
+        RancherService rancherService = findServiceByName(serviceName);
         if (rancherService != null) {
             return rancherService.upService();
         }
         return false;
     }
 
+    private RancherService findServiceByName(String serviceName) {
+        for (RancherService s : rancherServices) {
+            if (s.getName().equals(serviceName)) {
+                return s;
+            }
+        }
+        return null;
+    }
+
     public boolean downService(String serviceName) {
-        RancherService rancherService = findServiceById(serviceName);
-        if (rancherService != null&&rancherService.getScale()>1) {
-            rancherService.setScale(rancherService.getScale()-1);
+        RancherService rancherService = findServiceByName(serviceName);
+        if (rancherService != null && rancherService.getScale() > 1) {
+            rancherService.setScale(rancherService.getScale() - 1);
             return rancherService.downService();
         }
         return false;
@@ -169,8 +178,8 @@ public class RancherStack {
     }
 
     public RancherService findService(String serviceName) {
-        for(RancherService s:rancherServices){
-            if(s.getName().equals(serviceName)){
+        for (RancherService s : rancherServices) {
+            if (s.getName().equals(serviceName)) {
                 return s;
             }
         }

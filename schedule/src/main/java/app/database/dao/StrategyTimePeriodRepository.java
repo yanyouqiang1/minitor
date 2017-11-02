@@ -2,6 +2,7 @@ package app.database.dao;
 
 import app.database.domain.Strategy_timePeriod;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
@@ -16,4 +17,7 @@ public interface StrategyTimePeriodRepository extends JpaRepository<Strategy_tim
     @Query("select t from Strategy_timePeriod t where t.serviceName=?1 and t.onOrOff=?2")
     public Strategy_timePeriod findByServiceNameAndOnOrOffEquals(String serviceName,Boolean onOrOff);
 
+    @Modifying
+    @Query("update Strategy_timePeriod t set t.peekHandle=?1,t.thoughHandle=?2 where t.serviceName=?3")
+    public Integer updateStatus(boolean peekHandle,boolean thoughtHandle,String serviceName);
 }

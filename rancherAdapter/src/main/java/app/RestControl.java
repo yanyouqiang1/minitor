@@ -1,5 +1,7 @@
 package app;
 
+import app.rancher.RancherStack;
+import app.webInterface.RancherAdapter;
 import app.webInterface.RestInter;
 import app.webInterface.setting.CommonReply;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
  * Created by Administrator on 2017/9/8.
  */
 @RestController
-public class RestControl {
+public class RestControl extends RancherAdapter{
     @Autowired
     RestInter restInter;
 
@@ -22,5 +24,18 @@ public class RestControl {
         return restInter.setWebhookDown(serviceName,webhookDown);
     }
 
+    @Autowired
+    RancherStack rancherStack;
 
+    @RequestMapping("/test1")
+    public String test1(){
+        rancherStack.upService("nginx");
+        return "up nginx";
+    }
+
+    @RequestMapping("/test2")
+    public String test2(){
+        rancherStack.downService("nginx");
+        return "down nginx";
+    }
 }

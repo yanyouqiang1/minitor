@@ -17,11 +17,11 @@ spring:
   rabbitmq:
     username: ${RABBIT_NAME:user}
     password: ${RABBIT_PASS:password}
-    addresses: ${RABBIT_ADDRESS:192.168.0.101:5672}
+    addresses: ${RABBIT_ADDRESS:192.168.0.100:5672}
 #    addresses: ${RABBIT_ADDRESS:192.168.0.101:5672}
 
   datasource:
-    url: jdbc:mysql://${MYSQL_ADDRESS:192.168.0.102:3306}/monitor?autoReconnect=true&useSSL=false
+    url: jdbc:mysql://${MYSQL_ADDRESS:192.168.0.101:3306}/monitor?autoReconnect=true&useSSL=false
     username: ${MYSQL_NAME:root}
     password: ${MYSQL_PASS:root}
     driver-class-name: com.mysql.jdbc.Driver

@@ -3,7 +3,9 @@ package app.Schedule.strategy.single.service;
 import app.Schedule.AbstractService;
 import app.Schedule.ServiceSingleStrategyInter;
 import app.Schedule.StrategySingleResult;
+import app.database.service.StrategyTimePeriodService;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Calendar;
 
@@ -25,7 +27,7 @@ public class ServiceTimePeriod implements ServiceSingleStrategyInter {
                 break;
             case PERIOD_THOUGH:
                 if(!isThoughHandle) {
-                    isThoughHandle = false;
+                    isPeakHandle = false;
                     isThoughHandle = true;
                     return StrategySingleResult.DOWN;
                 }
@@ -41,7 +43,8 @@ public class ServiceTimePeriod implements ServiceSingleStrategyInter {
     private String peak;
     private String though;
 
-    public ServiceTimePeriod(String peak, String though) {
+    public ServiceTimePeriod(StrategyTimePeriodService timePeriodService,String peak, String though) {
+        this.timePeriodService = timePeriodService;
         this.peak = peak;
         this.though = though;
     }
@@ -82,5 +85,12 @@ public class ServiceTimePeriod implements ServiceSingleStrategyInter {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         return hour + minute / 60.0f;
+    }
+
+    StrategyTimePeriodService timePeriodService;
+
+    @Override
+    public void afterStrategy(AbstractService service) {
+        timePeriodService.updateStatus(service.getName(),this.isPeakHandle,this.isThoughHandle);
     }
 }

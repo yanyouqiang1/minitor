@@ -3,8 +3,10 @@ package app.webInterface;
 import app.database.domain.Monitor_method;
 import app.database.service.MonitorMethodService;
 import app.database.service.MonitorServiceService;
+import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
 import app.webInterface.forSchedule.Monitor;
 import app.webInterface.forSchedule.MonitorMethod;
+import com.sun.org.apache.xerces.internal.xs.LSInputList;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
@@ -16,17 +18,31 @@ import java.util.List;
 public class ScheduleRestControl implements Monitor {
     @Autowired
     MonitorMethodService methodService;
+    @Autowired
+    TopologyInter topologyInter;
 
     @Override
     public List<MonitorMethod> getServiceMethods(String serviceName) {
-        List<Monitor_method> monitor_methods = methodService.getMethodsByServiceName(serviceName);
-        List<MonitorMethod> monitorMethods = new LinkedList<>();
-        if(monitor_methods!=null) {
-            for (Monitor_method method : monitor_methods) {
-                monitorMethods.add(MonitorMethod.generate(method));
-            }
+//        List<Monitor_method> monitor_methods = methodService.getMethodsByServiceName(serviceName);
+//        List<MonitorMethod> monitorMethods = new LinkedList<>();
+//        if(monitor_methods!=null) {
+//            for (Monitor_method method : monitor_methods) {
+//                monitorMethods.add(MonitorMethod.generate(method));
+//            }
+//        }
+//        return monitorMethods;
+        List<MonitorMethod> methodList = new LinkedList<>();
+        List<String> methodsName = topologyInter.getMethodsByServiceName(serviceName);
+        if(methodsName==null){
+            return null;
         }
-        return monitorMethods;
+        MonitorMethod monitorMethod;
+        for (String m : methodsName) {
+            monitorMethod = new MonitorMethod();
+            monitorMethod.setName(m);
+            methodList.add(monitorMethod);
+        }
+        return  methodList;
     }
 
     @Autowired
@@ -39,12 +55,12 @@ public class ScheduleRestControl implements Monitor {
 
     @Override
     public long getMethodLatestVisitor(String serviceName, String methodName) {
-        return methodService.getMethodLatestVisitor(serviceName,methodName);
+        return methodService.getMethodLatestVisitor(serviceName, methodName);
     }
 
     @Override
     public int[] getMethodRecentResponseTime(String serviceName, String methodName) {
-        return methodService.getMethodRecentResponseTime(serviceName,methodName);
+        return methodService.getMethodRecentResponseTime(serviceName, methodName);
     }
 
     @Override

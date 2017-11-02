@@ -12,4 +12,9 @@ public class ServiceResource implements ServiceSingleStrategyInter {
     public StrategySingleResult doStrategy(AbstractService service) {
         return null;
     }
+
+    @Override
+    public void afterStrategy(AbstractService service) {
+
+    }
 }

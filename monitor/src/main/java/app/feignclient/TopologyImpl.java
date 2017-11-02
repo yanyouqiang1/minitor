@@ -122,4 +122,37 @@ public class TopologyImpl implements TopologyInter {
     public void update() {
         init();
     }
+
+    @Override
+    public Long getServiceIDByServiceName(String serviceName) {
+        Map<Long,String> services =  this.getAllServices();
+        Long serviceID = null;
+        for(Map.Entry entry:services.entrySet()){
+            if(entry.getValue().equals(serviceName)){
+                serviceID = (Long) entry.getKey();
+            }
+        }
+       return serviceID;
+    }
+
+    @Override
+    public List<String> getMethodsByServiceName(String serviceName) {
+        List<String> methodsName = new LinkedList<>();
+        Long serviceID = this.getServiceIDByServiceName(serviceName);
+        if(serviceID==null){
+            return null;
+        }
+        for(Group g:groups) {
+            List<Resource> resources = g.getResources();
+            for (Resource r : resources) {
+                if(r.getServiceId()==serviceID){
+                    List<Method> methods = r.getMethods();
+                    for(Method m:methods){
+                        methodsName.add(m.getMethodName());
+                    }
+                }
+            }
+        }
+        return methodsName;
+    }
 }

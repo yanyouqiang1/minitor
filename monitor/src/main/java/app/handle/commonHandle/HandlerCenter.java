@@ -1,6 +1,8 @@
 package app.handle.commonHandle;
 
 import app.database.dao.OverallRepository;
+import app.feignclient.GatewayManager;
+import app.feignclient.entity.Group;
 import app.handle.HandleInter;
 import app.handle.commonHandle.warehouse.WarehoseInter;
 import entitylib.RequestMessage;
@@ -49,6 +51,9 @@ public class HandlerCenter implements HandleInter {
             msgHandleListener.afterSumup();
         }
     }
+
+    @Autowired
+    GatewayManager gatewayManager;
 
     @Scheduled(fixedDelay = 60*1000)
     private void statisticUpdate(){
