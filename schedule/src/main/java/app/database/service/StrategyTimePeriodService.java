@@ -29,18 +29,28 @@ public class StrategyTimePeriodService {
 //        return null;
     }
 
-    public void insertStrategy(String service,String peak,String though){
-        Strategy_timePeriod timePeriod = new Strategy_timePeriod();
-        timePeriod.setServiceName(service);
-        timePeriod.setPeekTime(peak);
-        timePeriod.setPeekHandle(false);
-        timePeriod.setThoughTime(though);
-        timePeriod.setThoughHandle(false);
-        timePeriod.setOnOrOff(true);
-        timePeriodRepository.save(timePeriod);
+    public void insertStrategy(String serviceName,String peekTime,String thoughTime){
+        Object service = timePeriodRepository.findIdByServiceName(serviceName);
+        if(service==null) {
+            Strategy_timePeriod timePeriod = new Strategy_timePeriod();
+            timePeriod.setServiceName(serviceName);
+            timePeriod.setPeekTime(peekTime);
+            timePeriod.setPeekHandle(false);
+            timePeriod.setThoughTime(thoughTime);
+            timePeriod.setThoughHandle(false);
+            timePeriod.setOnOrOff(true);
+            timePeriodRepository.save(timePeriod);
+        }else{
+            update(serviceName,peekTime,thoughTime,false,false);
+        }
     }
 
-    public void updateStatus(String serviceName,boolean isPeakHandle,boolean isThoughHandle){
-        timePeriodRepository.updateStatus(isPeakHandle,isThoughHandle,serviceName);
+    public void updateStatus(String serviceName,boolean isPeekHandle,boolean isThoughHandle){
+        timePeriodRepository.updateStatus(isPeekHandle,isThoughHandle,serviceName);
+    }
+
+
+    private void update(String serviceName,String peekTime,String thoughTime,boolean isPeekHandle,boolean isThoughHandle){
+        timePeriodRepository.updateAll(peekTime,thoughTime,isPeekHandle,isThoughHandle,serviceName);
     }
 }

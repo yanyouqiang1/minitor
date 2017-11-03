@@ -121,22 +121,25 @@ public abstract class AbstractHeart {
 
         //调度
         for (OperationService operationService : upService) {
-            upgrade(operationService.service);
-            recordService.recordAutoUp(operationService);
+            if(upgrade(operationService.service)){
+                recordService.recordAutoUp(operationService);
+            }
+
         }
 
         for (OperationService operationService : downService) {
-            decline(operationService.service);
-            recordService.recordAutoDown(operationService);
+            if(decline(operationService.service)){
+                recordService.recordAutoDown(operationService);
+            }
         }
 
 
     }
 
 
-    protected abstract void decline(AbstractService service);
+    protected abstract boolean decline(AbstractService service);
 
-    protected abstract void upgrade(AbstractService service);
+    protected abstract boolean upgrade(AbstractService service);
 
     protected abstract List<OverallStrategyInter> getOverallStrategy();
 

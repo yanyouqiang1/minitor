@@ -112,18 +112,22 @@ public class Heart extends AbstractHeart {
     }
 
     @Override
-    protected void decline(AbstractService service) {
+    protected boolean decline(AbstractService service) {
         if (adapter.downService(service.getName())){
             System.out.println(service.getName()+"容器下降");
-        }
+            return true;
+        }else
+            return false;
 
     }
 
     @Override
-    protected void upgrade(AbstractService service) {
+    protected boolean upgrade(AbstractService service) {
         if (adapter.upService(service.getName())){
             System.out.println(service.getName()+"容器提升");
-        }
+            return true;
+        }else
+            return false;
     }
 }
 

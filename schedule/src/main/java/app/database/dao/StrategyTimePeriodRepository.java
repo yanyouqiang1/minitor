@@ -18,6 +18,14 @@ public interface StrategyTimePeriodRepository extends JpaRepository<Strategy_tim
     public Strategy_timePeriod findByServiceNameAndOnOrOffEquals(String serviceName,Boolean onOrOff);
 
     @Modifying
+    @Query("update Strategy_timePeriod t set t.peekTime=?1,t.thoughTime=?2,t.peekHandle=?3,t.thoughHandle=?4 where t.serviceName=?5")
+    public Integer updateAll(String peekTime,String though,boolean peekHandle,boolean thoughtHandle,String serviceName);
+
+    @Modifying
     @Query("update Strategy_timePeriod t set t.peekHandle=?1,t.thoughHandle=?2 where t.serviceName=?3")
     public Integer updateStatus(boolean peekHandle,boolean thoughtHandle,String serviceName);
+
+
+    public Strategy_timePeriod findIdByServiceName(String serviceName);
+
 }

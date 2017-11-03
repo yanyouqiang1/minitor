@@ -1,14 +1,12 @@
 package app.rancher;
 
 import app.rancher.entity.ResultData;
-import app.webInterface.targetAdapter.AdapterService;
 import lombok.Data;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import javax.annotation.PostConstruct;
 import java.util.LinkedList;
 import java.util.List;
 
