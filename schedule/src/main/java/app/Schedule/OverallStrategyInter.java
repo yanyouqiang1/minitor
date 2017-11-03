@@ -7,4 +7,7 @@ import java.util.List;
  */
 public interface OverallStrategyInter {
     public StrategyOverallResult doStrategy(List<AbstractService> serviceList);
+
+    //get name
+    public String getStrategyName();
 }

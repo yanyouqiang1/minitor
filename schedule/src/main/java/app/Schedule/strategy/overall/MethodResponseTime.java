@@ -24,6 +24,7 @@ import java.util.Map;
 @Component
 @Scope("prototype")
 public class MethodResponseTime implements OverallStrategyInter {
+    public static String name ="time window";
     private Map<String,MethodParameter> parameterMap;
 
     public MethodResponseTime() {
@@ -59,6 +60,7 @@ public class MethodResponseTime implements OverallStrategyInter {
     //判断服务是否负载
     private int serviceJudge(AbstractService abstractService) {
         List<AbstractMethod> methods = abstractService.getMethodList();
+        if(methods==null) return NORMAL;
         for(AbstractMethod method:methods){
             int[] responseTimes = monitor.getMethodRecentResponseTime(abstractService.getName(),method.getName());
             if(JudgmentOverLoadAlgorithm(parameterMap.get(method.getName()),responseTimes)){
@@ -106,7 +108,7 @@ public class MethodResponseTime implements OverallStrategyInter {
 
     //简化负载列表
     private void simplifyOverloadList(List<AbstractService> upList) {
-        List<AdapterService> adapterServiceList = new LinkedList<AdapterService>();
+        LinkedList<AdapterService> adapterServiceList = new LinkedList<AdapterService>();
         for(AbstractService abstractService:upList){
             adapterServiceList.add(AdapterService.generate(abstractService));
         }
@@ -116,6 +118,11 @@ public class MethodResponseTime implements OverallStrategyInter {
         for(AdapterService adapterService:adapterServiceList){
             upList.add(AbstractService.generate(adapterService));
         }
+    }
+
+    @Override
+    public String getStrategyName() {
+        return name;
     }
 
     @Data

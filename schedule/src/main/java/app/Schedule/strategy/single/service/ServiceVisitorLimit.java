@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * 平均访问量控制
  */
 public class ServiceVisitorLimit implements ServiceSingleStrategyInter {
+    private String name="service visitor limit";
     private long upper,lower;
 
     public ServiceVisitorLimit(long upper, long lower) {
@@ -38,5 +39,10 @@ public class ServiceVisitorLimit implements ServiceSingleStrategyInter {
     @Override
     public void afterStrategy(AbstractService service) {
 
+    }
+
+    @Override
+    public String getStrategyName() {
+        return name;
     }
 }

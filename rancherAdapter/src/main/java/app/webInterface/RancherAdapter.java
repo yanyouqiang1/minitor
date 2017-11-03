@@ -52,7 +52,7 @@ public class RancherAdapter implements Adapter {
     }
 
     @Override
-    public List<AdapterService> simplifyOverloadList(List<AdapterService> serviceList) {
+    public LinkedList<AdapterService> simplifyOverloadList(LinkedList<AdapterService> serviceList) {
         List<RancherService> rancherServiceLinkedList = new LinkedList<RancherService>();
         for(AdapterService adapterService:serviceList){
             rancherServiceLinkedList.add(rancherStack.findService(adapterService.getName()));

@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Created by Administrator on 2017/9/7.
  */
 public class MethodVisitorAverage implements MethodSingleStrategyInter{
+    private String name ="method visitor average";
     private long upper,lower;
 
     public MethodVisitorAverage(long upper, long lower) {
@@ -33,5 +34,10 @@ public class MethodVisitorAverage implements MethodSingleStrategyInter{
             return StrategySingleResult.DOWN;
         }
         return StrategySingleResult.NORMAL;
+    }
+
+    @Override
+    public String getStrategyName() {
+        return name;
     }
 }

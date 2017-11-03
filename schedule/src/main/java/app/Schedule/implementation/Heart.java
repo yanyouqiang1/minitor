@@ -101,7 +101,7 @@ public class Heart extends AbstractHeart {
     @Override
     protected List<OverallStrategyInter> getOverallStrategy() {
         List<OverallStrategyInter> overallStrategyInterList = new LinkedList<OverallStrategyInter>();
-        if (overallSwitchService.getSwitchStatus(MethodResponseTime.class.getName())) {
+        if (overallSwitchService.getSwitchStatus(MethodResponseTime.name)){
             Map<String, MethodResponseTime.MethodParameter> parameterMap = responseTimeService.getParameters();
             MethodResponseTime methodResponseTime = SpringUtil.getBean(MethodResponseTime.class);
             methodResponseTime.setParameterMap(parameterMap);

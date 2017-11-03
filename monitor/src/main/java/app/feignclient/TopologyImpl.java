@@ -148,7 +148,7 @@ public class TopologyImpl implements TopologyInter {
                 if(r.getServiceId()==serviceID){
                     List<Method> methods = r.getMethods();
                     for(Method m:methods){
-                        methodsName.add(m.getMethodName());
+                        methodsName.add(r.getResourceName()+"/"+m.getMethodName());
                     }
                 }
             }

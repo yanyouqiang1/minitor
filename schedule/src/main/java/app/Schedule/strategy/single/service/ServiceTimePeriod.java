@@ -14,6 +14,7 @@ import java.util.Calendar;
  */
 @Data
 public class ServiceTimePeriod implements ServiceSingleStrategyInter {
+    private String name ="service time peroid";
     private boolean isPeakHandle = false,isThoughHandle=false;
     @Override
     public StrategySingleResult doStrategy(AbstractService service) {
@@ -92,5 +93,10 @@ public class ServiceTimePeriod implements ServiceSingleStrategyInter {
     @Override
     public void afterStrategy(AbstractService service) {
         timePeriodService.updateStatus(service.getName(),this.isPeakHandle,this.isThoughHandle);
+    }
+
+    @Override
+    public String getStrategyName() {
+        return name;
     }
 }

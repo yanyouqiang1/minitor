@@ -90,7 +90,7 @@ public abstract class AbstractResourceStatistics implements Statistics {
             for (Map.Entry<Long, String> resourceEntry : resources.entrySet()) {
                 AbstractMethodStatistics method = SpringUtil.getBean(AbstractMethodStatistics.class);
                 method.setId(resourceEntry.getKey());
-                method.setName(resourceEntry.getValue());
+                method.setName(this.name+"/"+resourceEntry.getValue());
                 method.setParentResource(this);
                 methodStatisticsMap.put(resourceEntry.getKey(), method);
             }

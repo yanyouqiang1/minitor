@@ -1,6 +1,7 @@
 package app.Schedule;
 
 import app.database.service.StrategyContainerService;
+import app.database.service.StrategyRecordService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 
@@ -14,10 +15,16 @@ public abstract class AbstractHeart {
     @Autowired
     StrategyContainerService containerService;
 
+    @Autowired
+    StrategyRecordService recordService;
+
     @Scheduled(initialDelay = 0, fixedRate = 60 * 1000)
     public void heartbeat() {
-        Set<AbstractService> upService = new HashSet<AbstractService>();
-        Set<AbstractService> downService = new HashSet<AbstractService>();
+//        Set<AbstractService> upService = new HashSet<AbstractService>();
+//        Set<AbstractService> downService = new HashSet<AbstractService>();
+        Set<OperationService> upService = new HashSet<>();
+        Set<OperationService> downService = new HashSet<>();
+
         //服务调度
         List<AbstractService> allService = getAllStrategyService();
         containerService.save(allService);//保存服务容器数量
@@ -37,14 +44,17 @@ public abstract class AbstractHeart {
             boolean isServiceHandle = false;
             while (iterator.hasNext() && !isServiceHandle) {
                 ServiceSingleStrategyInter serviceSingleStrategyInter = (ServiceSingleStrategyInter) iterator.next();
+                OperationService operationService;
                 switch (serviceSingleStrategyInter.doStrategy(service)) {
                     case UP:
-                        upService.add(service);
+                        operationService = new OperationService(service,serviceSingleStrategyInter.getStrategyName());
+                        upService.add(operationService);
                         isServiceHandle = true;
                         break;
                     case DOWN:
+                        operationService = new OperationService(service,serviceSingleStrategyInter.getStrategyName());
+                        downService.add(operationService);
                         isServiceHandle = true;
-                        downService.add(service);
                         break;
                     default:
                         break;
@@ -71,14 +81,17 @@ public abstract class AbstractHeart {
                     boolean isMethodHandle = false;
                     while (iterator.hasNext() && !isMethodHandle) {
                         MethodSingleStrategyInter methodSingleStrategyInter = (MethodSingleStrategyInter) iterator.next();
+                        OperationService operationService;
                         switch (methodSingleStrategyInter.doStrategy(method, service)) {
                             case UP:
-                                upService.add(service);
+                                operationService = new OperationService(service,methodSingleStrategyInter.getStrategyName());
+                                upService.add(operationService);
                                 isMethodHandle = true;
                                 break;
                             case DOWN:
+                                operationService = new OperationService(service,methodSingleStrategyInter.getStrategyName());
+                                downService.add(operationService);
                                 isMethodHandle = true;
-                                downService.add(service);
                                 break;
                             default:
                                 break;
@@ -92,20 +105,29 @@ public abstract class AbstractHeart {
         List<OverallStrategyInter> overallStrategyInterList = getOverallStrategy();
         for (OverallStrategyInter overallStrategyInter : overallStrategyInterList) {
             StrategyOverallResult result = overallStrategyInter.doStrategy(allService);
-            upService.addAll(result.getUpList());
-            downService.addAll(result.getDownList());
+            OperationService operationService;
+            for (AbstractService up:result.getUpList()){
+                operationService = new OperationService(up,overallStrategyInter.getStrategyName());
+                upService.add(operationService);
+            }
+            for (AbstractService down:result.getDownList()){
+                operationService = new OperationService(down,overallStrategyInter.getStrategyName());
+                downService.add(operationService);
+            }
+//            upService.addAll(result.getUpList());
+//            downService.addAll(result.getDownList());
         }
         //方法调度
 
         //调度
-        for (AbstractService service : upService) {
-            upgrade(service);
-            service.up();
+        for (OperationService operationService : upService) {
+            upgrade(operationService.service);
+            recordService.recordAutoUp(operationService);
         }
 
-        for (AbstractService service : downService) {
-            decline(service);
-            service.down();
+        for (OperationService operationService : downService) {
+            decline(operationService.service);
+            recordService.recordAutoDown(operationService);
         }
 
 

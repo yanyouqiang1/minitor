@@ -18,17 +18,21 @@ import java.util.Map;
 @Component
 public class MonitorMethodService {
     @Autowired
-    ServiceRepository serviceRepository;
-    @Autowired
     MethodRepository methodRepository;
 
+    @Autowired
+    TopologyInter topologyInter;
+
     public long getMethodLatestVisitor(String serviceName, String methodName) {
-        long serviceID = serviceRepository.findDistinctIdByName(serviceName);
+        Long serviceID=topologyInter.getServiceIDByServiceName(serviceName);
+        if(serviceID==null) return 0;
         return methodRepository.findFirstRequest_visitorsByServiceidAndNameOrderByColumnidDesc(serviceID, methodName);
     }
 
     public int[] getMethodRecentResponseTime(String serviceName, String methodName) {
-        long serviceID = serviceRepository.findDistinctIdByName(serviceName);
+        Long serviceID=topologyInter.getServiceIDByServiceName(serviceName);
+        if(serviceID==null) return null;
+//        long serviceID = serviceRepository.findDistinctIdByName(serviceName);
         List<Monitor_method> methods = methodRepository.findTop90ByServiceidAndNameOrderByColumnidDesc(serviceID,methodName);
         int[] result = new int[methods.size()];
         for(int i=0;i<result.length;i++){

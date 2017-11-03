@@ -6,6 +6,9 @@ package app.Schedule;
 public interface ServiceSingleStrategyInter {
     public StrategySingleResult doStrategy(AbstractService service);
 
+    //get name
+    public String getStrategyName();
+
     //after strategy
     public void afterStrategy(AbstractService service);
 }

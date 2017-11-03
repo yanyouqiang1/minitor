@@ -5,4 +5,7 @@ package app.Schedule;
  */
 public interface MethodSingleStrategyInter {
     public StrategySingleResult doStrategy(AbstractMethod method, AbstractService abstractService);
+
+    //get name
+    public String getStrategyName();
 }

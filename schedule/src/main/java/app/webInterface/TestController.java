@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by Administrator on 2017/9/14.
  */
 @RestController
-public class TextController {
+public class TestController {
     @Autowired
     StrategyTimePeriodService timePeriodService;
 
