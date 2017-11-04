@@ -5,20 +5,21 @@ import app.Schedule.ServiceSingleStrategyInter;
 import app.Schedule.StrategySingleResult;
 import app.feignclient.monitor.Monitor;
 import app.feignclient.targetAdapter.Adapter;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Administrator on 2017/8/30.
  * 平均访问量控制
  */
+@Scope("prototype")
+@Component
+@Data
 public class ServiceVisitorLimit implements ServiceSingleStrategyInter {
     private String name="service visitor limit";
     private long upper,lower;
-
-    public ServiceVisitorLimit(long upper, long lower) {
-        this.upper = upper;
-        this.lower = lower;
-    }
 
     @Autowired
     Monitor monitor;

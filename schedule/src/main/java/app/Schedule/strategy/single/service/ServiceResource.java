@@ -3,10 +3,14 @@ package app.Schedule.strategy.single.service;
 import app.Schedule.AbstractService;
 import app.Schedule.ServiceSingleStrategyInter;
 import app.Schedule.StrategySingleResult;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Administrator on 2017/9/7.
  */
+@Scope("prototype")
+@Component
 public class ServiceResource implements ServiceSingleStrategyInter {
     private String name="service resource";
     @Override

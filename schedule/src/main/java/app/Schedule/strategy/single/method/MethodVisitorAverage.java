@@ -5,20 +5,20 @@ import app.Schedule.AbstractService;
 import app.Schedule.MethodSingleStrategyInter;
 import app.Schedule.StrategySingleResult;
 import app.feignclient.monitor.Monitor;
+import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 /**
  * Created by Administrator on 2017/9/7.
  */
+@Data
+@Scope("prototype")
+@Component
 public class MethodVisitorAverage implements MethodSingleStrategyInter{
     private String name ="method visitor average";
     private long upper,lower;
-
-    public MethodVisitorAverage(long upper, long lower) {
-        this.upper = upper;
-        this.lower = lower;
-    }
-
 
     @Autowired
     Monitor monitor;

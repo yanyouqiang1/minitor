@@ -6,6 +6,8 @@ import app.Schedule.StrategySingleResult;
 import app.database.service.StrategyTimePeriodService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 
 import java.util.Calendar;
 
@@ -13,6 +15,8 @@ import java.util.Calendar;
  * Created by Administrator on 2017/8/30.
  */
 @Data
+@Scope("prototype")
+@Component
 public class ServiceTimePeriod implements ServiceSingleStrategyInter {
     private String name ="service time peroid";
     private boolean isPeakHandle = false,isThoughHandle=false;
@@ -41,19 +45,14 @@ public class ServiceTimePeriod implements ServiceSingleStrategyInter {
     }
 
     //18:20
-    private String peak;
+    private String peek;
     private String though;
 
-    public ServiceTimePeriod(StrategyTimePeriodService timePeriodService,String peak, String though) {
-        this.timePeriodService = timePeriodService;
-        this.peak = peak;
-        this.though = though;
-    }
 
     private final int PERIOD_PEAK = 1, PERIOD_THOUGH = 0, PERIOD_ERROR = -1;
 
     private int getPeriod() {
-        float peakF = getFloatTime(peak);
+        float peakF = getFloatTime(peek);
         float thoughF = getFloatTime(though);
         float now = getFloatNow();
 
@@ -88,6 +87,7 @@ public class ServiceTimePeriod implements ServiceSingleStrategyInter {
         return hour + minute / 60.0f;
     }
 
+    @Autowired
     StrategyTimePeriodService timePeriodService;
 
     @Override

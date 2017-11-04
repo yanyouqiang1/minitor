@@ -3,6 +3,7 @@ package app.database.service;
 import app.Schedule.strategy.single.service.ServiceTimePeriod;
 import app.database.dao.StrategyTimePeriodRepository;
 import app.database.domain.Strategy_timePeriod;
+import app.util.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -17,7 +18,9 @@ public class StrategyTimePeriodService {
     public ServiceTimePeriod getStrategy(String serviceName){
         Strategy_timePeriod strategyTimePeriod = timePeriodRepository.findByServiceNameAndOnOrOffEquals(serviceName,true);
         if(strategyTimePeriod!=null) {
-            ServiceTimePeriod serviceTimePeriod = new ServiceTimePeriod(this,strategyTimePeriod.getPeekTime(), strategyTimePeriod.getThoughTime());
+            ServiceTimePeriod serviceTimePeriod = SpringUtil.getBean(ServiceTimePeriod.class);
+            serviceTimePeriod.setPeek(strategyTimePeriod.getPeekTime());
+            serviceTimePeriod.setThough(strategyTimePeriod.getThoughTime());
             serviceTimePeriod.setPeakHandle(strategyTimePeriod.getPeekHandle());
             serviceTimePeriod.setThoughHandle(strategyTimePeriod.getThoughHandle());
             serviceTimePeriod.setPeakHandle(strategyTimePeriod.getPeekHandle());
@@ -26,7 +29,6 @@ public class StrategyTimePeriodService {
         }else{
             return null;
         }
-//        return null;
     }
 
     public void insertStrategy(String serviceName,String peekTime,String thoughTime){

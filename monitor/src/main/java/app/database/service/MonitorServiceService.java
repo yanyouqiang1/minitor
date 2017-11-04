@@ -18,7 +18,10 @@ public class MonitorServiceService {
 
     public long getServiceLatestVisitor(String serviceName) {
         Monitor_services services = serviceRepository.findFirstByNameOrderByColumnidDesc(serviceName);
-        return services.getResponse_visitors();
+        if(services!=null) {
+            return services.getResponse_visitors();
+        }else
+            return 0;
     }
 
     public int[] getServiceRecentResponseTime(String serviceName) {

@@ -42,8 +42,8 @@
 //    StrategyTimePeriodService timePeriodService;
 //
 //    @RequestMapping("/strategy/serviceTimePeriod/update")
-//    public boolean ServiceTimePeriod(@RequestParam(name = "service") String service, @RequestParam(name = "peak") String peak, @RequestParam(name = "though") String though){
-//        timePeriodService.insertStrategy(service,peak,though);
+//    public boolean ServiceTimePeriod(@RequestParam(name = "service") String service, @RequestParam(name = "peek") String peek, @RequestParam(name = "though") String though){
+//        timePeriodService.insertStrategy(service,peek,though);
 //        return true;
 //    }
 //}

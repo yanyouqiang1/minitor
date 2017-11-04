@@ -2,6 +2,7 @@ package app.outerInterface;
 
 import app.database.service.StrategyContainerService;
 import app.database.service.StrategyTimePeriodService;
+import app.database.service.StrategyVisitorLimitService;
 import app.feignclient.monitor.Monitor;
 import app.feignclient.targetAdapter.Adapter;
 import app.feignclient.targetAdapter.AdapterService;
@@ -109,10 +110,12 @@ public class RestImpl implements RestInter {
         return CommonReplyBuilder.buildSuccessReply();
     }
 
+    @Autowired
+    StrategyVisitorLimitService visitorLimitService;
     @Override
     public CommonReply updateStrategyVisitorLimit(String serviceName, long upper, long lower) {
-
-        return null;
+        visitorLimitService.insertStrategy(serviceName,upper,lower);
+        return CommonReplyBuilder.buildSuccessReply();
     }
 
     @Override
