@@ -48,6 +48,8 @@ public class MethodStatistics extends AbstractMethodStatistics {
             case 500:
                 status_500++;
                 break;
+            default:
+                break;
         }
         int responsetime = responseMessage.getResponseTime();
         if (response_visitors == 1) {
@@ -102,8 +104,9 @@ public class MethodStatistics extends AbstractMethodStatistics {
             rate_status_300 = (float) status_300 / method.getResponse_visitors();
             rate_status_400 = (float) status_400 / method.getResponse_visitors();
             rate_status_500 = (float) status_500 / method.getResponse_visitors();
-
-            response_median =responseTimeList.get(responseTimeList.size()/2);
+            if(responseTimeList.size()>0) {
+                response_median = responseTimeList.get(responseTimeList.size() / 2);
+            }
             response_90 = responseTimeList.get((int)(responseTimeList.size()*0.9));
             response_99 = responseTimeList.get((int)(responseTimeList.size()*0.99));
         }

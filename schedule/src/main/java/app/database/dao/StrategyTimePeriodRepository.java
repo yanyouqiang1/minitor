@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/9/8.
@@ -18,8 +19,8 @@ public interface StrategyTimePeriodRepository extends JpaRepository<Strategy_tim
     public Strategy_timePeriod findByServiceNameAndOnOrOffEquals(String serviceName,Boolean onOrOff);
 
     @Modifying
-    @Query("update Strategy_timePeriod t set t.peekTime=?1,t.thoughTime=?2,t.peekHandle=?3,t.thoughHandle=?4 where t.serviceName=?5")
-    public Integer updateAll(String peekTime,String though,boolean peekHandle,boolean thoughtHandle,String serviceName);
+    @Query("update Strategy_timePeriod t set t.peekTime=?1,t.thoughTime=?2,t.peekHandle=?3,t.thoughHandle=?4,t.onOrOff=?5 where t.serviceName=?6")
+    public Integer updateAll(String peekTime,String though,boolean peekHandle,boolean thoughtHandle,boolean sswitch,String serviceName);
 
     @Modifying
     @Query("update Strategy_timePeriod t set t.peekHandle=?1,t.thoughHandle=?2 where t.serviceName=?3")
@@ -28,4 +29,5 @@ public interface StrategyTimePeriodRepository extends JpaRepository<Strategy_tim
 
     public Strategy_timePeriod findIdByServiceName(String serviceName);
 
+    public List<Strategy_timePeriod> findByIdNotNull();
 }

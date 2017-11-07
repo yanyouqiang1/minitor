@@ -7,6 +7,8 @@ import app.util.SpringUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 /**
  * Created by Administrator on 2017/9/8.
  */
@@ -31,7 +33,7 @@ public class StrategyTimePeriodService {
         }
     }
 
-    public void insertStrategy(String serviceName,String peekTime,String thoughTime){
+    public void insertStrategy(String serviceName,String peekTime,String thoughTime,boolean sswitch){
         Object service = timePeriodRepository.findIdByServiceName(serviceName);
         if(service==null) {
             Strategy_timePeriod timePeriod = new Strategy_timePeriod();
@@ -40,10 +42,10 @@ public class StrategyTimePeriodService {
             timePeriod.setPeekHandle(false);
             timePeriod.setThoughTime(thoughTime);
             timePeriod.setThoughHandle(false);
-            timePeriod.setOnOrOff(true);
+            timePeriod.setOnOrOff(sswitch);
             timePeriodRepository.save(timePeriod);
         }else{
-            update(serviceName,peekTime,thoughTime,false,false);
+            update(serviceName,peekTime,thoughTime,false,false,sswitch);
         }
     }
 
@@ -52,7 +54,11 @@ public class StrategyTimePeriodService {
     }
 
 
-    private void update(String serviceName,String peekTime,String thoughTime,boolean isPeekHandle,boolean isThoughHandle){
-        timePeriodRepository.updateAll(peekTime,thoughTime,isPeekHandle,isThoughHandle,serviceName);
+    private void update(String serviceName,String peekTime,String thoughTime,boolean isPeekHandle,boolean isThoughHandle,boolean sswitch){
+        timePeriodRepository.updateAll(peekTime,thoughTime,isPeekHandle,isThoughHandle,sswitch,serviceName);
+    }
+
+    public List<Strategy_timePeriod> getAllstrategys(){
+         return timePeriodRepository.findByIdNotNull();
     }
 }

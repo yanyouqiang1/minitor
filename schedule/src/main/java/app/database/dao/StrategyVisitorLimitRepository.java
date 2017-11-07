@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import javax.transaction.Transactional;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/9/8.
@@ -21,4 +22,6 @@ public interface StrategyVisitorLimitRepository extends JpaRepository<Strategy_v
     @Modifying
     @Query("update Strategy_visitorLimit v set v.upper=?1,v.lower=?2,v.onOrOff=?3 where v.serviceName=?4")
     public Integer updateData(long upper,long lower,boolean onOrOff,String serviceName);
+
+    public List<Strategy_visitorLimit> findByIdNotNull();
 }

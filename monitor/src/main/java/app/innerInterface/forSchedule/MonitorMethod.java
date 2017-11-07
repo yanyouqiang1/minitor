@@ -1,4 +1,4 @@
-package app.outerInterface.forSchedule;
+package app.innerInterface.forSchedule;
 
 import app.database.domain.Monitor_method;
 import lombok.Data;

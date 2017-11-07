@@ -17,7 +17,7 @@ public class Strategy_visitorAverage {
     @GeneratedValue
     private Integer id;
 
-    private String serviceName;
+    private String methodName;
 
     private Long upper;
 

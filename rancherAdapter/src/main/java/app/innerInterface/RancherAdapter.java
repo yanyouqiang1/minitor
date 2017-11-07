@@ -1,11 +1,11 @@
-package app.outerInterface;
+package app.innerInterface;
 
+import app.innerInterface.targetAdapter.Adapter;
+import app.innerInterface.targetAdapter.AdapterResultData;
+import app.innerInterface.targetAdapter.AdapterService;
 import app.rancher.RancherService;
 import app.rancher.RancherStack;
 import app.rancher.entity.ResultData;
-import app.outerInterface.targetAdapter.Adapter;
-import app.outerInterface.targetAdapter.AdapterResultData;
-import app.outerInterface.targetAdapter.AdapterService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;

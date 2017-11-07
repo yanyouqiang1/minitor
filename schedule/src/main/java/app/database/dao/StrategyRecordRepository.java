@@ -10,5 +10,5 @@ import java.util.List;
  * Created by Administrator on 2017/9/19.
  */
 public interface StrategyRecordRepository extends JpaRepository<Strategy_record,Integer> {
-
+    public List<Strategy_record> findByisAutoEquals(boolean isAuto);
 }

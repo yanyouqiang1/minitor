@@ -27,7 +27,7 @@ public interface MethodRepository extends JpaRepository<Monitor_method,Long> {
 
     public List<String> findDistinctNameByServiceid(long serviceId);
 
-    public long findFirstRequest_visitorsByServiceidAndNameOrderByColumnidDesc(long serviceID,String methodName);
+    public Monitor_method findFirstByServiceidAndNameOrderByColumnidDesc(long serviceID,String methodName);
 
     public List<Monitor_method> findTop90ByServiceidAndNameOrderByColumnidDesc(long serviceID,String methodName);
 

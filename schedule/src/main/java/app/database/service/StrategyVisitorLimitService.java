@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by Administrator on 2017/9/9.
@@ -31,8 +32,8 @@ public class StrategyVisitorLimitService {
         }
     }
 
-    public void insertStrategy(String serviceName,long upper,long lower){
-        update(serviceName,upper,lower,true);
+    public void insertStrategy(String serviceName,long upper,long lower,boolean sswitch){
+        update(serviceName,upper,lower,sswitch);
     }
 
     private void update(String serviceName,long upper,long lower,boolean onOroff){
@@ -48,5 +49,9 @@ public class StrategyVisitorLimitService {
         }else{
             visitorLimitRepository.updateData(upper,lower,onOroff,serviceName);
         }
+    }
+
+    public List<Strategy_visitorLimit> getAllstrategys(){
+        return visitorLimitRepository.findByIdNotNull();
     }
 }

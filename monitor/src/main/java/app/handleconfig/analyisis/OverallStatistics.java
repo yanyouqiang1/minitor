@@ -79,6 +79,8 @@ public class OverallStatistics extends AbstractOverallStatistics {
         response_max = 0;
         response_avg = 0;
         response_median = 0;
+        response_90 = 0;
+        response_99 = 0;
         TPS = 0;
         responseTimeList.clear();
     }

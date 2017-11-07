@@ -18,7 +18,7 @@ import java.util.Calendar;
 @Scope("prototype")
 @Component
 public class ServiceTimePeriod implements ServiceSingleStrategyInter {
-    private String name ="service time peroid";
+    public static String name ="service time peroid";
     private boolean isPeakHandle = false,isThoughHandle=false;
     @Override
     public StrategySingleResult doStrategy(AbstractService service) {

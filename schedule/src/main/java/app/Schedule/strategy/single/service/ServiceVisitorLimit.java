@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 @Component
 @Data
 public class ServiceVisitorLimit implements ServiceSingleStrategyInter {
-    private String name="service visitor limit";
+    public static String name="service visitor limit";
     private long upper,lower;
 
     @Autowired

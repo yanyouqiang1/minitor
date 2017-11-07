@@ -9,6 +9,7 @@ import entitylib.RequestMessage;
 import entitylib.ResponseMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 
 import java.util.Date;
 import java.util.Iterator;
@@ -18,6 +19,7 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/7/4 0004.
  */
+@Component
 public class HandlerCenter implements HandleInter {
     private MsgHandleListener msgHandleListener;
     private List<Msgfilter> msgfilterChain= new LinkedList<Msgfilter>();
@@ -64,7 +66,7 @@ public class HandlerCenter implements HandleInter {
     @Autowired
     OverallRepository overallRepository;
 
-    @Scheduled(fixedDelay = 60*60*1000)
+   // @Scheduled(fixedDelay = 60*60*1000)
     private void doClean(){
         System.out.println("清理数据");
         Date boforeDate = new Date(new Date().getTime()-60*60*1000);

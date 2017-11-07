@@ -1,7 +1,7 @@
 package app;
 
 import app.rancher.RancherStack;
-import app.outerInterface.RancherAdapter;
+import app.innerInterface.RancherAdapter;
 import app.outerInterface.RestInter;
 import app.outerInterface.setting.CommonReply;
 import org.springframework.beans.factory.annotation.Autowired;

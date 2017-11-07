@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @Scope("prototype")
 @Component
 public class ServiceResource implements ServiceSingleStrategyInter {
-    private String name="service resource";
+    public static String name="service resource";
     @Override
     public StrategySingleResult doStrategy(AbstractService service) {
         return null;

@@ -10,5 +10,5 @@ import java.util.List;
  * Created by Administrator on 2017/9/19.
  */
 public interface StrategyContainerRepository extends JpaRepository<Strategy_container,Integer> {
-    public List<Strategy_container> findTopByServiceNameOrderByIdDesc(String serviceName);
+    public List<Strategy_container> findTop90ByServiceNameOrderByIdDesc(String serviceName);
 }

@@ -1,10 +1,10 @@
-package app.outerInterface;
+package app.innerInterface;
 
 import app.database.service.MonitorMethodService;
 import app.database.service.MonitorServiceService;
 import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
-import app.outerInterface.forSchedule.Monitor;
-import app.outerInterface.forSchedule.MonitorMethod;
+import app.innerInterface.forSchedule.Monitor;
+import app.innerInterface.forSchedule.MonitorMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;

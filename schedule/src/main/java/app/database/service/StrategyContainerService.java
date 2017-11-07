@@ -17,7 +17,7 @@ public class StrategyContainerService {
     StrategyContainerRepository containerRepository;
 
     public List<Strategy_container> getLatestContainers(String serviceName){
-        return containerRepository.findTopByServiceNameOrderByIdDesc(serviceName);
+        return containerRepository.findTop90ByServiceNameOrderByIdDesc(serviceName);
     }
 
     public void save(List<AbstractService> allService){

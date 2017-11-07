@@ -5,6 +5,7 @@ import app.database.dao.ServiceRepository;
 import app.database.domain.Monitor_method;
 import app.database.domain.Monitor_services;
 import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
+import app.outerInterface.forSchedule.MonitorMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -26,7 +27,8 @@ public class MonitorMethodService {
     public long getMethodLatestVisitor(String serviceName, String methodName) {
         Long serviceID=topologyInter.getServiceIDByServiceName(serviceName);
         if(serviceID==null) return 0;
-        return methodRepository.findFirstRequest_visitorsByServiceidAndNameOrderByColumnidDesc(serviceID, methodName);
+        Monitor_method monitorMethod = methodRepository.findFirstByServiceidAndNameOrderByColumnidDesc(serviceID, methodName);
+        return monitorMethod.getRequest_visitors();
     }
 
     public int[] getMethodRecentResponseTime(String serviceName, String methodName) {

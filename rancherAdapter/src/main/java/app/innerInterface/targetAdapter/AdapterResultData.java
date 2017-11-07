@@ -1,4 +1,4 @@
-package app.outerInterface.targetAdapter;
+package app.innerInterface.targetAdapter;
 
 import app.rancher.entity.ResultData;
 import lombok.Data;

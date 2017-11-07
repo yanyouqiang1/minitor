@@ -61,4 +61,11 @@ public class StrategyRecordService {
     private void record(Strategy_record record){
         recordRepository.save(record);
     }
+
+    public List<Strategy_record> getAutomaticList(){
+        return recordRepository.findByisAutoEquals(true);
+    }
+    public List<Strategy_record> getManualList(){
+        return recordRepository.findByisAutoEquals(false);
+    }
 }

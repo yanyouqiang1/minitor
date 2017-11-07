@@ -1,18 +1,25 @@
 package app.outerInterface;
 
-import app.database.service.StrategyContainerService;
-import app.database.service.StrategyTimePeriodService;
-import app.database.service.StrategyVisitorLimitService;
+import app.Schedule.strategy.overall.MethodResponseTime;
+import app.Schedule.strategy.single.service.ServiceTimePeriod;
+import app.Schedule.strategy.single.service.ServiceVisitorLimit;
+import app.database.domain.Strategy_responseTime;
+import app.database.domain.Strategy_timePeriod;
+import app.database.domain.Strategy_visitorAverage;
+import app.database.domain.Strategy_visitorLimit;
+import app.database.service.*;
 import app.feignclient.monitor.Monitor;
 import app.feignclient.targetAdapter.Adapter;
 import app.feignclient.targetAdapter.AdapterService;
 import app.outerInterface.entity.observation.*;
 import app.outerInterface.entity.reply.CommonReply;
 import app.outerInterface.entity.reply.CommonReplyBuilder;
+import app.outerInterface.entity.strategy.Overview;
 import app.outerInterface.entity.task.AutomaticList;
 import app.outerInterface.entity.task.ManualList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -35,7 +42,7 @@ public class RestImpl implements RestInter {
     }
 
     @Override
-    public RestServiceResponse getRestServiceResponse(String serviceName) {
+    public RestServiceResponse getRestServiceResponse(@PathVariable(name = "serviceName",required = true)String serviceName) {
         int[] responses = monitor.getServiceRecentResponseTime(serviceName);
         return RestServiceResponse.generate(serviceName,responses);
     }
@@ -44,7 +51,7 @@ public class RestImpl implements RestInter {
     StrategyContainerService containerService;
 
     @Override
-    public RestServiceContainer getRestServiceContainer(String serviceName) {
+    public RestServiceContainer getRestServiceContainer(@PathVariable(name = "serviceName",required = true)String serviceName) {
         return RestServiceContainer.generate(serviceName,containerService.getLatestContainers(serviceName));
     }
 
@@ -91,36 +98,42 @@ public class RestImpl implements RestInter {
         }
         return serviceContainerMemory;
     }
-
+    @Autowired
+    StrategyRecordService recordService;
     @Override
     public AutomaticList getAutomaticList() {
-        return null;
+        AutomaticList automaticList = new AutomaticList(recordService.getAutomaticList());
+        return automaticList;
     }
 
     @Override
     public ManualList getManualList() {
-        return null;
+        ManualList manualList = new ManualList(recordService.getManualList());
+        return manualList;
     }
 
     @Autowired
     StrategyTimePeriodService timePeriodService;
     @Override
-    public CommonReply updateStrategyTimePeriod(String serviceName, String peek, String thought) {
-        timePeriodService.insertStrategy(serviceName,peek,thought);
+    public CommonReply updateStrategyTimePeriod(@RequestParam(name = "serviceName") String serviceName, @RequestParam(name = "peek") String peek, @RequestParam(name = "thought") String thought, @RequestParam(name = "switch") boolean sswitch) {
+        timePeriodService.insertStrategy(serviceName,peek,thought,sswitch);
         return CommonReplyBuilder.buildSuccessReply();
     }
 
     @Autowired
     StrategyVisitorLimitService visitorLimitService;
     @Override
-    public CommonReply updateStrategyVisitorLimit(String serviceName, long upper, long lower) {
-        visitorLimitService.insertStrategy(serviceName,upper,lower);
+    public CommonReply updateStrategyVisitorLimit(@RequestParam(name = "serviceName")String serviceName,@RequestParam(name = "upper")long upper,@RequestParam(name = "lower")long lower, @RequestParam(name = "switch") boolean sswitch) {
+        visitorLimitService.insertStrategy(serviceName,upper,lower,sswitch);
         return CommonReplyBuilder.buildSuccessReply();
     }
 
+    @Autowired
+    StrategyVisitorAverageService visitorAverageService;
     @Override
-    public CommonReply updateStrategyVisitorAverage(String methodName, long upper, long lower) {
-        return null;
+    public CommonReply updateStrategyVisitorAverage(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "upper")long upper,@RequestParam(name = "lower")long lower, @RequestParam(name = "switch") boolean sswitch) {
+        visitorAverageService.insertStrategy(methodName,upper,lower,sswitch);
+        return CommonReplyBuilder.buildSuccessReply();
     }
 
     @Override
@@ -128,8 +141,81 @@ public class RestImpl implements RestInter {
         return null;
     }
 
+    @Autowired
+    StrategyResponseTimeService responseTimeService;
     @Override
-    public CommonReply updateStrategyResponseTime(String methodName, long lower, long upper, long upperLimit) {
-        return null;
+    public CommonReply updateStrategyResponseTime(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "lower")int lower,@RequestParam(name = "upper")int upper,@RequestParam(name = "upperLimit")int upperLimit){
+        responseTimeService.insertStrategy(methodName,lower,upper,upperLimit);
+        return CommonReplyBuilder.buildSuccessReply();
+    }
+
+
+    @Autowired
+    StrategyOverallSwitchService overallSwitchService;
+    @Override
+    public Overview getOverview() {
+        Overview overview = new Overview();
+
+        overview.getTimeWindow().setName(MethodResponseTime.name);
+        overview.getTimeWindow().setStatus(overallSwitchService.getSwitchStatus(MethodResponseTime.name));
+
+        List<Strategy_timePeriod> timePeriods = timePeriodService.getAllstrategys();
+        Overview.StrategyService strategyService = new Overview.StrategyService();
+        strategyService.setName(ServiceTimePeriod.name);
+        if(timePeriods!=null) {
+            for (Strategy_timePeriod timePeriod : timePeriods) {
+                Overview.Status status = new Overview.Status();
+                status.setName(timePeriod.getServiceName());
+                status.setStatus(timePeriod.getOnOrOff());
+                strategyService.getStrategys().add(status);
+            }
+        }
+        overview.getStrategyServices().add(strategyService);
+
+        List<Strategy_visitorLimit> visitorLimits = visitorLimitService.getAllstrategys();
+        strategyService = new Overview.StrategyService();
+        strategyService.setName(ServiceVisitorLimit.name);
+        if(visitorLimits!=null) {
+            for (Strategy_visitorLimit visitorLimit : visitorLimits) {
+                Overview.Status status = new Overview.Status();
+                status.setName(visitorLimit.getServiceName());
+                status.setStatus(visitorLimit.getOnOrOff());
+                strategyService.getStrategys().add(status);
+            }
+        }
+        overview.getStrategyServices().add(strategyService);
+
+
+        List<Strategy_visitorAverage> visitorAverages = visitorAverageService.getAllstrategys();
+        if (visitorAverages!=null) {
+            for (Strategy_visitorAverage visitorAverage : visitorAverages) {
+                Overview.Status status = new Overview.Status();
+                status.setName(visitorAverage.getMethodName());
+                status.setStatus(visitorAverage.getOnOrOff());
+                overview.getStrategyMethods().add(status);
+            }
+        }
+
+        return overview;
+    }
+
+    @Override
+    public List<Strategy_responseTime> getMethodResponse() {
+        return responseTimeService.getAllStrategy();
+    }
+
+    @Override
+    public List<Strategy_timePeriod> getTimePeriod() {
+        return timePeriodService.getAllstrategys();
+    }
+
+    @Override
+    public List<Strategy_visitorLimit> getVisitorLimit() {
+        return visitorLimitService.getAllstrategys();
+    }
+
+    @Override
+    public List<Strategy_visitorAverage> getMethodAverage() {
+        return visitorAverageService.getAllstrategys();
     }
 }

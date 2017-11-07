@@ -1,4 +1,4 @@
-package app.outerInterface.targetAdapter;
+package app.innerInterface.targetAdapter;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
 import org.springframework.web.bind.annotation.RequestMapping;
