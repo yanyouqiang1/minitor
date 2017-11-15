@@ -135,7 +135,7 @@ public class RestImpl implements RestInter {
 
     @Override
     public Method_visitors method_visitors(long id) {
-        List<Monitor_method> monitor_method = methodRepository.findTop90ByIdOrderByColumnid(id);
+        List<Monitor_method> monitor_method = methodRepository.findTop90ByIdOrderByColumnidDesc(id);
         Method_visitors visitors = new Method_visitors();
         visitors.generate(monitor_method);
         return visitors;
@@ -143,7 +143,7 @@ public class RestImpl implements RestInter {
 
     @Override
     public Method_success_rate method_success_rate(long id) {
-        List<Monitor_method> monitor_method = methodRepository.findTop90ByIdOrderByColumnid(id);
+        List<Monitor_method> monitor_method = methodRepository.findTop90ByIdOrderByColumnidDesc(id);
         Method_success_rate success_rate = new Method_success_rate();
         success_rate.generate(monitor_method);
         return success_rate;
@@ -151,7 +151,7 @@ public class RestImpl implements RestInter {
 
     @Override
     public Method_status_code method_status_code(long id) {
-        List<Monitor_method> monitor_method = methodRepository.findTop90ByIdOrderByColumnid(id);
+        List<Monitor_method> monitor_method = methodRepository.findTop90ByIdOrderByColumnidDesc(id);
         Method_status_code status_code = new Method_status_code();
         status_code.generate(monitor_method);
         return status_code;
@@ -159,7 +159,7 @@ public class RestImpl implements RestInter {
 
     @Override
     public Method_response_time method_response_time(long id) {
-        List<Monitor_method> monitor_method = methodRepository.findTop90ByIdOrderByColumnid(id);
+        List<Monitor_method> monitor_method = methodRepository.findTop90ByIdOrderByColumnidDesc(id);
         Method_response_time response_time = new Method_response_time();
         response_time.generate(monitor_method);
         return response_time;
@@ -167,7 +167,7 @@ public class RestImpl implements RestInter {
 
     @Override
     public Method_tps method_tps(long id) {
-        List<Monitor_method> monitor_method = methodRepository.findTop90ByIdOrderByColumnid(id);
+        List<Monitor_method> monitor_method = methodRepository.findTop90ByIdOrderByColumnidDesc(id);
         Method_tps tps = new Method_tps();
         tps.generate(monitor_method);
         return tps;

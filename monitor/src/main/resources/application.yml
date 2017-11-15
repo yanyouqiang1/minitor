@@ -5,12 +5,12 @@ spring:
     stream:
       bindings:
         input_channel_request:
-          destination: ${STREAM_NAME:overview-stream}
+          destination: ${STREAM_NAME:overview-request}
           group: monitor_group
           consumer:
             durableSubscription: true
         input_channel_response:
-          destination: ${STREAM_NAME:overview-stream}
+          destination: ${STREAM_NAME:overview-response}
           group: monitor_group
           consumer:
             durableSubscription: true

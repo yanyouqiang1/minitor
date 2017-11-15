@@ -19,7 +19,6 @@ import java.util.List;
 /**
  * Created by Administrator on 2017/7/4 0004.
  */
-@Component
 public class HandlerCenter implements HandleInter {
     private MsgHandleListener msgHandleListener;
     private List<Msgfilter> msgfilterChain= new LinkedList<Msgfilter>();
@@ -43,7 +42,7 @@ public class HandlerCenter implements HandleInter {
         warehoseInter.putRequestMsg(requestMessage);
     }
 
-    @Scheduled(initialDelay = 10*1000, fixedDelay = 10000)
+    @Scheduled(initialDelay = 5*1000, fixedDelay = 5*1000)
     private void handle(){
         System.out.println("统计数据:"+System.currentTimeMillis());
         //统计消息

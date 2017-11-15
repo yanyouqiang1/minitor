@@ -29,15 +29,6 @@ public abstract class AbstractHeart {
         List<AbstractService> allService = getAllStrategyService();
         containerService.save(allService);//保存服务容器数量
         for (AbstractService service : allService) {
-            //服务全局调度
-//            List<OverallStrategyInter> serviceOverallStrategyInterList = service.getServiceOverallStrategyInterList();
-//            Iterator iterator = serviceOverallStrategyInterList.iterator();
-//            while (iterator.hasNext()) {
-//                OverallStrategyInter strategy = (OverallStrategyInter) iterator.next();
-//                StrategyOverallResult result = strategy.doStrategy(service);
-//                upService.addAll(result.getUpList());
-//                downService.addAll(result.getDownList());
-//            }
             //服务单个调度
             List<ServiceSingleStrategyInter> serviceSingleStrategyInterList = service.getServiceSingleStrategyInterList();
             Iterator iterator = serviceSingleStrategyInterList.iterator();
@@ -62,43 +53,34 @@ public abstract class AbstractHeart {
                 serviceSingleStrategyInter.afterStrategy(service);
             }
             //方法调度
-            List<AbstractMethod> methods = getStrategyMethods(service);
-            service.setMethodList(methods);
-            if(methods!=null) {
-                for (AbstractMethod method : methods) {
-                    //方法全局策略
-//                List<MethodOverallStrategyInter> methodOverallStrategyInters = method.getMethodOverallStrategyInterList();
-//                iterator = methodOverallStrategyInters.iterator();
-//                while (iterator.hasNext()) {
-//                    MethodOverallStrategyInter methodOverallStrategyInter = (MethodOverallStrategyInter) iterator.next();
-//                    StrategyOverallResult result = methodOverallStrategyInter.doStrategy(method, service);
-//                    upService.addAll(result.getUpList());
-//                    downService.addAll(result.getDownList());
+//            List<AbstractMethod> methods = getStrategyMethods(service);
+//            service.setMethodList(methods);
+//            if(methods!=null) {
+//                for (AbstractMethod method : methods) {
+//                    //方法单个策略
+//                    List<MethodSingleStrategyInter> methodSingleStrategyInters = method.getMethodSingleStrategyInterList();
+//                    iterator = methodSingleStrategyInters.iterator();
+//                    boolean isMethodHandle = false;
+//                    while (iterator.hasNext() && !isMethodHandle) {
+//                        MethodSingleStrategyInter methodSingleStrategyInter = (MethodSingleStrategyInter) iterator.next();
+//                        OperationService operationService;
+//                        switch (methodSingleStrategyInter.doStrategy(method, service)) {
+//                            case UP:
+//                                operationService = new OperationService(service,methodSingleStrategyInter.getStrategyName());
+//                                upService.add(operationService);
+//                                isMethodHandle = true;
+//                                break;
+//                            case DOWN:
+//                                operationService = new OperationService(service,methodSingleStrategyInter.getStrategyName());
+//                                downService.add(operationService);
+//                                isMethodHandle = true;
+//                                break;
+//                            default:
+//                                break;
+//                        }
+//                    }
 //                }
-                    //方法单个策略
-                    List<MethodSingleStrategyInter> methodSingleStrategyInters = method.getMethodSingleStrategyInterList();
-                    iterator = methodSingleStrategyInters.iterator();
-                    boolean isMethodHandle = false;
-                    while (iterator.hasNext() && !isMethodHandle) {
-                        MethodSingleStrategyInter methodSingleStrategyInter = (MethodSingleStrategyInter) iterator.next();
-                        OperationService operationService;
-                        switch (methodSingleStrategyInter.doStrategy(method, service)) {
-                            case UP:
-                                operationService = new OperationService(service,methodSingleStrategyInter.getStrategyName());
-                                upService.add(operationService);
-                                isMethodHandle = true;
-                                break;
-                            case DOWN:
-                                operationService = new OperationService(service,methodSingleStrategyInter.getStrategyName());
-                                downService.add(operationService);
-                                isMethodHandle = true;
-                                break;
-                            default:
-                                break;
-                        }
-                    }
-                }
-            }
+//            }
         }
 
         //全局策略
@@ -114,8 +96,6 @@ public abstract class AbstractHeart {
                 operationService = new OperationService(down,overallStrategyInter.getStrategyName());
                 downService.add(operationService);
             }
-//            upService.addAll(result.getUpList());
-//            downService.addAll(result.getDownList());
         }
         //方法调度
 

@@ -15,7 +15,7 @@ public class Method_visitors {
         int size = methods.size();
         method_visitors = new long[size];
         for(int i=0;i<size;i++){
-            method_visitors[i] = methods.get(i).getRequest_visitors();
+            method_visitors[i] = methods.get(size-i-1).getRequest_visitors();
         }
     }
 }

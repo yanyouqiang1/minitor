@@ -1,6 +1,6 @@
 package app.outerInterface;
 
-import app.database.domain.Strategy_responseTime;
+import app.database.domain.Strategy_timeWindow;
 import app.database.domain.Strategy_timePeriod;
 import app.database.domain.Strategy_visitorAverage;
 import app.database.domain.Strategy_visitorLimit;
@@ -119,7 +119,7 @@ public interface RestInter {
     public Overview getOverview();
 
     @RequestMapping("/strategy/methodResponse/info")
-    public List<Strategy_responseTime> getMethodResponse();
+    public List<Strategy_timeWindow> getMethodResponse();
 
     @RequestMapping("/strategy/serviceTimePeriod/info")
     public List<Strategy_timePeriod> getTimePeriod();

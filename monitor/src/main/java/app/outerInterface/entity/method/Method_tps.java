@@ -15,7 +15,7 @@ public class Method_tps {
         int size = methods.size();
         method_TPS = new long[size];
         for(int i=0;i<size;i++){
-            method_TPS[i] = methods.get(i).getTPS();
+            method_TPS[i] = methods.get(size-i-1).getTPS();
         }
     }
 

@@ -41,6 +41,7 @@ public class MonitorApp {
     @StreamListener(RabbitChannel.INPUT_RESPONSE)
     public void handle(ResponseMessage responseMessage){
 //        System.out.println("收到response请求");
+//        if (responseMessage.getHttpStatus()==null) return;
         handleInter.msgReceive(responseMessage);
     }
 

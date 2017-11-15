@@ -4,7 +4,7 @@ import app.Schedule.AbstractHeart;
 import app.Schedule.AbstractMethod;
 import app.Schedule.AbstractService;
 import app.Schedule.OverallStrategyInter;
-import app.Schedule.strategy.overall.MethodResponseTime;
+import app.Schedule.strategy.overall.TimeWindow;
 import app.Schedule.strategy.single.method.MethodVisitorAverage;
 import app.Schedule.strategy.single.service.ServiceTimePeriod;
 import app.Schedule.strategy.single.service.ServiceVisitorLimit;
@@ -96,17 +96,17 @@ public class Heart extends AbstractHeart {
     StrategyOverallSwitchService overallSwitchService;
 
     @Autowired
-    StrategyResponseTimeService responseTimeService;
+    StrategyTimeWindowService responseTimeService;
 
     @Override
     protected List<OverallStrategyInter> getOverallStrategy() {
         List<OverallStrategyInter> overallStrategyInterList = new LinkedList<OverallStrategyInter>();
-        if (overallSwitchService.getSwitchStatus(MethodResponseTime.name)){
-            Map<String, MethodResponseTime.MethodParameter> parameterMap = responseTimeService.getParameters();
-            MethodResponseTime methodResponseTime = SpringUtil.getBean(MethodResponseTime.class);
-            methodResponseTime.setParameterMap(parameterMap);
-//            MethodResponseTime methodResponseTime = new MethodResponseTime(parameterMap);
-            overallStrategyInterList.add(methodResponseTime);
+        if (overallSwitchService.getSwitchStatus(TimeWindow.name)){
+            Map<String, TimeWindow.ServiceParameter> parameterMap = responseTimeService.getParameters();
+            TimeWindow timeWindow = SpringUtil.getBean(TimeWindow.class);
+            timeWindow.setParameterMap(parameterMap);
+//            TimeWindow timeWindow = new TimeWindow(parameterMap);
+            overallStrategyInterList.add(timeWindow);
         }
         return overallStrategyInterList;
     }

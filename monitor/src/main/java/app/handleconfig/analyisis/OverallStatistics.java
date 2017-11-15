@@ -33,6 +33,7 @@ public class OverallStatistics extends AbstractOverallStatistics {
     protected LinkedList<Integer> responseTimeList = new LinkedList<>();
     @Override
     public void update(ResponseMessage responseMessage) {
+        int responsetime = responseMessage.getResponseTime();
         switch (responseMessage.getHttpStatus()) {
             case 100:
                 status_100++;
@@ -48,10 +49,11 @@ public class OverallStatistics extends AbstractOverallStatistics {
                 break;
             case 500:
                 status_500++;
+                responsetime = Const.MAX_RESPONSE;
                 break;
         }
 
-        int responsetime = responseMessage.getResponseTime();
+
         if (response_visitor == 1) {
             response_min = responsetime;
         }
@@ -75,6 +77,11 @@ public class OverallStatistics extends AbstractOverallStatistics {
         status_300 = 0;
         status_400 = 0;
         status_500 = 0;
+        rate_status_100 = 0;
+        rate_status_200 =0 ;
+        rate_status_300 = 0;
+        rate_status_400 =0 ;
+        rate_status_500 = 0;
         response_min = 0;
         response_max = 0;
         response_avg = 0;

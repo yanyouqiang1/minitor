@@ -18,18 +18,22 @@ public class MonitorServiceService {
 
     public long getServiceLatestVisitor(String serviceName) {
         Monitor_services services = serviceRepository.findFirstByNameOrderByColumnidDesc(serviceName);
-        if(services!=null) {
+        if (services != null) {
             return services.getResponse_visitors();
-        }else
+        } else
             return 0;
     }
 
     public int[] getServiceRecentResponseTime(String serviceName) {
-        List<Monitor_services> servicesList = serviceRepository.findTop30ByNameOrderByColumnid(serviceName);
-        int[] ints = new int[servicesList.size()];
-        for(int i=0;i<ints.length;i++){
-            ints[i] = servicesList.get(i).getResponse_avg();
-        }
-        return ints;
+        List<Monitor_services> servicesList = serviceRepository.findTop30ByNameOrderByColumnidDesc(serviceName);
+        if (servicesList != null) {
+            int size = servicesList.size();
+            int[] ints = new int[size];
+            for (int i = 0; i < ints.length; i++) {
+                ints[size-1-i] = servicesList.get(i).getResponse_avg();
+            }
+            return ints;
+        }else
+            return new int[0];
     }
 }

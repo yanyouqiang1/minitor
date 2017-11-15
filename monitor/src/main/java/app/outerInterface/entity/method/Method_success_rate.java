@@ -15,7 +15,7 @@ public class Method_success_rate {
         int size = methods.size();
         method_success_rate = new float[size];
         for(int i=0;i<size;i++){
-            method_success_rate[i] = methods.get(i).getRate_status_200();
+            method_success_rate[i] = methods.get(size-i-1).getRate_status_200();
         }
     }
 

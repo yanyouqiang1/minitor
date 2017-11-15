@@ -1,5 +1,6 @@
 package app;
 
+import app.database.service.MonitorServiceService;
 import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
 import app.outerInterface.RestInter;
 import app.innerInterface.ScheduleRestControl;
@@ -106,11 +107,10 @@ public class RestControl extends ScheduleRestControl{
     }
 
     @Autowired
-    TopologyInter topologyInter;
-    @RequestMapping("/test")
-    public String test2(){
-        topologyInter.getMethodsByServiceName("123");
-        List e = topologyInter.getMethodsByServiceName("ServiceA");
-        return e.toString();
+    MonitorServiceService serviceService;
+    @RequestMapping("/service/{serviceName}/response")
+    public int[] serviceResponse(@PathVariable(name = "serviceName") String serviceName) {
+         return serviceService.getServiceRecentResponseTime(serviceName);
     }
+
 }

@@ -15,7 +15,7 @@ import java.util.List;
 public interface MethodRepository extends JpaRepository<Monitor_method,Long> {
     public Monitor_method findFirstByIdOrderByColumnid(long id);
 
-    public List<Monitor_method> findTop90ByIdOrderByColumnid(long id);
+    public List<Monitor_method> findTop90ByIdOrderByColumnidDesc(long id);
 
     public List<Monitor_method> findByResourceIdAndOverall(Pageable pageable, long resourceId, Monitor_overall overall);
 

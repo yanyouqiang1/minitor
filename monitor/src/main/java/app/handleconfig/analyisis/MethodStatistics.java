@@ -32,6 +32,7 @@ public class MethodStatistics extends AbstractMethodStatistics {
 
     @Override
     public void update(ResponseMessage responseMessage) {
+        int responsetime = responseMessage.getResponseTime();
         switch (responseMessage.getHttpStatus()) {
             case 100:
                 status_100++;
@@ -47,11 +48,11 @@ public class MethodStatistics extends AbstractMethodStatistics {
                 break;
             case 500:
                 status_500++;
+                responsetime = Const.MAX_RESPONSE;
                 break;
             default:
                 break;
         }
-        int responsetime = responseMessage.getResponseTime();
         if (response_visitors == 1) {
             response_min = responsetime;
             response_avg = responsetime;
@@ -81,6 +82,11 @@ public class MethodStatistics extends AbstractMethodStatistics {
         status_300 = 0;
         status_400 = 0;
         status_500 = 0;
+        rate_status_100 =0;
+        rate_status_200 = 0;
+        rate_status_300= 0;
+        rate_status_400 =0;
+        rate_status_500 =0 ;
         response_min = 0;
         response_max = 0;
         response_avg = 0;

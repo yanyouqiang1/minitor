@@ -1,6 +1,5 @@
 package app.Schedule.strategy.overall;
 
-import app.Schedule.AbstractMethod;
 import app.Schedule.AbstractService;
 import app.Schedule.OverallStrategyInter;
 import app.Schedule.StrategyOverallResult;
@@ -12,7 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +21,12 @@ import java.util.Map;
 @Data
 @Component
 @Scope("prototype")
-public class MethodResponseTime implements OverallStrategyInter {
+public class TimeWindow implements OverallStrategyInter {
     public static String name ="time window";
-    private Map<String,MethodParameter> parameterMap;
 
-    public MethodResponseTime() {
+    private Map<String,ServiceParameter> parameterMap;
+
+    public TimeWindow() {
     }
 
     @Autowired
@@ -59,28 +58,38 @@ public class MethodResponseTime implements OverallStrategyInter {
     private final int OVERLOAD =1,RELAX=0,NORMAL=-1;
     //判断服务是否负载
     private int serviceJudge(AbstractService abstractService) {
-        List<AbstractMethod> methods = abstractService.getMethodList();
-        if(methods==null) return NORMAL;
-        for(AbstractMethod method:methods){
-            int[] responseTimes = monitor.getMethodRecentResponseTime(abstractService.getName(),method.getName());
-            if(JudgmentOverLoadAlgorithm(parameterMap.get(method.getName()),responseTimes)){
+        int[] serviceResponse = monitor.getServiceRecentResponseTime(abstractService.getName());
+        if(serviceResponse!=null){
+            if(JudgmentOverLoadAlgorithm(parameterMap.get(abstractService.getName()),serviceResponse))
                 return OVERLOAD;
-            }else if(JudgmentRelaxAlgorithm(parameterMap.get(method.getName()),responseTimes)){
+            else if(JudgmentRelaxAlgorithm(parameterMap.get(abstractService.getName()),serviceResponse))
                 return RELAX;
-            }else{
+            else
                 return NORMAL;
-            }
         }
         return NORMAL;
+//        List<AbstractMethod> methods = abstractService.getMethodList();
+//        if(methods==null) return NORMAL;
+//        for(AbstractMethod method:methods){
+//            int[] responseTimes = monitor.getMethodRecentResponseTime(abstractService.getName(),method.getName());
+//            if(JudgmentOverLoadAlgorithm(parameterMap.get(method.getName()),responseTimes)){
+//                return OVERLOAD;
+//            }else if(JudgmentRelaxAlgorithm(parameterMap.get(method.getName()),responseTimes)){
+//                return RELAX;
+//            }else{
+//                return NORMAL;
+//            }
+//        }
+//        return NORMAL;
     }
     //负载判断算法
-    private boolean JudgmentOverLoadAlgorithm(MethodParameter methodParameter, int[] responseTimes) {
-        if(methodParameter==null){
+    private boolean JudgmentOverLoadAlgorithm(ServiceParameter serviceParameter, int[] responseTimes) {
+        if(serviceParameter ==null){
             return false;
         }
         int count = 0;
         for(int i=0;i<responseTimes.length;i++){
-            if(responseTimes[i]>=methodParameter.getUpper()){
+            if(responseTimes[i]>= serviceParameter.getUpper()){
                 count++;
             }
         }
@@ -90,13 +99,13 @@ public class MethodResponseTime implements OverallStrategyInter {
         return false;
     }
     //低负载判断算法
-    private boolean JudgmentRelaxAlgorithm(MethodParameter methodParameter, int[] responseTimes) {
-        if(methodParameter==null){
+    private boolean JudgmentRelaxAlgorithm(ServiceParameter serviceParameter, int[] responseTimes) {
+        if(serviceParameter ==null){
             return false;
         }
         int count = 0;
         for(int i=0;i<responseTimes.length;i++){
-            if(responseTimes[i]<=methodParameter.getLower()){
+            if(responseTimes[i]<= serviceParameter.getLower()){
                 count++;
             }
         }
@@ -126,11 +135,11 @@ public class MethodResponseTime implements OverallStrategyInter {
     }
 
     @Data
-    public static class MethodParameter{
+    public static class ServiceParameter {
         private int upper,lower;
         private int upperLimit;
 
-        public MethodParameter(int upper, int lower, int upperLimit) {
+        public ServiceParameter(int upper, int lower, int upperLimit) {
             this.upper = upper;
             this.lower = lower;
             this.upperLimit = upperLimit;

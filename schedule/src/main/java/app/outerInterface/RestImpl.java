@@ -1,9 +1,9 @@
 package app.outerInterface;
 
-import app.Schedule.strategy.overall.MethodResponseTime;
+import app.Schedule.strategy.overall.TimeWindow;
 import app.Schedule.strategy.single.service.ServiceTimePeriod;
 import app.Schedule.strategy.single.service.ServiceVisitorLimit;
-import app.database.domain.Strategy_responseTime;
+import app.database.domain.Strategy_timeWindow;
 import app.database.domain.Strategy_timePeriod;
 import app.database.domain.Strategy_visitorAverage;
 import app.database.domain.Strategy_visitorLimit;
@@ -142,7 +142,7 @@ public class RestImpl implements RestInter {
     }
 
     @Autowired
-    StrategyResponseTimeService responseTimeService;
+    StrategyTimeWindowService responseTimeService;
     @Override
     public CommonReply updateStrategyResponseTime(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "lower")int lower,@RequestParam(name = "upper")int upper,@RequestParam(name = "upperLimit")int upperLimit){
         responseTimeService.insertStrategy(methodName,lower,upper,upperLimit);
@@ -156,8 +156,8 @@ public class RestImpl implements RestInter {
     public Overview getOverview() {
         Overview overview = new Overview();
 
-        overview.getTimeWindow().setName(MethodResponseTime.name);
-        overview.getTimeWindow().setStatus(overallSwitchService.getSwitchStatus(MethodResponseTime.name));
+        overview.getTimeWindow().setName(TimeWindow.name);
+        overview.getTimeWindow().setStatus(overallSwitchService.getSwitchStatus(TimeWindow.name));
 
         List<Strategy_timePeriod> timePeriods = timePeriodService.getAllstrategys();
         Overview.StrategyService strategyService = new Overview.StrategyService();
@@ -200,7 +200,7 @@ public class RestImpl implements RestInter {
     }
 
     @Override
-    public List<Strategy_responseTime> getMethodResponse() {
+    public List<Strategy_timeWindow> getMethodResponse() {
         return responseTimeService.getAllStrategy();
     }
 

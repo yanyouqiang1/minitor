@@ -12,12 +12,12 @@ import java.util.Date;
  */
 @Entity
 @Data
-public class Strategy_responseTime {
+public class Strategy_timeWindow {
     @Id
     @GeneratedValue
     private Integer id;
 
-    private String methodName;
+    private String serviceName;
 
     private Integer upper;
 
@@ -27,7 +27,7 @@ public class Strategy_responseTime {
 
     private Date updateTime;
 
-    public Strategy_responseTime() {
+    public Strategy_timeWindow() {
         updateTime = new Date();
     }
 }

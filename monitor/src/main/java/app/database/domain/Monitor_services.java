@@ -19,7 +19,7 @@ public class Monitor_services {
     private String name;
     private Long request_visitors,response_visitors;
 
-    private Integer response_min,response_max,response_avg;
+    private Integer response_avg;
 
     @JsonIgnore
     @ManyToOne(fetch = FetchType.LAZY)

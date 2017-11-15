@@ -20,20 +20,20 @@ import org.springframework.context.annotation.Scope;
 @Configuration
 public class MonitorConfig {
 
-//    @Autowired @Qualifier("httpStatusFilter")
-//    Msgfilter httpStatusFilter;
-//
-//    @Autowired
-//    MsgHandleListener msgHandleListener;
-//
-//    @Bean
-//    public HandleInter getcommonHandle(){
-//        HandlerCenter commonHandle  = new HandlerCenter();
-//        commonHandle.getMsgfilterChain().add(httpStatusFilter);
-//        commonHandle.setMsgHandleListener(msgHandleListener);
-//        return commonHandle;
-//    }
-//
+    @Autowired @Qualifier("httpStatusFilter")
+    Msgfilter httpStatusFilter;
+
+    @Autowired
+    MsgHandleListener msgHandleListener;
+
+    @Bean
+    public HandleInter getcommonHandle(){
+        HandlerCenter commonHandle  = new HandlerCenter();
+        commonHandle.getMsgfilterChain().add(httpStatusFilter);
+        commonHandle.setMsgHandleListener(msgHandleListener);
+        return commonHandle;
+    }
+
 
 
 

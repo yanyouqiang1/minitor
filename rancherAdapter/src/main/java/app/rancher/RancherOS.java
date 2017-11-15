@@ -7,6 +7,7 @@ import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -29,30 +30,38 @@ public class RancherOS {
     }
 
     public String getServiceName(String serviceId) throws JSONException {
-        return queryRancherServiceResult(serviceId,"name").get(0);
+        return queryRancherServiceResult(serviceId, "name").get(0);
     }
 
     public int getServiceScale(String serviceId) throws JSONException {
-        return Integer.valueOf(queryRancherServiceResult(serviceId,"scale").get(0));
+        return Integer.valueOf(queryRancherServiceResult(serviceId, "scale").get(0));
     }
 
     public List<String> getLinkedServices(String serviceId) throws JSONException {
-        return queryRancherServiceResult(serviceId,"linkedServices");
+        return queryRancherServiceResult(serviceId, "linkedServices");
     }
 
     public List<String> getServiceContainerNames(String serviceId) throws JSONException {
         List<String> containerNames = new LinkedList<String>();
         //获得instanceIds
-        List<String> instanceIds = queryRancherServiceResult(serviceId,"instanceIds");
+        List<String> instanceIds = queryRancherServiceResult(serviceId, "instanceIds");
         for (String instanceId : instanceIds) {
-            String containerName = queryRancherContainerResult(instanceId,"name").get(0);
+            String containerName = queryRancherContainerResult(instanceId, "name").get(0);
             containerNames.add(containerName);
         }
         return containerNames;
     }
 
+    static Long lastSchedule = System.currentTimeMillis();
+
     //增加服务，或者减少服务
     public boolean scaleService(String serviceName, boolean upOrdown) {
+        //add the cooling time module
+        long now = System.currentTimeMillis();
+        if (now - lastSchedule < 60 * 1000) {
+            return false;
+        }
+
         String webhooksURL = "";
         if (upOrdown) {
             webhooksURL = rancherPresetValue.getServiceUpUrl(serviceName);
@@ -64,6 +73,9 @@ public class RancherOS {
             return false;
         }
         HttpRequest.httpClientPost(webhooksURL, null, "UTF8");
+
+        lastSchedule = System.currentTimeMillis();
+
         return true;
     }
 
@@ -93,13 +105,15 @@ public class RancherOS {
         }
         return rancherContainerURL;
     }
+
     //查询某个服务的某个属性
-    private List<String> queryRancherServiceResult(String serviceId, String queryName)throws JSONException {
+    private List<String> queryRancherServiceResult(String serviceId, String queryName) throws JSONException {
         String realPath = getRancherServiceURL() + serviceId;
         String restApiContent = LocalWebCookies.getApiContent(rancherPresetValue.getAccesskey(), rancherPresetValue.getSecret(), realPath, "");
         return JsonUtil.getList(restApiContent, queryName);
     }
-    private List<String> queryRancherContainerResult(String containerId, String queryName)throws JSONException {
+
+    private List<String> queryRancherContainerResult(String containerId, String queryName) throws JSONException {
         String realPath = getRancherContainerURL() + containerId;
         String restApiContent = LocalWebCookies.getApiContent(rancherPresetValue.getAccesskey(), rancherPresetValue.getSecret(), realPath, "");
         return JsonUtil.getList(restApiContent, queryName);

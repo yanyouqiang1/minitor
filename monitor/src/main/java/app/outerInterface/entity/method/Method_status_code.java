@@ -24,11 +24,11 @@ public class Method_status_code {
         method_status_400 = new long[size];
         method_status_500 = new long[size];
         for(int i=0;i<size;i++){
-            method_status_100[i] = methods.get(i).getStatus_100();
-            method_status_200[i] = methods.get(i).getStatus_200();
-            method_status_300[i] = methods.get(i).getStatus_300();
-            method_status_400[i] = methods.get(i).getStatus_400();
-            method_status_500[i] = methods.get(i).getStatus_500();
+            method_status_100[i] = methods.get(size-i-1).getStatus_100();
+            method_status_200[i] = methods.get(size-i-1).getStatus_200();
+            method_status_300[i] = methods.get(size-i-1).getStatus_300();
+            method_status_400[i] = methods.get(size-i-1).getStatus_400();
+            method_status_500[i] = methods.get(size-i-1).getStatus_500();
         }
     }
 

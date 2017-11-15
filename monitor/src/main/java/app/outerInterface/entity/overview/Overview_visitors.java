@@ -19,6 +19,7 @@ public class Overview_visitors {
         overview_response_visitors = new long[size];
         for(int i=0;i<size;i++){
             overview_request_visitors[i] = overalls.get(i).getRequest_visitors();
+            overview_response_visitors[i] = overalls.get(i).getResponse_visitors();
         }
     }
 
