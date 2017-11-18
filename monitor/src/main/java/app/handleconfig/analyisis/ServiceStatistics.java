@@ -23,23 +23,27 @@ import java.util.Map;
 public class ServiceStatistics extends AbstractServiceStatistics {
     protected int response_avg;
 
-    protected Map<Long,MethodCount> methodResponseMap = new HashMap<>();
+    protected Map<Long, MethodCount> methodResponseMap = new HashMap<>();
 
     @Override
     public void update(ResponseMessage responseMessage) {
         int responsetime = responseMessage.getResponseTime();
-        long methodId= responseMessage.getMethodId();
+        long methodId = responseMessage.getMethodId();
         MethodCount methodCount = findOrCreate(methodId);
-        methodCount.add(responsetime);
+        if (responseMessage.getHttpStatus() == 500) {
+            methodCount.add(Const.MAX_RESPONSE);
+        } else {
+            methodCount.add(responsetime);
+        }
 //        response_avg = (int) (((response_visitors - 1) * response_avg + responsetime) / response_visitors);
     }
 
     private MethodCount findOrCreate(long methodId) {
-        if(methodResponseMap.keySet().contains(methodId)){
+        if (methodResponseMap.keySet().contains(methodId)) {
             return methodResponseMap.get(methodId);
-        }else{
+        } else {
             MethodCount methodCount = new MethodCount();
-            methodResponseMap.put(methodId,methodCount);
+            methodResponseMap.put(methodId, methodCount);
             return methodCount;
         }
     }
@@ -47,7 +51,7 @@ public class ServiceStatistics extends AbstractServiceStatistics {
     @Override
     public void attributeClear() {
         methodResponseMap.clear();
-        response_avg=0;
+        response_avg = 0;
     }
 
     @Autowired
@@ -67,21 +71,21 @@ public class ServiceStatistics extends AbstractServiceStatistics {
     }
 
     private int calculate() {
-        int responseTime =0;
-        for (Map.Entry<Long,MethodCount> entry:methodResponseMap.entrySet()){
-            responseTime+=entry.getValue().avg;
+        int responseTime = 0;
+        for (Map.Entry<Long, MethodCount> entry : methodResponseMap.entrySet()) {
+            responseTime += entry.getValue().avg;
         }
         return responseTime;
     }
 
 
     @Data
-    class MethodCount{
+    class MethodCount {
         private int count;
         private int avg;
 
-        public void add(int responseTime){
-            avg = (avg*count+responseTime)/(count+1);
+        public void add(int responseTime) {
+            avg = (avg * count + responseTime) / (count + 1);
             count++;
         }
     }

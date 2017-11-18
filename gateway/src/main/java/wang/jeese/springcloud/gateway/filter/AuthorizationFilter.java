@@ -36,7 +36,7 @@ public class AuthorizationFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        System.out.println("AuthorizationFilter");
+//        System.out.println("AuthorizationFilter");
         RequestContext ctx = RequestContext.getCurrentContext();
         return authorizationService.shouldFilter(ctx);
     }

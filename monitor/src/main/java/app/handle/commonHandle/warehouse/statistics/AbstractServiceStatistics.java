@@ -31,6 +31,7 @@ public abstract class AbstractServiceStatistics implements Statistics {
     @Override
     public void sumup() {
         handleResult(this);
+        clear();
     }
 
     public abstract void handleResult(AbstractServiceStatistics service);

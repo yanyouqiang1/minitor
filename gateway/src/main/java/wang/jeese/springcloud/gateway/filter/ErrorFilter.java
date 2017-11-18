@@ -37,23 +37,25 @@ public class ErrorFilter extends ZuulFilter {
     public Object run() {
         System.out.println("error error error error error error error error error error error error error error error");
         RequestContext ctx = RequestContext.getCurrentContext();
-        Long groupId = (Long) ctx.get("GroupId");
-        Long resourceId = (Long) ctx.get("ResourceId");
-        Long methodId = (Long) ctx.get("MethodId");
-        Long serviceId = (Long) ctx.get("ServiceId");
-//        Long startTime = (Long) ctx.get("StartTime");
-//        Long endTime = (Long) ctx.get("EndTime");
-        Integer httpStatus = 500;
-//        Integer responseTime = Math.toIntExact(endTime - startTime);
-        Integer responseTime = -1;
-        ResponseMessage responseMessage = new ResponseMessage(groupId, resourceId, methodId, serviceId, httpStatus, responseTime);
-        rabbitChannel.responseOutPut().send(MessageBuilder.withPayload(responseMessage).build());
-        logger.info("groupId: " + groupId);
-        logger.info("resourceId: " + resourceId);
-        logger.info("methodId: " + methodId);
-        logger.info("serviceId: " + serviceId);
-        logger.info("httpStatus: " + httpStatus);
-        logger.info("responseTime: " + responseTime + " ms");
+//        Long groupId = (Long) ctx.get("GroupId");
+//        Long resourceId = (Long) ctx.get("ResourceId");
+//        Long methodId = (Long) ctx.get("MethodId");
+//        Long serviceId = (Long) ctx.get("ServiceId");
+////        Long startTime = (Long) ctx.get("StartTime");
+////        Long endTime = (Long) ctx.get("EndTime");
+//        Integer httpStatus = 500;
+////        Integer responseTime = Math.toIntExact(endTime - startTime);
+//        Integer responseTime = -1;
+//        ResponseMessage responseMessage = new ResponseMessage(groupId, resourceId, methodId, serviceId, httpStatus, responseTime);
+//        rabbitChannel.responseOutPut().send(MessageBuilder.withPayload(responseMessage).build());
+//        logger.info("groupId: " + groupId);
+//        logger.info("resourceId: " + resourceId);
+//        logger.info("methodId: " + methodId);
+//        logger.info("serviceId: " + serviceId);
+//        logger.info("httpStatus: " + httpStatus);
+//        logger.info("responseTime: " + responseTime + " ms");
+        System.out.println(ctx.getThrowable().getCause());
+        ctx.put("HttpCode",500);
         return null;
     }
 }

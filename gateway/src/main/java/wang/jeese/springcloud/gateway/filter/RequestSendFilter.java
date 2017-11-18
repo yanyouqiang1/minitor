@@ -35,7 +35,7 @@ public class RequestSendFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        System.out.println("requestSendFilter");
+//        System.out.println("requestSendFilter");
         return true;
     }
 

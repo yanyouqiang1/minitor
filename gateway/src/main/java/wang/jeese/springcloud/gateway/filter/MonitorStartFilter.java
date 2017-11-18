@@ -29,7 +29,7 @@ public class MonitorStartFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        System.out.println("monitorEndFilter");
+//        System.out.println("monitorEndFilter");
         return true;
     }
 

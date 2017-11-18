@@ -34,7 +34,7 @@ public class ResponseSendFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        System.out.println("ResponseFilter");
+//        System.out.println("ResponseFilter");
         return true;
     }
 
@@ -47,7 +47,10 @@ public class ResponseSendFilter extends ZuulFilter {
         Long serviceId = (Long) ctx.get("ServiceId");
         Long startTime = (Long) ctx.get("StartTime");
         Long endTime = (Long) ctx.get("EndTime");
-        Integer httpStatus = ctx.getResponseStatusCode();
+        Integer httpStatus = (Integer)ctx.get("HttpCode");
+        if(httpStatus==null){
+            httpStatus = ctx.getResponseStatusCode();
+        }
         Integer responseTime = Math.toIntExact(endTime - startTime);
         ResponseMessage responseMessage = new ResponseMessage(groupId, resourceId, methodId, serviceId, httpStatus, responseTime);
         rabbitChannel.responseOutPut().send(MessageBuilder.withPayload(responseMessage).build());

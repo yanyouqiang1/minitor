@@ -34,7 +34,7 @@ public class AuthenticationFilter extends ZuulFilter {
 
     @Override
     public boolean shouldFilter() {
-        System.out.println("AuthenticationFilter");
+//        System.out.println("AuthenticationFilter");
         RequestContext ctx = RequestContext.getCurrentContext();
         HttpServletRequest request = ctx.getRequest();
         logger.info("send {} request to {}", request.getMethod(), request.getRequestURL().toString());

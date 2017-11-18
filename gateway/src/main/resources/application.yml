@@ -66,13 +66,12 @@ hystrix:
                 isolation:
                     thread:
                         timeoutInMilliseconds: 6000
+            circuitBreaker:
+                enabled: false
 
 ribbon:
     ConnectTimeout: 3000
     ReadTimeout: 6000
-feign:
-    hystrix:
-        enable: false
 
 jwt:
     header:

@@ -1,6 +1,5 @@
 package wang.jeese.springcloud.gateway.fallback;
 
-import com.netflix.discovery.converters.Auto;
 import com.netflix.zuul.context.RequestContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -10,11 +9,8 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.client.ClientHttpResponse;
-import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.stereotype.Component;
-import wang.jeese.springcloud.gateway.filter.ErrorFilter;
 import wang.jeese.springcloud.gateway.messagechannel.RabbitChannel;
-import wang.jeese.springcloud.gateway.model.ResponseMessage;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -53,19 +49,21 @@ public class ServiceFallback implements ZuulFallbackProvider {
 //        logger.info("responseTime: " + responseTime + " ms");
         System.out.println("serviceFall back");
         RequestContext ctx = RequestContext.getCurrentContext();
-        Long groupId = (Long) ctx.get("GroupId");
-        Long resourceId = (Long) ctx.get("ResourceId");
-        Long methodId = (Long) ctx.get("MethodId");
-        Long serviceId = (Long) ctx.get("ServiceId");
-//        Long startTime = (Long) ctx.get("StartTime");
-//        Long endTime = (Long) ctx.get("EndTime");
-        Integer httpStatus = 500;
-//        Integer responseTime = Math.toIntExact(endTime - startTime);
-        Integer responseTime = -1;
-        ResponseMessage responseMessage = new ResponseMessage(groupId, resourceId, methodId, serviceId, httpStatus, responseTime);
-        rabbitChannel.responseOutPut().send(MessageBuilder.withPayload(responseMessage).build());
-
+//        Long groupId = (Long) ctx.get("GroupId");
+//        Long resourceId = (Long) ctx.get("ResourceId");
+//        Long methodId = (Long) ctx.get("MethodId");
+//        Long serviceId = (Long) ctx.get("ServiceId");
+////        Long startTime = (Long) ctx.get("StartTime");
+////        Long endTime = (Long) ctx.get("EndTime");
+//        Integer httpStatus = 500;
+////        Integer responseTime = Math.toIntExact(endTime - startTime);
+//        Integer responseTime = -1;
+//        ResponseMessage responseMessage = new ResponseMessage(groupId, resourceId, methodId, serviceId, httpStatus, responseTime);
+//        rabbitChannel.responseOutPut().send(MessageBuilder.withPayload(responseMessage).build());
+//        ctx.setResponseStatusCode(HttpStatus.SERVICE_UNAVAILABLE.value());
+        ctx.put("HttpCode",500);
         return new ClientHttpResponse() {
+
             @Override
             public HttpStatus getStatusCode() throws IOException {
                 return HttpStatus.OK;
