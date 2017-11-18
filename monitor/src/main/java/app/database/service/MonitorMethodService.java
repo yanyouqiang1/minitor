@@ -1,17 +1,12 @@
 package app.database.service;
 
 import app.database.dao.MethodRepository;
-import app.database.dao.ServiceRepository;
 import app.database.domain.Monitor_method;
-import app.database.domain.Monitor_services;
 import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
-import app.outerInterface.forSchedule.MonitorMethod;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Administrator on 2017/9/15.
@@ -23,7 +18,6 @@ public class MonitorMethodService {
 
     @Autowired
     TopologyInter topologyInter;
-
     public long getMethodLatestVisitor(String serviceName, String methodName) {
         Long serviceID=topologyInter.getServiceIDByServiceName(serviceName);
         if(serviceID==null) return 0;

@@ -1,0 +1,160 @@
+spring:
+  profiles:
+    active: development
+
+---
+
+spring:
+    profiles: development
+    datasource:
+        url: jdbc:mysql://120.76.234.224:9000/sct_gateway?useUnicode=true&characterEncoding=UTF8&useSSL=false
+#       url: jdbc:mysql://database:3306/mbyjdb?useUnicode=true&characterEncoding=UTF8&useSSL=false
+        username: root
+        password: password
+        driver-class-name: com.mysql.jdbc.Driver
+        initialize: false
+    jpa:
+        database: MYSQL
+        show-sql: true
+        properties:
+            hibernate:
+                dialect : org.hibernate.dialect.MySQL5Dialect
+    jackson:
+        serialization:
+            INDENT_OUTPUT: true
+    cloud:
+        stream:
+            bindings:
+                output_channel_request:
+                    destination: overview-request
+                    content-type: application/json
+                    binder: rabbit1
+                output_channel_response:
+                    destination: overview-response
+                    content-type: application/json
+                    binder: rabbit1
+            binders:
+                rabbit1:
+                    type: rabbit
+                    environment:
+                        spring:
+                            rabbitmq:
+                                host: 192.168.0.100
+                                port: 5672
+                                username: user
+                                password: password
+server:
+    port: 8090
+eureka:
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+    hostname: ${EUREKA_ADDRESS:192.168.0.100}
+    port:  ${EUREKA_PORT:8001}
+  client:
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+zuul:
+    ignored-services: '*'
+    prefix: /api
+
+
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 6000
+
+ribbon:
+    ConnectTimeout: 3000
+    ReadTimeout: 6000
+feign:
+    hystrix:
+        enable: false
+
+jwt:
+    header:
+        access: AccessToken
+    secret: mainSecret
+
+account:
+    header: AccountId
+
+---
+
+spring:
+    profiles: production
+    datasource:
+        url: jdbc:mysql://120.76.234.224:9000/sct_gateway?useUnicode=true&characterEncoding=UTF8&useSSL=false
+#       url: jdbc:mysql://database:3306/mbyjdb?useUnicode=true&characterEncoding=UTF8&useSSL=false
+        username: root
+        password: password
+        driver-class-name: com.mysql.jdbc.Driver
+        initialize: false
+    jpa:
+        database: MYSQL
+        show-sql: true
+        properties:
+            hibernate:
+                dialect : org.hibernate.dialect.MySQL5Dialect
+    jackson:
+        serialization:
+            INDENT_OUTPUT: true
+    cloud:
+        stream:
+            bindings:
+                output_channel_request:
+                    destination: overview-request
+                    content-type: application/json
+                    binder: rabbit1
+                output_channel_response:
+                    destination: overview-response
+                    content-type: application/json
+                    binder: rabbit1
+            binders:
+                rabbit1:
+                    type: rabbit
+                    environment:
+                        spring:
+                            rabbitmq:
+                                host: rabbit1
+                                port: 5672
+                                username: user
+                                password: password
+server:
+    port: 8080
+eureka:
+    instance:
+        preferIpAddress: true
+        instance-id: ${spring.cloud.client.ipAddress}:${server.port}
+        hostname: eureka
+        port: 8080
+    client:
+        serviceUrl:
+            defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+zuul:
+    ignored-services: '*'
+    prefix: /api
+
+hystrix:
+    command:
+        default:
+            execution:
+                isolation:
+                    thread:
+                        timeoutInMilliseconds: 6000
+
+
+ribbon:
+    ConnectTimeout: 3000
+    ReadTimeout: 6000
+
+jwt:
+    header:
+        access: AccessToken
+    secret: mainSecret
+
+account:
+    header: AccountId
