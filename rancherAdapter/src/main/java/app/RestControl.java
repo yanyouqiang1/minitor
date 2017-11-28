@@ -29,13 +29,13 @@ public class RestControl extends RancherAdapter{
 
     @RequestMapping("/test1")
     public String test1(){
-        rancherStack.upService("nginx");
-        return "up nginx";
+        rancherStack.upService("ServiceA");
+        return "up ServiceA";
     }
 
     @RequestMapping("/test2")
     public String test2(){
-        rancherStack.downService("nginx");
-        return "down nginx";
+        rancherStack.downService("ServiceA");
+        return "down ServiceA";
     }
 }

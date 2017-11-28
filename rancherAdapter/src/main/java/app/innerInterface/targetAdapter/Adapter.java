@@ -1,8 +1,7 @@
 package app.innerInterface.targetAdapter;
 
 import org.springframework.cloud.netflix.feign.FeignClient;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -25,8 +24,9 @@ public interface Adapter {
     public AdapterResultData getMemoryByContainerName(@RequestParam(name = "containerName") String containerName);
 
     //简化负载列表
-    @RequestMapping("/function/simplifyList")
-    public LinkedList<AdapterService> simplifyOverloadList(LinkedList<AdapterService> serviceList);
+    @RequestMapping(value = "/function/simplifyList",method = RequestMethod.POST)
+    @ResponseBody
+    public SimplifyService simplifyOverloadList(@RequestBody SimplifyService serviceList);
     //触发
     //增加
     @RequestMapping("/trigger/upService")

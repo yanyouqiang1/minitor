@@ -15,11 +15,11 @@ import java.util.List;
 public interface StrategyTimeWindowRepository extends JpaRepository<Strategy_timeWindow,Integer> {
     public List<Strategy_timeWindow> getAllByIdNotNull();
 
-    public Strategy_timeWindow findByMethodName(String methodName);
+    public Strategy_timeWindow findByServiceName(String methodName);
 
     @Modifying
-    @Query("update Strategy_timeWindow r set r.upper=?1,r.lower=?2,r.upperLimit=?3 where r.methodName=?4")
-    public Integer updateData(int upper,int lower,int upperLimit,String methodName);
+    @Query("update Strategy_timeWindow r set r.upper=?1,r.lower=?2,r.upperLimit=?3 where r.serviceName=?4")
+    public Integer updateData(int upper,int lower,int upperLimit,String serviceName);
 
 
 }

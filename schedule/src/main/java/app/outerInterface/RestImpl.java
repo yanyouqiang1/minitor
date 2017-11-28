@@ -3,14 +3,15 @@ package app.outerInterface;
 import app.Schedule.strategy.overall.TimeWindow;
 import app.Schedule.strategy.single.service.ServiceTimePeriod;
 import app.Schedule.strategy.single.service.ServiceVisitorLimit;
-import app.database.domain.Strategy_timeWindow;
 import app.database.domain.Strategy_timePeriod;
+import app.database.domain.Strategy_timeWindow;
 import app.database.domain.Strategy_visitorAverage;
 import app.database.domain.Strategy_visitorLimit;
 import app.database.service.*;
 import app.feignclient.monitor.Monitor;
 import app.feignclient.targetAdapter.Adapter;
 import app.feignclient.targetAdapter.AdapterService;
+import app.feignclient.targetAdapter.SimplifyService;
 import app.outerInterface.entity.observation.*;
 import app.outerInterface.entity.reply.CommonReply;
 import app.outerInterface.entity.reply.CommonReplyBuilder;
@@ -19,9 +20,11 @@ import app.outerInterface.entity.task.AutomaticList;
 import app.outerInterface.entity.task.ManualList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -217,5 +220,20 @@ public class RestImpl implements RestInter {
     @Override
     public List<Strategy_visitorAverage> getMethodAverage() {
         return visitorAverageService.getAllstrategys();
+    }
+
+
+    @RequestMapping("/test")
+    public String test(){
+        LinkedList<AdapterService> adapterServices = new LinkedList<>();
+
+        AdapterService adapterService = new AdapterService();
+        adapterService.setName("ServiceA");
+
+        adapterServices.add(adapterService);
+        SimplifyService simplifyService = new SimplifyService();
+        simplifyService.setAdapterServices(adapterServices);
+        adapter.simplifyOverloadList(simplifyService);
+        return "test";
     }
 }

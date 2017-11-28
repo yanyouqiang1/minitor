@@ -13,12 +13,15 @@ import java.util.List;
 @Data
 public class AdapterService {
     private String name;
-//    private String serviceId;
+    //    private String serviceId;
     private int scale;
     private List<String> containerNames = new LinkedList<String>();
     private List<String> linkedServices = new LinkedList<>();
 
-    public static AdapterService generate(AbstractService abstractService){
+    public AdapterService() {
+    }
+
+    public static AdapterService generate(AbstractService abstractService) {
         AdapterService adapterService = new AdapterService();
         adapterService.setName(abstractService.getName());
         adapterService.setScale(abstractService.getScale());

@@ -16,6 +16,9 @@ public class AdapterService {
     private List<String> containerNames = new LinkedList<String>();
     private List<String> linkedServices = new LinkedList<>();
 
+    public AdapterService() {
+    }
+
     public static AdapterService generate(RancherService rancherService){
         AdapterService adapterService = new AdapterService();
         adapterService.setName(rancherService.getName());

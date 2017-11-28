@@ -6,6 +6,7 @@ import app.Schedule.StrategyOverallResult;
 import app.feignclient.monitor.Monitor;
 import app.feignclient.targetAdapter.Adapter;
 import app.feignclient.targetAdapter.AdapterService;
+import app.feignclient.targetAdapter.SimplifyService;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -93,7 +94,7 @@ public class TimeWindow implements OverallStrategyInter {
                 count++;
             }
         }
-        if(count>responseTimes.length*2/3){
+        if(count>responseTimes.length*1/2){
             return true;
         }
         return false;
@@ -109,7 +110,7 @@ public class TimeWindow implements OverallStrategyInter {
                 count++;
             }
         }
-        if(count>responseTimes.length*2/3){
+        if(count>responseTimes.length*1/2){
             return true;
         }
         return false;
@@ -117,14 +118,17 @@ public class TimeWindow implements OverallStrategyInter {
 
     //简化负载列表
     private void simplifyOverloadList(List<AbstractService> upList) {
+        SimplifyService simplifyService= new SimplifyService();
         LinkedList<AdapterService> adapterServiceList = new LinkedList<AdapterService>();
         for(AbstractService abstractService:upList){
             adapterServiceList.add(AdapterService.generate(abstractService));
         }
-        adapterServiceList = adapter.simplifyOverloadList(adapterServiceList);
+        simplifyService.setAdapterServices(adapterServiceList);
+
+        simplifyService = adapter.simplifyOverloadList(simplifyService);
 
         upList.clear();
-        for(AdapterService adapterService:adapterServiceList){
+        for(AdapterService adapterService:simplifyService.getAdapterServices()){
             upList.add(AbstractService.generate(adapterService));
         }
     }

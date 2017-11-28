@@ -21,6 +21,7 @@ public class StrategyTimeWindowService {
 
     public Map<String,TimeWindow.ServiceParameter> getParameters(){
         List<Strategy_timeWindow> responseTimes = timeWindowRepository.getAllByIdNotNull();
+        if(responseTimes==null) return null;
         Map<String,TimeWindow.ServiceParameter> map = new HashMap<String, TimeWindow.ServiceParameter>();
         for(Strategy_timeWindow responseTime:responseTimes){
             TimeWindow.ServiceParameter parameter = new TimeWindow.ServiceParameter(responseTime.getUpper(),responseTime.getLower(),responseTime.getUpperLimit());
@@ -33,7 +34,7 @@ public class StrategyTimeWindowService {
     }
 
     private void update(String serviceName,int upper,int lower,int upperLimit){
-        Object service = timeWindowRepository.findByMethodName(serviceName);
+        Object service = timeWindowRepository.findByServiceName(serviceName);
         if(service==null){
             Strategy_timeWindow responseTime = new Strategy_timeWindow();
             responseTime.setLower(lower);

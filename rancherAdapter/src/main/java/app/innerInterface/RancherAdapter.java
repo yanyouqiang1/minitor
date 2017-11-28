@@ -3,10 +3,12 @@ package app.innerInterface;
 import app.innerInterface.targetAdapter.Adapter;
 import app.innerInterface.targetAdapter.AdapterResultData;
 import app.innerInterface.targetAdapter.AdapterService;
+import app.innerInterface.targetAdapter.SimplifyService;
 import app.rancher.RancherService;
 import app.rancher.RancherStack;
 import app.rancher.entity.ResultData;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -51,9 +53,9 @@ public class RancherAdapter implements Adapter {
     }
 
     @Override
-    public LinkedList<AdapterService> simplifyOverloadList(LinkedList<AdapterService> serviceList) {
+    public SimplifyService simplifyOverloadList(@RequestBody SimplifyService simplifyService) {
         List<RancherService> rancherServiceLinkedList = new LinkedList<RancherService>();
-        for(AdapterService adapterService:serviceList){
+        for(AdapterService adapterService:simplifyService.getAdapterServices()){
             rancherServiceLinkedList.add(rancherStack.findService(adapterService.getName()));
         }
         for(RancherService rancherService:rancherServiceLinkedList){
@@ -66,11 +68,11 @@ public class RancherAdapter implements Adapter {
             }
         }
 
-        serviceList.clear();
+        simplifyService.getAdapterServices().clear();
         for(RancherService rancherService:rancherServiceLinkedList){
-            serviceList.add(AdapterService.generate(rancherService));
+            simplifyService.getAdapterServices().add(AdapterService.generate(rancherService));
         }
 
-        return serviceList;
+        return simplifyService;
     }
 }
