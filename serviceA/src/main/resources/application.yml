@@ -1,5 +1,8 @@
 server:
   port: 10010
+  tomcat:
+    max-threads: 10
+    accept-count: 10
 
 eureka:
   instance:
@@ -10,3 +13,8 @@ eureka:
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
+    healthcheck:
+      enabled: true
+    instance:
+      lease-expiration-duration-in-seconds: 30
+      lease-renewal-interval-in-seconds: 10

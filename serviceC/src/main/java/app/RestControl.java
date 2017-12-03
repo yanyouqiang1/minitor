@@ -10,15 +10,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class RestControl implements ServiceC {
     @Override
     public String methodC1() {
-        //费时操作 大约328ms
-        for(int i=0;i<1000000000;i++){
-
+        try {
+            Thread.currentThread().sleep(50);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
         return "methodC1";
     }
 
     @Override
     public String methodC2() {
+        try {
+            Thread.currentThread().sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return "methodC2";
     }
 }

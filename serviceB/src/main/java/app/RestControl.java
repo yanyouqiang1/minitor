@@ -14,19 +14,23 @@ public class RestControl implements ServiceB {
 
     @Override
     public String methodB1() {
-        for(int i=0;i<3;i++){
-            System.out.println("servcieB 调用 serviceC");
-            serviceC.serviceC1();
+        System.out.println("servcieB 调用 serviceC");
+        try {
+            Thread.currentThread().sleep(38);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
-        //费时操作 大约38 ms
-        for(int i=0;i<100000000;i++){
-
-        }
+        serviceC.serviceC1();
         return "methodB1";
     }
 
     @Override
     public String methodB2() {
+        try {
+            Thread.currentThread().sleep(2);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         return "methodB2";
     }
 }
