@@ -60,7 +60,6 @@ public class RestControl extends ScheduleRestControl{
     public Details Details(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size) {
         return restInter.details(page, size);
     }
-
     @RequestMapping("/groups/{id}/monitor_details")
     public Details_group Details_group(@PathVariable(name = "id") long id, @RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size) {
         return restInter.details_group(id, page, size);

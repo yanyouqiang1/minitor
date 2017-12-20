@@ -2,11 +2,13 @@ package app.rancher;
 
 import app.rancher.entity.ResultData;
 import lombok.Data;
+import lombok.Synchronized;
 import org.json.JSONException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -17,14 +19,16 @@ import java.util.List;
 @Data
 public class RancherStack {
     private List<RancherService> rancherServices = new LinkedList<RancherService>();
-
+    public static final Object serviceUpdateLock = new Object();
 
     @Autowired
     RancherOS rancherOS;
 
-    @Scheduled(initialDelay = 0, fixedRate = 30 * 1000l)
+    @Scheduled(initialDelay = 0, fixedRate = 3 * 60 * 1000l)
+    @Synchronized("serviceUpdateLock")
     public void initialization() {
         try {
+            rancherServices.clear();
             List<String> serviceIds = rancherOS.getStackServices();
             for (String serviceId : serviceIds) {
                 RancherService service = findServiceById(serviceId);
@@ -174,6 +178,7 @@ public class RancherStack {
         return containerInter.getMemoryByContainerName(containerName);
     }
 
+    @Synchronized("serviceUpdateLock")
     public RancherService findService(String serviceName) {
         for (RancherService s : rancherServices) {
             if (s.getName().equals(serviceName)) {

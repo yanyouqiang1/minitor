@@ -58,7 +58,7 @@ public class RancherOS {
     public boolean scaleService(String serviceName, boolean upOrdown) {
         //add the cooling time module
         long now = System.currentTimeMillis();
-        if (now - lastSchedule < 250 * 1000) {
+        if (now - lastSchedule < 150 * 1000) {
             return false;
         }
 

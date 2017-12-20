@@ -229,6 +229,10 @@ public class RestImpl implements RestInter {
 
         AdapterService adapterService = new AdapterService();
         adapterService.setName("ServiceA");
+        adapterServices.add(adapterService);
+
+        adapterService = new AdapterService();
+        adapterService.setName("ServiceD");
 
         adapterServices.add(adapterService);
         SimplifyService simplifyService = new SimplifyService();

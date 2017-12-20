@@ -9,6 +9,7 @@
       <module fileurl="file://$PROJECT_DIR$/serviceA/serviceA.iml" filepath="$PROJECT_DIR$/serviceA/serviceA.iml" />
       <module fileurl="file://$PROJECT_DIR$/serviceB/serviceB.iml" filepath="$PROJECT_DIR$/serviceB/serviceB.iml" />
       <module fileurl="file://$PROJECT_DIR$/serviceC/serviceC.iml" filepath="$PROJECT_DIR$/serviceC/serviceC.iml" />
+      <module fileurl="file://$PROJECT_DIR$/serviceD/serviceD.iml" filepath="$PROJECT_DIR$/serviceD/serviceD.iml" />
       <module fileurl="file://$PROJECT_DIR$/springcloud.iml" filepath="$PROJECT_DIR$/springcloud.iml" />
     </modules>
   </component>

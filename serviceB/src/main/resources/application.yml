@@ -1,8 +1,8 @@
 server:
   port: 10011
   tomcat:
-    max-threads: 10
-    accept-count: 10
+    max-threads: ${MAX_THREADS:10}
+    accept-count: ${ACCEPT_COUNT:10}
 eureka:
   instance:
     prefer-ip-address: true
@@ -12,4 +12,7 @@ eureka:
   client:
     service-url:
       defaultZone: http://${eureka.instance.hostname}:${eureka.instance.port}/eureka/
-  
+
+service:
+  method1: ${METHOD1:80}
+  method2: ${METHOD2:10}

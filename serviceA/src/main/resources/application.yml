@@ -1,8 +1,8 @@
 server:
   port: 10010
   tomcat:
-    max-threads: 10
-    accept-count: 10
+    max-threads: ${MAX_THREADS:10}
+    accept-count: ${ACCEPT_COUNT:10}
 
 eureka:
   instance:
@@ -18,3 +18,7 @@ eureka:
     instance:
       lease-expiration-duration-in-seconds: 30
       lease-renewal-interval-in-seconds: 10
+
+service:
+  method1: ${METHOD1:80}
+  method2: ${METHOD2:10}

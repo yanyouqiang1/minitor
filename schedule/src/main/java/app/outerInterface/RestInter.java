@@ -129,4 +129,5 @@ public interface RestInter {
 
     @RequestMapping("/strategy/serviceMethodAverage/info")
     public List<Strategy_visitorAverage> getMethodAverage();
+
 }

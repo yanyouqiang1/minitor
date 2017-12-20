@@ -7,9 +7,11 @@ import app.innerInterface.targetAdapter.SimplifyService;
 import app.rancher.RancherService;
 import app.rancher.RancherStack;
 import app.rancher.entity.ResultData;
+import lombok.Synchronized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -58,15 +60,20 @@ public class RancherAdapter implements Adapter {
         for(AdapterService adapterService:simplifyService.getAdapterServices()){
             rancherServiceLinkedList.add(rancherStack.findService(adapterService.getName()));
         }
+        //ConcurrentModificationException
+        List<RancherService> deleteServiceList = new LinkedList<>();
+
         for(RancherService rancherService:rancherServiceLinkedList){
             List<RancherService> linkService = rancherService.getLinkedServices();
             for(RancherService service: linkService){
                 if(rancherServiceLinkedList.contains(service)){
-                    rancherServiceLinkedList.remove(rancherService);
+                    deleteServiceList.add(rancherService);
+//                    rancherServiceLinkedList.remove(rancherService);
                     break;
                 }
             }
         }
+        rancherServiceLinkedList.removeAll(deleteServiceList);
 
         simplifyService.getAdapterServices().clear();
         for(RancherService rancherService:rancherServiceLinkedList){

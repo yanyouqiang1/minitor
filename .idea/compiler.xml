@@ -16,6 +16,7 @@
         <module name="serviceA" />
         <module name="serviceB" />
         <module name="serviceC" />
+        <module name="serviceD" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
@@ -27,6 +28,7 @@
       <module name="serviceA" target="1.8" />
       <module name="serviceB" target="1.8" />
       <module name="serviceC" target="1.8" />
+      <module name="serviceD" target="1.8" />
       <module name="springcloud" target="1.6" />
       <module name="streamSender" target="1.8" />
     </bytecodeTargetLevel>

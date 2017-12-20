@@ -6,8 +6,6 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.cloud.netflix.feign.EnableFeignClients;
 
-import javax.swing.*;
-
 /**
  * Created by Administrator on 2017/9/12.
  */
@@ -15,9 +13,9 @@ import javax.swing.*;
 @EnableFeignClients
 @EnableDiscoveryClient
 @EnableConfigurationProperties({ServiceConfig.class})
-public class ServiceAApp {
+public class ServiceDApp {
     public static void main(String[] args) {
-        SpringApplication.run(ServiceAApp.class, args);
+        SpringApplication.run(ServiceDApp.class, args);
     }
 
 }

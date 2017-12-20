@@ -16,6 +16,7 @@
         <module>serviceB</module>
         <module>serviceC</module>
         <module>gateway</module>
+        <module>serviceD</module>
     </modules>
 
     <parent>

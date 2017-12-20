@@ -24,6 +24,15 @@ rancher:
     secret: ${RANCHER_API_SECRET:5VrwxXgNsWMR1Dz4i2TuvCv7VGGB6n54C5NHrhz2}
   stackApiUrl: ${RANCHER_STACK_URL:v2-beta/projects/1a5/stacks/1st9}
   webHooks:
-    nginx:
-      up: http://192.168.0.100:8080/v1-webhooks/endpoint?key=R5a6Di8zOMbVm5lxC7vbr01mTJj8UDYvTiumLoEp&projectId=1a5
-      down: http://192.168.0.100:8080/v1-webhooks/endpoint?key=F8iVgOkwMRHFFceqqI49Td7KYR2Jq5NOsDBj6agY&projectId=1a5
+    ServiceA:
+      up: http://192.168.0.100:8080/v1-webhooks/endpoint?key=GmLpObgPiCHd70s9TOvKgTanb14EXabsdehTvT7o&projectId=1a5
+      down: http://192.168.0.100:8080/v1-webhooks/endpoint?key=boNc3L9clBB4E8YKxaGTeHLsDwlRgI8v5YWPDEwP&projectId=1a5
+    ServiceB:
+      up: http://192.168.0.100:8080/v1-webhooks/endpoint?key=lYkupO7mFZ4dDFL6DFl45ybSaNpFhf8i9F12Vmzn&projectId=1a5
+      down: http://192.168.0.100:8080/v1-webhooks/endpoint?key=bLCtJ7Q9uiPPx4F4wGmoJikYbYP3BV2HzWXizQ9O&projectId=1a5
+    ServiceC:
+      up: http://192.168.0.100:8080/v1-webhooks/endpoint?key=k2A7pUml0kLFVdaJMekqGWIJijESjsMYPMF21Pun&projectId=1a5
+      down: http://192.168.0.100:8080/v1-webhooks/endpoint?key=61am4fV4xWSGbvc8ykY1IOXETktGMkixwcvU4eRC&projectId=1a5
+    ServiceD:
+      up: http://192.168.0.100:8080/v1-webhooks/endpoint?key=lqxR42wW3SVRHXMqQ4Ss44VvOYP94OdqXdm3MzKa&projectId=1a5
+      down: http://192.168.0.100:8080/v1-webhooks/endpoint?key=sZ4vBqdTkJAcySusonUhXUpZB5mm81THaOpmXrU4&projectId=1a5
