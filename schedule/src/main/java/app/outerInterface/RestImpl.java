@@ -147,7 +147,7 @@ public class RestImpl implements RestInter {
     @Autowired
     StrategyTimeWindowService responseTimeService;
     @Override
-    public CommonReply updateStrategyResponseTime(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "lower")int lower,@RequestParam(name = "upper")int upper,@RequestParam(name = "upperLimit")int upperLimit){
+    public CommonReply updateStrategyTimeWindow(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "lower")int lower,@RequestParam(name = "upper")int upper,@RequestParam(name = "upperLimit")int upperLimit){
         responseTimeService.insertStrategy(methodName,lower,upper,upperLimit);
         return CommonReplyBuilder.buildSuccessReply();
     }
@@ -203,7 +203,7 @@ public class RestImpl implements RestInter {
     }
 
     @Override
-    public List<Strategy_timeWindow> getMethodResponse() {
+    public List<Strategy_timeWindow> getTimeWindow() {
         return responseTimeService.getAllStrategy();
     }
 

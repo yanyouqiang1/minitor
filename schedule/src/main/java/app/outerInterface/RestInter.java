@@ -112,14 +112,16 @@ public interface RestInter {
      * @param upperLimit
      * @return
      */
-    @RequestMapping("/strategy/methodResponse/update")
-    public CommonReply updateStrategyResponseTime(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "lower")int lower,@RequestParam(name = "upper")int upper,@RequestParam(name = "upperLimit")int upperLimit);
+    @RequestMapping("/strategy/timeWindow/update")
+    public CommonReply updateStrategyTimeWindow(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "lower")int lower,@RequestParam(name = "upper")int upper,@RequestParam(name = "upperLimit")int upperLimit);
 
     @RequestMapping("/strategy/overview")
     public Overview getOverview();
 
-    @RequestMapping("/strategy/methodResponse/info")
-    public List<Strategy_timeWindow> getMethodResponse();
+    @RequestMapping("/strategy/timeWindow/info")
+    public List<Strategy_timeWindow> getTimeWindow();
+
+
 
     @RequestMapping("/strategy/serviceTimePeriod/info")
     public List<Strategy_timePeriod> getTimePeriod();
