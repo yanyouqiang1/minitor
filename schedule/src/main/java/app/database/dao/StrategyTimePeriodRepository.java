@@ -30,4 +30,10 @@ public interface StrategyTimePeriodRepository extends JpaRepository<Strategy_tim
     public Strategy_timePeriod findIdByServiceName(String serviceName);
 
     public List<Strategy_timePeriod> findByIdNotNull();
+
+    @Modifying
+    @Query("update Strategy_timePeriod t set t.onOrOff=?1 where t.serviceName=?2")
+    public void changeSwitch(Boolean onOrOff,String serviceName);
+
+    public Strategy_timePeriod findByServiceName(String serviceName);
 }

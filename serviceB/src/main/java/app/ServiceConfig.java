@@ -8,4 +8,5 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 public class ServiceConfig {
     int method1;
     int method2;
+    int times1;
 }

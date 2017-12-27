@@ -5,6 +5,9 @@ import app.database.domain.Strategy_timePeriod;
 import app.database.domain.Strategy_visitorAverage;
 import app.database.domain.Strategy_visitorLimit;
 import app.outerInterface.entity.observation.*;
+import app.outerInterface.entity.re.ParamTimePeriod;
+import app.outerInterface.entity.re.ParamTimeWindow;
+import app.outerInterface.entity.re.ParamVisitorLimit;
 import app.outerInterface.entity.reply.CommonReply;
 import app.outerInterface.entity.strategy.Overview;
 import app.outerInterface.entity.task.AutomaticList;
@@ -21,27 +24,28 @@ public interface RestInter {
      *  所有服务响应时间
      * @return
      */
-    @RequestMapping(value = "/observation/services",method = RequestMethod.GET)
+    @RequestMapping(value = "/observation/services", method = RequestMethod.GET)
     public RestServices getRestService();
+
     /***
      *  单个服务响应时间
      * @return
      */
     @RequestMapping(value = "/observation/service/{serviceName}/response")
-    public RestServiceResponse getRestServiceResponse(@PathVariable(name = "serviceName",required = true)String serviceName);
+    public RestServiceResponse getRestServiceResponse(@PathVariable(name = "serviceName", required = true) String serviceName);
 
     /***
      * 单个服务容器变化
      * @return
      */
     @RequestMapping(value = "/observation/service/{serviceName}/container")
-    public RestServiceContainer getRestServiceContainer(@PathVariable(name = "serviceName",required = true)String serviceName);
+    public RestServiceContainer getRestServiceContainer(@PathVariable(name = "serviceName", required = true) String serviceName);
 
     /***
      *  单个服务所有容器CPU使用情况
      * @return
      */
-    public RestServiceContainerCpu getRestServiceContainerCpu(@PathVariable(name = "serviceName",required = true)String serviceName);
+    public RestServiceContainerCpu getRestServiceContainerCpu(@PathVariable(name = "serviceName", required = true) String serviceName);
 
     /***
      * 单个服务所有容器内存使用情况
@@ -67,23 +71,19 @@ public interface RestInter {
 
     /***
      *  set strategy time period
-     * @param serviceName
-     * @param peek
-     * @param thought
+     * @param paramTimePeriod
      * @return
      */
-    @RequestMapping("/strategy/serviceTimePeriod/update")
-    public CommonReply updateStrategyTimePeriod(@RequestParam(name = "serviceName") String serviceName, @RequestParam(name = "peek") String peek, @RequestParam(name = "thought") String thought, @RequestParam(name = "switch") boolean sswitch);
+    @RequestMapping(value = "/strategy/serviceTimePeriod/update", method = RequestMethod.PUT)
+    public CommonReply updateStrategyTimePeriod(@RequestBody ParamTimePeriod paramTimePeriod);
 
     /***
      *  set strategy visitor limit
-     * @param serviceName
-     * @param upper
-     * @param lower
+     * @param paramVisitorLimit
      * @return
      */
-    @RequestMapping("/strategy/serviceVisitorLimit/update")
-    public CommonReply updateStrategyVisitorLimit(@RequestParam(name = "serviceName")String serviceName,@RequestParam(name = "upper")long upper,@RequestParam(name = "lower")long lower, @RequestParam(name = "switch") boolean sswitch);
+    @RequestMapping(value = "/strategy/serviceVisitorLimit/update", method = RequestMethod.PUT)
+    public CommonReply updateStrategyVisitorLimit(@RequestBody ParamVisitorLimit paramVisitorLimit);
 
 
     /***
@@ -93,27 +93,17 @@ public interface RestInter {
      * @param lower
      * @return
      */
-    @RequestMapping("/strategy/methodAverage/update")
-    public CommonReply updateStrategyVisitorAverage(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "upper")long upper,@RequestParam(name = "lower")long lower, @RequestParam(name = "switch") boolean sswitch);
+    @RequestMapping(value = "/strategy/methodAverage/update", method = RequestMethod.PUT)
+    public CommonReply updateStrategyVisitorAverage(@RequestParam(name = "methodName") String methodName, @RequestParam(name = "upper") long upper, @RequestParam(name = "lower") long lower, @RequestParam(name = "switch") boolean sswitch);
 
-    /***
-     *  set overall strategy switch
-     * @param strategyName
-     * @param sswitch
-     * @return
-     */
-    public CommonReply updateStrategyOverallSwitch(String strategyName,boolean sswitch);
 
     /***
      *  set strategy method response time
-     * @param methodName
-     * @param lower
-     * @param upper
-     * @param upperLimit
+     * @param paramTimeWindow
      * @return
      */
-    @RequestMapping("/strategy/timeWindow/update")
-    public CommonReply updateStrategyTimeWindow(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "lower")int lower,@RequestParam(name = "upper")int upper,@RequestParam(name = "upperLimit")int upperLimit);
+    @RequestMapping(value = "/strategy/timeWindow/update", method = RequestMethod.PUT)
+    public CommonReply updateStrategyTimeWindow(@RequestBody ParamTimeWindow paramTimeWindow);
 
     @RequestMapping("/strategy/overview")
     public Overview getOverview();
@@ -122,14 +112,22 @@ public interface RestInter {
     public List<Strategy_timeWindow> getTimeWindow();
 
 
-
     @RequestMapping("/strategy/serviceTimePeriod/info")
-    public List<Strategy_timePeriod> getTimePeriod();
+    public Strategy_timePeriod getTimePeriod(@RequestParam("serviceName")String serviceName);
 
     @RequestMapping("/strategy/serviceVisitorLimit/info")
-    public List<Strategy_visitorLimit> getVisitorLimit();
+    public Strategy_visitorLimit getVisitorLimit(@RequestParam("serviceName")String serviceName);
 
     @RequestMapping("/strategy/serviceMethodAverage/info")
     public List<Strategy_visitorAverage> getMethodAverage();
 
+
+    @RequestMapping("/strategy/timeWindow/change")
+    public CommonReply changeStrategyTimeWindow();
+
+    @RequestMapping("/strategy/serviceTimePeriod/change")
+    public CommonReply changeStrategyServiceTimeperiod(@RequestParam("serviceName")String serviceName);
+
+    @RequestMapping("/strategy/serviceVisitorLimit/change")
+    public CommonReply changeStrategyServiceVisitorLimit(@RequestParam("serviceName")String serviceName);
 }

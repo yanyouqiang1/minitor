@@ -21,5 +21,4 @@ public interface StrategyTimeWindowRepository extends JpaRepository<Strategy_tim
     @Query("update Strategy_timeWindow r set r.upper=?1,r.lower=?2,r.upperLimit=?3 where r.serviceName=?4")
     public Integer updateData(int upper,int lower,int upperLimit,String serviceName);
 
-
 }

@@ -30,4 +30,8 @@ public class Strategy_visitorLimit {
     public Strategy_visitorLimit() {
         updateTime = new Date();
     }
+
+    public Strategy_visitorLimit(String serviceName) {
+        this.serviceName = serviceName;
+    }
 }

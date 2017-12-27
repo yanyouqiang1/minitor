@@ -22,7 +22,9 @@ public class RestControl implements ServiceB {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        serviceC.serviceC1();
+        for(int i=0;i<config.times1;i++){
+            serviceC.serviceC1();
+        }
         return "methodB1";
     }
 

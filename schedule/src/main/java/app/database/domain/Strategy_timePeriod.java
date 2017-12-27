@@ -34,4 +34,8 @@ public class Strategy_timePeriod {
     public Strategy_timePeriod() {
         updateTime = new Date();
     }
+
+    public Strategy_timePeriod(String serviceName) {
+        this.serviceName = serviceName;
+    }
 }

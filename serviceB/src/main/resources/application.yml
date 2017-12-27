@@ -16,3 +16,4 @@ eureka:
 service:
   method1: ${METHOD1:80}
   method2: ${METHOD2:10}
+  times1: ${TIMES1:16}

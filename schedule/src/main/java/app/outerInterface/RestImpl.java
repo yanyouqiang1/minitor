@@ -13,16 +13,16 @@ import app.feignclient.targetAdapter.Adapter;
 import app.feignclient.targetAdapter.AdapterService;
 import app.feignclient.targetAdapter.SimplifyService;
 import app.outerInterface.entity.observation.*;
+import app.outerInterface.entity.re.ParamTimePeriod;
+import app.outerInterface.entity.re.ParamTimeWindow;
+import app.outerInterface.entity.re.ParamVisitorLimit;
 import app.outerInterface.entity.reply.CommonReply;
 import app.outerInterface.entity.reply.CommonReplyBuilder;
 import app.outerInterface.entity.strategy.Overview;
 import app.outerInterface.entity.task.AutomaticList;
 import app.outerInterface.entity.task.ManualList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -118,16 +118,16 @@ public class RestImpl implements RestInter {
     @Autowired
     StrategyTimePeriodService timePeriodService;
     @Override
-    public CommonReply updateStrategyTimePeriod(@RequestParam(name = "serviceName") String serviceName, @RequestParam(name = "peek") String peek, @RequestParam(name = "thought") String thought, @RequestParam(name = "switch") boolean sswitch) {
-        timePeriodService.insertStrategy(serviceName,peek,thought,sswitch);
+    public CommonReply updateStrategyTimePeriod(@RequestBody ParamTimePeriod paramTimePeriod){
+        timePeriodService.insertStrategy(paramTimePeriod.getServiceName(),paramTimePeriod.getPeek(),paramTimePeriod.getThought(),true);
         return CommonReplyBuilder.buildSuccessReply();
     }
 
     @Autowired
     StrategyVisitorLimitService visitorLimitService;
     @Override
-    public CommonReply updateStrategyVisitorLimit(@RequestParam(name = "serviceName")String serviceName,@RequestParam(name = "upper")long upper,@RequestParam(name = "lower")long lower, @RequestParam(name = "switch") boolean sswitch) {
-        visitorLimitService.insertStrategy(serviceName,upper,lower,sswitch);
+    public CommonReply updateStrategyVisitorLimit(@RequestBody ParamVisitorLimit paramVisitorLimit){
+        visitorLimitService.insertStrategy(paramVisitorLimit.getServiceName(),paramVisitorLimit.getUpper(),paramVisitorLimit.getLower(),true);
         return CommonReplyBuilder.buildSuccessReply();
     }
 
@@ -139,16 +139,11 @@ public class RestImpl implements RestInter {
         return CommonReplyBuilder.buildSuccessReply();
     }
 
-    @Override
-    public CommonReply updateStrategyOverallSwitch(String strategyName, boolean sswitch) {
-        return null;
-    }
-
     @Autowired
-    StrategyTimeWindowService responseTimeService;
+    StrategyTimeWindowService timeWindowService;
     @Override
-    public CommonReply updateStrategyTimeWindow(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "lower")int lower,@RequestParam(name = "upper")int upper,@RequestParam(name = "upperLimit")int upperLimit){
-        responseTimeService.insertStrategy(methodName,lower,upper,upperLimit);
+    public CommonReply updateStrategyTimeWindow(@RequestBody ParamTimeWindow paramTimeWindow){
+        timeWindowService.insertStrategy(paramTimeWindow.getServiceName(),paramTimeWindow.getUpper(),paramTimeWindow.getLower(),paramTimeWindow.getUpperLimit());
         return CommonReplyBuilder.buildSuccessReply();
     }
 
@@ -204,17 +199,17 @@ public class RestImpl implements RestInter {
 
     @Override
     public List<Strategy_timeWindow> getTimeWindow() {
-        return responseTimeService.getAllStrategy();
+        return timeWindowService.getAllStrategy();
     }
 
     @Override
-    public List<Strategy_timePeriod> getTimePeriod() {
-        return timePeriodService.getAllstrategys();
+    public Strategy_timePeriod getTimePeriod(@RequestParam("serviceName")String serviceName){
+        return timePeriodService.getStrategyInfo(serviceName);
     }
 
     @Override
-    public List<Strategy_visitorLimit> getVisitorLimit() {
-        return visitorLimitService.getAllstrategys();
+    public Strategy_visitorLimit getVisitorLimit(@RequestParam("serviceName")String serviceName){
+        return visitorLimitService.getStrategyInfo(serviceName);
     }
 
     @Override
@@ -222,6 +217,27 @@ public class RestImpl implements RestInter {
         return visitorAverageService.getAllstrategys();
     }
 
+    @Override
+    public CommonReply changeStrategyTimeWindow(){
+        if(timeWindowService.changeStatus(TimeWindow.name))
+            return CommonReplyBuilder.buildSuccessReply();
+        return CommonReplyBuilder.buildErrorReply("unkown error");
+
+    }
+
+    @Override
+    public CommonReply changeStrategyServiceTimeperiod(@RequestParam("serviceName")String serviceName){
+        if(timePeriodService.changeStatus(serviceName))
+            return CommonReplyBuilder.buildSuccessReply();
+        return CommonReplyBuilder.buildErrorReply("unkown error");
+    }
+
+    @Override
+    public CommonReply changeStrategyServiceVisitorLimit(@RequestParam("serviceName")String serviceName) {
+        if(visitorLimitService.changeStatus(serviceName))
+            return CommonReplyBuilder.buildSuccessReply();
+        return CommonReplyBuilder.buildErrorReply("unkown error");
+    }
 
     @RequestMapping("/test")
     public String test(){

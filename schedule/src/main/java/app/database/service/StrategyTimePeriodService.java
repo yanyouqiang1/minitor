@@ -17,9 +17,9 @@ public class StrategyTimePeriodService {
     @Autowired
     StrategyTimePeriodRepository timePeriodRepository;
 
-    public ServiceTimePeriod getStrategy(String serviceName){
-        Strategy_timePeriod strategyTimePeriod = timePeriodRepository.findByServiceNameAndOnOrOffEquals(serviceName,true);
-        if(strategyTimePeriod!=null) {
+    public ServiceTimePeriod getStrategy(String serviceName) {
+        Strategy_timePeriod strategyTimePeriod = timePeriodRepository.findByServiceNameAndOnOrOffEquals(serviceName, true);
+        if (strategyTimePeriod != null) {
             ServiceTimePeriod serviceTimePeriod = SpringUtil.getBean(ServiceTimePeriod.class);
             serviceTimePeriod.setPeek(strategyTimePeriod.getPeekTime());
             serviceTimePeriod.setThough(strategyTimePeriod.getThoughTime());
@@ -28,14 +28,14 @@ public class StrategyTimePeriodService {
             serviceTimePeriod.setPeakHandle(strategyTimePeriod.getPeekHandle());
             serviceTimePeriod.setThoughHandle(strategyTimePeriod.getThoughHandle());
             return serviceTimePeriod;
-        }else{
+        } else {
             return null;
         }
     }
 
-    public void insertStrategy(String serviceName,String peekTime,String thoughTime,boolean sswitch){
+    public void insertStrategy(String serviceName, String peekTime, String thoughTime, boolean sswitch) {
         Object service = timePeriodRepository.findIdByServiceName(serviceName);
-        if(service==null) {
+        if (service == null) {
             Strategy_timePeriod timePeriod = new Strategy_timePeriod();
             timePeriod.setServiceName(serviceName);
             timePeriod.setPeekTime(peekTime);
@@ -44,21 +44,36 @@ public class StrategyTimePeriodService {
             timePeriod.setThoughHandle(false);
             timePeriod.setOnOrOff(sswitch);
             timePeriodRepository.save(timePeriod);
-        }else{
-            update(serviceName,peekTime,thoughTime,false,false,sswitch);
+        } else {
+            update(serviceName, peekTime, thoughTime, false, false, sswitch);
         }
     }
 
-    public void updateStatus(String serviceName,boolean isPeekHandle,boolean isThoughHandle){
-        timePeriodRepository.updateStatus(isPeekHandle,isThoughHandle,serviceName);
+    public void updateStatus(String serviceName, boolean isPeekHandle, boolean isThoughHandle) {
+        timePeriodRepository.updateStatus(isPeekHandle, isThoughHandle, serviceName);
     }
 
 
-    private void update(String serviceName,String peekTime,String thoughTime,boolean isPeekHandle,boolean isThoughHandle,boolean sswitch){
-        timePeriodRepository.updateAll(peekTime,thoughTime,isPeekHandle,isThoughHandle,sswitch,serviceName);
+    private void update(String serviceName, String peekTime, String thoughTime, boolean isPeekHandle, boolean isThoughHandle, boolean sswitch) {
+        timePeriodRepository.updateAll(peekTime, thoughTime, isPeekHandle, isThoughHandle, sswitch, serviceName);
     }
 
-    public List<Strategy_timePeriod> getAllstrategys(){
-         return timePeriodRepository.findByIdNotNull();
+    public List<Strategy_timePeriod> getAllstrategys() {
+        return timePeriodRepository.findByIdNotNull();
+    }
+
+    public boolean changeStatus(String serviceName) {
+        Strategy_timePeriod timePeriod = timePeriodRepository.findByServiceName(serviceName);
+        if (timePeriod != null)
+            timePeriodRepository.changeSwitch(!timePeriod.getOnOrOff(), serviceName);
+        return true;
+    }
+
+    public Strategy_timePeriod getStrategyInfo(String serviceName) {
+        Strategy_timePeriod timePeriod= timePeriodRepository.findByServiceName(serviceName);
+        if(timePeriod==null){
+            timePeriod = new Strategy_timePeriod(serviceName);
+        }
+        return timePeriod;
     }
 }
