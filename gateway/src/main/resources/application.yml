@@ -7,10 +7,11 @@ spring:
 spring:
     profiles: development
     datasource:
-        url: jdbc:mysql://120.76.234.224:9000/sct_gateway?useUnicode=true&characterEncoding=UTF8&useSSL=false
+#        url: jdbc:mysql://120.76.234.224:9000/sct_gateway?useUnicode=true&characterEncoding=UTF8&useSSL=false
+        url: jdbc:mysql://192.168.0.101/sct_gateway?useUnicode=true&characterEncoding=UTF8&useSSL=false
 #       url: jdbc:mysql://database:3306/mbyjdb?useUnicode=true&characterEncoding=UTF8&useSSL=false
         username: root
-        password: password
+        password: root
         driver-class-name: com.mysql.jdbc.Driver
         initialize: false
     jpa:
@@ -39,7 +40,7 @@ spring:
                     environment:
                         spring:
                             rabbitmq:
-                                host: 192.168.0.100
+                                host: 192.168.0.101
                                 port: 5672
                                 username: user
                                 password: password

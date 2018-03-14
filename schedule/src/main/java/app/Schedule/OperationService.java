@@ -8,11 +8,13 @@ import java.util.Date;
 public class OperationService {
     AbstractService service;
     String strategyName;
+    int size; //size default 1
     Date time;
 
     public OperationService(AbstractService service, String strategyName) {
         this.service = service;
         this.strategyName = strategyName;
+        this.size = 1;
         this.time = new Date();
     }
 

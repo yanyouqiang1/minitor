@@ -59,7 +59,7 @@ public interface RestInter {
      * @return
      */
     @RequestMapping("/task/automaticList")
-    public AutomaticList getAutomaticList();
+    public AutomaticList getAutomaticList(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size);
 
 
     /***
@@ -67,7 +67,7 @@ public interface RestInter {
      * @return
      */
     @RequestMapping("/task/manualList")
-    public ManualList getManualList();
+    public ManualList getManualList(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size);
 
     /***
      *  set strategy time period
@@ -125,9 +125,15 @@ public interface RestInter {
     @RequestMapping("/strategy/timeWindow/change")
     public CommonReply changeStrategyTimeWindow();
 
-    @RequestMapping("/strategy/serviceTimePeriod/change")
-    public CommonReply changeStrategyServiceTimeperiod(@RequestParam("serviceName")String serviceName);
+    @RequestMapping("/strategy/serviceTimePeriod/{serviceName}/change")
+    public CommonReply changeStrategyServiceTimeperiod(@PathVariable("serviceName") String serviceName);
 
-    @RequestMapping("/strategy/serviceVisitorLimit/change")
-    public CommonReply changeStrategyServiceVisitorLimit(@RequestParam("serviceName")String serviceName);
+    @RequestMapping("/strategy/serviceVisitorLimit/{serviceName}/change")
+    public CommonReply changeStrategyServiceVisitorLimit(@PathVariable("serviceName")String serviceName);
+
+    @RequestMapping("/strategy/manual/{serviceName}/up")
+    public CommonReply manualServiceUp(@PathVariable("serviceName")String serviceName);
+
+    @RequestMapping("/strategy/manual/{serviceName}/down")
+    public CommonReply manualServiceDown(@PathVariable("serviceName")String serviceName);
 }

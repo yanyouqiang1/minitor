@@ -29,4 +29,8 @@ public interface Monitor {
 
     @RequestMapping("/schedule/getServiceRecentResponseTime")
     public int[] getServiceRecentResponseTime(@RequestParam(name = "serviceName") String serviceName);
+
+    @RequestMapping("/schedule/getServiceVisitCount")
+    public VisitorEntity getServiceVisitCount();
+
 }

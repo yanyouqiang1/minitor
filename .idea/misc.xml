@@ -47,6 +47,7 @@
     <option name="ignoredFiles">
       <set>
         <option value="$PROJECT_DIR$/MinitorSchedule/pom.xml" />
+        <option value="$PROJECT_DIR$/eureka/pom.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/streamSender/pom.xml" />
       </set>

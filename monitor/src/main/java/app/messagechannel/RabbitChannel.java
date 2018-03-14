@@ -9,6 +9,7 @@ import org.springframework.messaging.SubscribableChannel;
 public interface RabbitChannel {
     String INPUT_REQUEST = "input_channel_request";
     String INPUT_RESPONSE = "input_channel_response";
+    String INPUT__SERVICE = "input_channel_service";
 
     @Input(RabbitChannel.INPUT_REQUEST)
     SubscribableChannel inputRequest();
@@ -17,4 +18,6 @@ public interface RabbitChannel {
     SubscribableChannel inputResponse();
 
 
+    @Input(RabbitChannel.INPUT__SERVICE)
+    SubscribableChannel inputService();
 }

@@ -4,6 +4,7 @@ import app.handle.HandleInter;
 import app.messagechannel.RabbitChannel;
 import entitylib.RequestMessage;
 import entitylib.ResponseMessage;
+import entitylib.ServiceMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -35,14 +36,16 @@ public class MonitorApp {
     @StreamListener(RabbitChannel.INPUT_REQUEST)
     public void handleRequest(RequestMessage requestMessage){
         handleInter.msgReceive(requestMessage);
-//        System.out.println("收到request请求");
     }
 
     @StreamListener(RabbitChannel.INPUT_RESPONSE)
     public void handle(ResponseMessage responseMessage){
-//        System.out.println("收到response请求");
-//        if (responseMessage.getHttpStatus()==null) return;
         handleInter.msgReceive(responseMessage);
+    }
+
+    @StreamListener(RabbitChannel.INPUT__SERVICE)
+    public void handle(ServiceMessage serviceMessage){
+        handleInter.msgReceive(serviceMessage);
     }
 
     @RequestMapping("/")

@@ -22,8 +22,15 @@ public class RestControl implements ServiceB {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+
         for(int i=0;i<config.times1;i++){
-            serviceC.serviceC1();
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    serviceC.serviceC1();
+                }
+            });
+            thread.start();
         }
         return "methodB1";
     }

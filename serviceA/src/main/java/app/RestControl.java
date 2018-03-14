@@ -1,5 +1,6 @@
 package app;
 
+import app.aspect.RabbitChannel;
 import app.feignClient.ServiceB;
 import app.feignClient.ServiceC;
 import app.feignClient.ServiceD;

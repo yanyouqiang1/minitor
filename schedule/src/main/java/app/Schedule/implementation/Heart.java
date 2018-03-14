@@ -1,10 +1,7 @@
 package app.Schedule.implementation;
 
-import app.Schedule.AbstractHeart;
-import app.Schedule.AbstractMethod;
-import app.Schedule.AbstractService;
-import app.Schedule.OverallStrategyInter;
-import app.Schedule.strategy.overall.TimeWindow;
+import app.Schedule.*;
+import app.Schedule.strategy.overall.NativeStrategy;
 import app.Schedule.strategy.single.method.MethodVisitorAverage;
 import app.Schedule.strategy.single.service.ServiceTimePeriod;
 import app.Schedule.strategy.single.service.ServiceVisitorLimit;
@@ -101,30 +98,32 @@ public class Heart extends AbstractHeart {
     @Override
     protected List<OverallStrategyInter> getOverallStrategy() {
         List<OverallStrategyInter> overallStrategyInterList = new LinkedList<OverallStrategyInter>();
-        if (overallSwitchService.getSwitchStatus(TimeWindow.name)){
-            Map<String, TimeWindow.ServiceParameter> parameterMap = responseTimeService.getParameters();
-            TimeWindow timeWindow = SpringUtil.getBean(TimeWindow.class);
-            timeWindow.setParameterMap(parameterMap);
-//            TimeWindow timeWindow = new TimeWindow(parameterMap);
-            overallStrategyInterList.add(timeWindow);
+        if (overallSwitchService.getSwitchStatus(NativeStrategy.name)){
+            Map<String, NativeStrategy.ServiceParameter> parameterMap = responseTimeService.getParameters();
+            NativeStrategy nativeStrategy = SpringUtil.getBean(NativeStrategy.class);
+            nativeStrategy.setParameterMap(parameterMap);
+//            NativeStrategy nativeStrategy = new NativeStrategy(parameterMap);
+            overallStrategyInterList.add(nativeStrategy);
         }
         return overallStrategyInterList;
     }
 
     @Override
-    protected boolean decline(AbstractService service) {
-        if (adapter.downService(service.getName())){
-            System.out.println(service.getName()+"容器下降");
-            return true;
-        }else
-            return false;
-
+    protected boolean decline(OperationService service) {
+        for (int i=0;i<service.getSize();i++){
+            if (adapter.downService(service.getService().getName())){
+                System.out.println(service.getService().getName()+"容器下降");
+                return true;
+            }else
+                return false;
+        }
+        return false;
     }
 
     @Override
-    protected boolean upgrade(AbstractService service) {
-        if (adapter.upService(service.getName())){
-            System.out.println(service.getName()+"容器提升");
+    protected boolean upgrade(OperationService service) {
+        if (adapter.upService(service.getService().getName())){
+            System.out.println(service.getService().getName()+"容器提升");
             return true;
         }else
             return false;

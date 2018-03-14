@@ -2,9 +2,11 @@ package app.innerInterface;
 
 import app.database.service.MonitorMethodService;
 import app.database.service.MonitorServiceService;
+import app.database.service.ServiceSumupService;
 import app.handle.commonHandle.warehouse.statistics.gateway.TopologyInter;
 import app.innerInterface.forSchedule.Monitor;
 import app.innerInterface.forSchedule.MonitorMethod;
+import app.innerInterface.forSchedule.VisitorEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.LinkedList;
@@ -65,4 +67,12 @@ public class ScheduleRestControl implements Monitor {
     public int[] getServiceRecentResponseTime(String serviceName) {
         return serviceService.getServiceRecentResponseTime(serviceName);
     }
+
+    @Autowired
+    ServiceSumupService sumupService;
+    @Override
+    public VisitorEntity getServiceVisitCount() {
+        return sumupService.getVisitorCount();
+    }
+
 }

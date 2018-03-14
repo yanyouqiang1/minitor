@@ -24,7 +24,7 @@ public interface StrategyVisitorLimitRepository extends JpaRepository<Strategy_v
     public Integer updateData(long upper,long lower,boolean onOrOff,String serviceName);
 
     public List<Strategy_visitorLimit> findByIdNotNull();
-
+    @Modifying
     @Query("update Strategy_visitorLimit v set v.onOrOff = ?1 where v.serviceName=?2")
     public void changeStatus(Boolean onOrOff,String serviceName);
 

@@ -36,4 +36,29 @@ public class MonitorServiceService {
         }else
             return new int[0];
     }
+
+    public Long[][] getServiceGatewayVisitCount(){
+        Long[][] ycount = new Long[12][4];
+        List<Monitor_services> services = serviceRepository.findTop12ByNameOrderByColumnidDesc("ServiceA");
+        int i=0;
+        for (Monitor_services services1:services){
+            ycount[i++][0] = services1.getRequest_visitors();
+        }
+        services = serviceRepository.findTop12ByNameOrderByColumnidDesc("ServiceB");
+        i=0;
+        for (Monitor_services services1:services){
+            ycount[i++][1] = services1.getRequest_visitors();
+        }
+        services = serviceRepository.findTop12ByNameOrderByColumnidDesc("ServiceC");
+        i=0;
+        for (Monitor_services services1:services){
+            ycount[i++][2] = services1.getRequest_visitors();
+        }
+        services = serviceRepository.findTop12ByNameOrderByColumnidDesc("ServiceD");
+        i=0;
+        for (Monitor_services services1:services){
+            ycount[i++][3] = services1.getRequest_visitors();
+        }
+        return ycount;
+    }
 }

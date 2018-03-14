@@ -14,10 +14,15 @@ spring:
           group: monitor_group
           consumer:
             durableSubscription: true
+        input_channel_service:
+          destination: ${STREAM_NAME:overview-service}
+          group: monitor_group
+          consumer:
+            durableSubscription: true
   rabbitmq:
     username: ${RABBIT_NAME:user}
     password: ${RABBIT_PASS:password}
-    addresses: ${RABBIT_ADDRESS:192.168.0.100:5672}
+    addresses: ${RABBIT_ADDRESS:192.168.0.101:5672}
 #    addresses: ${RABBIT_ADDRESS:192.168.0.101:5672}
 
   datasource:

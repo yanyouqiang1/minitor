@@ -7,8 +7,11 @@ import app.database.dao.StrategyRecordRepository;
 import app.database.domain.Strategy_container;
 import app.database.domain.Strategy_record;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,7 +27,7 @@ public class StrategyRecordService {
         record.setIsAuto(true);
         record.setServiceName(operationService.getService().getName());
         record.setStrategyName(operationService.getStrategyName());
-        record.setEffect(operationService.getService().getName()+" UP 1");
+        record.setEffect(operationService.getService().getName()+" UP "+operationService.getSize());
         record.setTime(operationService.getTime());
         record(record);
 
@@ -34,38 +37,38 @@ public class StrategyRecordService {
         record.setIsAuto(true);
         record.setServiceName(operationService.getService().getName());
         record.setStrategyName(operationService.getStrategyName());
-        record.setEffect(operationService.getService().getName()+" DOWN 1");
+        record.setEffect(operationService.getService().getName()+" DOWN "+operationService.getSize());
         record.setTime(operationService.getTime());
         record(record);
     }
 
 
-    public void recordManualUp(OperationService operationService){
+    public void recordManualUp(String serviceName){
         Strategy_record record = new Strategy_record();
         record.setIsAuto(false);
-        record.setServiceName(operationService.getService().getName());
-        record.setStrategyName(operationService.getStrategyName());
-        record.setEffect(operationService.getService().getName()+" UP 1");
-        record.setTime(operationService.getTime());
+        record.setServiceName(serviceName);
+        record.setEffect(serviceName+" UP 1");
+        record.setTime(new Date());
         record(record);
     }
-    public void recordManualDown(OperationService operationService){
+    public void recordManualDown(String serviceName){
         Strategy_record record = new Strategy_record();
         record.setIsAuto(false);
-        record.setServiceName(operationService.getService().getName());
-        record.setStrategyName(operationService.getStrategyName());
-        record.setEffect(operationService.getService().getName()+" DOWN 1");
-        record.setTime(operationService.getTime());
+        record.setServiceName(serviceName);
+        record.setEffect(serviceName+" DOWN 1");
+        record.setTime(new Date());
         record(record);
     }
     private void record(Strategy_record record){
         recordRepository.save(record);
     }
 
-    public List<Strategy_record> getAutomaticList(){
-        return recordRepository.findByisAutoEquals(true);
+    public List<Strategy_record> getAutomaticList(int page,int size){
+        Pageable pageable = new PageRequest(page,size);
+        return recordRepository.findByisAutoEquals(pageable,true);
     }
-    public List<Strategy_record> getManualList(){
-        return recordRepository.findByisAutoEquals(false);
+    public List<Strategy_record> getManualList(int page,int size){
+        Pageable pageable = new PageRequest(page,size);
+        return recordRepository.findByisAutoEquals(pageable,false);
     }
 }

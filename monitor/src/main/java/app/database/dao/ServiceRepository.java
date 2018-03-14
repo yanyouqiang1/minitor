@@ -23,4 +23,6 @@ public interface ServiceRepository extends JpaRepository<Monitor_services,Long> 
     public Monitor_services findFirstByNameOrderByColumnidDesc(String serviceName);
 
     public List<Monitor_services> findTop30ByNameOrderByColumnidDesc(String serviceName);
+
+    public List<Monitor_services> findTop12ByNameOrderByColumnidDesc(String serviceName);
 }

@@ -22,12 +22,12 @@ import java.util.Map;
 @Data
 @Component
 @Scope("prototype")
-public class TimeWindow implements OverallStrategyInter {
-    public static String name ="time window";
+public class NativeStrategy implements OverallStrategyInter {
+    public static String name ="Native strategy";
 
     private Map<String,ServiceParameter> parameterMap;
 
-    public TimeWindow() {
+    public NativeStrategy() {
     }
 
     @Autowired
@@ -69,19 +69,6 @@ public class TimeWindow implements OverallStrategyInter {
                 return NORMAL;
         }
         return NORMAL;
-//        List<AbstractMethod> methods = abstractService.getMethodList();
-//        if(methods==null) return NORMAL;
-//        for(AbstractMethod method:methods){
-//            int[] responseTimes = monitor.getMethodRecentResponseTime(abstractService.getName(),method.getName());
-//            if(JudgmentOverLoadAlgorithm(parameterMap.get(method.getName()),responseTimes)){
-//                return OVERLOAD;
-//            }else if(JudgmentRelaxAlgorithm(parameterMap.get(method.getName()),responseTimes)){
-//                return RELAX;
-//            }else{
-//                return NORMAL;
-//            }
-//        }
-//        return NORMAL;
     }
     //负载判断算法
     private boolean JudgmentOverLoadAlgorithm(ServiceParameter serviceParameter, int[] responseTimes) {

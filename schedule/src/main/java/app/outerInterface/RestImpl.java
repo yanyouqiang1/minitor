@@ -1,6 +1,6 @@
 package app.outerInterface;
 
-import app.Schedule.strategy.overall.TimeWindow;
+import app.Schedule.strategy.overall.NativeStrategy;
 import app.Schedule.strategy.single.service.ServiceTimePeriod;
 import app.Schedule.strategy.single.service.ServiceVisitorLimit;
 import app.database.domain.Strategy_timePeriod;
@@ -40,37 +40,37 @@ public class RestImpl implements RestInter {
 
     @Override
     public RestServices getRestService() {
-        List<AdapterService> adapterServices =  adapter.getServices();
+        List<AdapterService> adapterServices = adapter.getServices();
         return RestServices.generate(adapterServices);
     }
 
     @Override
-    public RestServiceResponse getRestServiceResponse(@PathVariable(name = "serviceName",required = true)String serviceName) {
+    public RestServiceResponse getRestServiceResponse(@PathVariable(name = "serviceName", required = true) String serviceName) {
         int[] responses = monitor.getServiceRecentResponseTime(serviceName);
-        return RestServiceResponse.generate(serviceName,responses);
+        return RestServiceResponse.generate(serviceName, responses);
     }
 
     @Autowired
     StrategyContainerService containerService;
 
     @Override
-    public RestServiceContainer getRestServiceContainer(@PathVariable(name = "serviceName",required = true)String serviceName) {
-        return RestServiceContainer.generate(serviceName,containerService.getLatestContainers(serviceName));
+    public RestServiceContainer getRestServiceContainer(@PathVariable(name = "serviceName", required = true) String serviceName) {
+        return RestServiceContainer.generate(serviceName, containerService.getLatestContainers(serviceName));
     }
 
     @Override
     public RestServiceContainerCpu getRestServiceContainerCpu(String serviceName) {
         RestServiceContainerCpu serviceContainerCpu = new RestServiceContainerCpu(serviceName);
         List<AdapterService> services = adapter.getServices();
-        AdapterService findService=null;
-        for(AdapterService adapterService:services){
-            if(adapterService.getName().equals(serviceName)){
+        AdapterService findService = null;
+        for (AdapterService adapterService : services) {
+            if (adapterService.getName().equals(serviceName)) {
                 findService = adapterService;
             }
         }
-        if(findService!=null){
+        if (findService != null) {
             List<String> containerNames = findService.getContainerNames();
-            for (String name:containerNames){
+            for (String name : containerNames) {
                 RestServiceContainerCpu.ContainerCPU containerCPU = new RestServiceContainerCpu.ContainerCPU(name);
                 containerCPU.setData(adapter.getCpuRateByContainerName(name));
                 serviceContainerCpu.getContainerCpus().add(containerCPU);
@@ -84,15 +84,15 @@ public class RestImpl implements RestInter {
     public RestServiceContainerMemory getRestServiceContainerMemory(String serviceName) {
         RestServiceContainerMemory serviceContainerMemory = new RestServiceContainerMemory(serviceName);
         List<AdapterService> services = adapter.getServices();
-        AdapterService findService=null;
-        for(AdapterService adapterService:services){
-            if(adapterService.getName().equals(serviceName)){
+        AdapterService findService = null;
+        for (AdapterService adapterService : services) {
+            if (adapterService.getName().equals(serviceName)) {
                 findService = adapterService;
             }
         }
-        if(findService!=null){
+        if (findService != null) {
             List<String> containerNames = findService.getContainerNames();
-            for (String name:containerNames){
+            for (String name : containerNames) {
                 RestServiceContainerMemory.ContainerMemory containerMemory = new RestServiceContainerMemory.ContainerMemory(name);
                 containerMemory.setData(adapter.getCpuRateByContainerName(name));
                 serviceContainerMemory.getContainerMemorys().add(containerMemory);
@@ -101,66 +101,70 @@ public class RestImpl implements RestInter {
         }
         return serviceContainerMemory;
     }
-    @Autowired
-    StrategyRecordService recordService;
+
     @Override
-    public AutomaticList getAutomaticList() {
-        AutomaticList automaticList = new AutomaticList(recordService.getAutomaticList());
+    public AutomaticList getAutomaticList(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size){
+    AutomaticList automaticList = new AutomaticList(recordService.getAutomaticList(page, size));
         return automaticList;
     }
 
     @Override
-    public ManualList getManualList() {
-        ManualList manualList = new ManualList(recordService.getManualList());
+    public ManualList getManualList(@RequestParam(name = "page", defaultValue = "0") int page, @RequestParam(name = "size", defaultValue = "10") int size){
+    ManualList manualList = new ManualList(recordService.getManualList(page,size));
         return manualList;
     }
 
     @Autowired
     StrategyTimePeriodService timePeriodService;
+
     @Override
-    public CommonReply updateStrategyTimePeriod(@RequestBody ParamTimePeriod paramTimePeriod){
-        timePeriodService.insertStrategy(paramTimePeriod.getServiceName(),paramTimePeriod.getPeek(),paramTimePeriod.getThought(),true);
+    public CommonReply updateStrategyTimePeriod(@RequestBody ParamTimePeriod paramTimePeriod) {
+        timePeriodService.insertStrategy(paramTimePeriod.getServiceName(), paramTimePeriod.getPeek(), paramTimePeriod.getThought(), true);
         return CommonReplyBuilder.buildSuccessReply();
     }
 
     @Autowired
     StrategyVisitorLimitService visitorLimitService;
+
     @Override
-    public CommonReply updateStrategyVisitorLimit(@RequestBody ParamVisitorLimit paramVisitorLimit){
-        visitorLimitService.insertStrategy(paramVisitorLimit.getServiceName(),paramVisitorLimit.getUpper(),paramVisitorLimit.getLower(),true);
+    public CommonReply updateStrategyVisitorLimit(@RequestBody ParamVisitorLimit paramVisitorLimit) {
+        visitorLimitService.insertStrategy(paramVisitorLimit.getServiceName(), paramVisitorLimit.getUpper(), paramVisitorLimit.getLower(), true);
         return CommonReplyBuilder.buildSuccessReply();
     }
 
     @Autowired
     StrategyVisitorAverageService visitorAverageService;
+
     @Override
-    public CommonReply updateStrategyVisitorAverage(@RequestParam(name = "methodName")String methodName,@RequestParam(name = "upper")long upper,@RequestParam(name = "lower")long lower, @RequestParam(name = "switch") boolean sswitch) {
-        visitorAverageService.insertStrategy(methodName,upper,lower,sswitch);
+    public CommonReply updateStrategyVisitorAverage(@RequestParam(name = "methodName") String methodName, @RequestParam(name = "upper") long upper, @RequestParam(name = "lower") long lower, @RequestParam(name = "switch") boolean sswitch) {
+        visitorAverageService.insertStrategy(methodName, upper, lower, sswitch);
         return CommonReplyBuilder.buildSuccessReply();
     }
 
     @Autowired
     StrategyTimeWindowService timeWindowService;
+
     @Override
-    public CommonReply updateStrategyTimeWindow(@RequestBody ParamTimeWindow paramTimeWindow){
-        timeWindowService.insertStrategy(paramTimeWindow.getServiceName(),paramTimeWindow.getUpper(),paramTimeWindow.getLower(),paramTimeWindow.getUpperLimit());
+    public CommonReply updateStrategyTimeWindow(@RequestBody ParamTimeWindow paramTimeWindow) {
+        timeWindowService.insertStrategy(paramTimeWindow.getServiceName(), paramTimeWindow.getUpper(), paramTimeWindow.getLower(), paramTimeWindow.getUpperLimit());
         return CommonReplyBuilder.buildSuccessReply();
     }
 
 
     @Autowired
     StrategyOverallSwitchService overallSwitchService;
+
     @Override
     public Overview getOverview() {
         Overview overview = new Overview();
 
-        overview.getTimeWindow().setName(TimeWindow.name);
-        overview.getTimeWindow().setStatus(overallSwitchService.getSwitchStatus(TimeWindow.name));
+        overview.getTimeWindow().setName(NativeStrategy.name);
+        overview.getTimeWindow().setStatus(overallSwitchService.getSwitchStatus(NativeStrategy.name));
 
         List<Strategy_timePeriod> timePeriods = timePeriodService.getAllstrategys();
         Overview.StrategyService strategyService = new Overview.StrategyService();
         strategyService.setName(ServiceTimePeriod.name);
-        if(timePeriods!=null) {
+        if (timePeriods != null) {
             for (Strategy_timePeriod timePeriod : timePeriods) {
                 Overview.Status status = new Overview.Status();
                 status.setName(timePeriod.getServiceName());
@@ -173,7 +177,7 @@ public class RestImpl implements RestInter {
         List<Strategy_visitorLimit> visitorLimits = visitorLimitService.getAllstrategys();
         strategyService = new Overview.StrategyService();
         strategyService.setName(ServiceVisitorLimit.name);
-        if(visitorLimits!=null) {
+        if (visitorLimits != null) {
             for (Strategy_visitorLimit visitorLimit : visitorLimits) {
                 Overview.Status status = new Overview.Status();
                 status.setName(visitorLimit.getServiceName());
@@ -185,7 +189,7 @@ public class RestImpl implements RestInter {
 
 
         List<Strategy_visitorAverage> visitorAverages = visitorAverageService.getAllstrategys();
-        if (visitorAverages!=null) {
+        if (visitorAverages != null) {
             for (Strategy_visitorAverage visitorAverage : visitorAverages) {
                 Overview.Status status = new Overview.Status();
                 status.setName(visitorAverage.getMethodName());
@@ -203,12 +207,12 @@ public class RestImpl implements RestInter {
     }
 
     @Override
-    public Strategy_timePeriod getTimePeriod(@RequestParam("serviceName")String serviceName){
+    public Strategy_timePeriod getTimePeriod(@RequestParam("serviceName") String serviceName) {
         return timePeriodService.getStrategyInfo(serviceName);
     }
 
     @Override
-    public Strategy_visitorLimit getVisitorLimit(@RequestParam("serviceName")String serviceName){
+    public Strategy_visitorLimit getVisitorLimit(@RequestParam("serviceName") String serviceName) {
         return visitorLimitService.getStrategyInfo(serviceName);
     }
 
@@ -218,29 +222,50 @@ public class RestImpl implements RestInter {
     }
 
     @Override
-    public CommonReply changeStrategyTimeWindow(){
-        if(timeWindowService.changeStatus(TimeWindow.name))
+    public CommonReply changeStrategyTimeWindow() {
+        if (timeWindowService.changeStatus(NativeStrategy.name))
             return CommonReplyBuilder.buildSuccessReply();
         return CommonReplyBuilder.buildErrorReply("unkown error");
 
     }
 
     @Override
-    public CommonReply changeStrategyServiceTimeperiod(@RequestParam("serviceName")String serviceName){
-        if(timePeriodService.changeStatus(serviceName))
+    public CommonReply changeStrategyServiceTimeperiod(@PathVariable("serviceName") String serviceName) {
+        if (timePeriodService.changeStatus(serviceName))
             return CommonReplyBuilder.buildSuccessReply();
         return CommonReplyBuilder.buildErrorReply("unkown error");
     }
 
     @Override
-    public CommonReply changeStrategyServiceVisitorLimit(@RequestParam("serviceName")String serviceName) {
-        if(visitorLimitService.changeStatus(serviceName))
+    public CommonReply changeStrategyServiceVisitorLimit(@PathVariable("serviceName") String serviceName) {
+        if (visitorLimitService.changeStatus(serviceName))
             return CommonReplyBuilder.buildSuccessReply();
         return CommonReplyBuilder.buildErrorReply("unkown error");
+    }
+
+    @Autowired
+    StrategyRecordService recordService;
+
+    @Override
+    public CommonReply manualServiceUp(String serviceName) {
+        if (adapter.upService(serviceName)) {
+            recordService.recordManualUp(serviceName);
+            return CommonReplyBuilder.buildSuccessReply();
+        } else
+            return CommonReplyBuilder.buildErrorReply("adapter error");
+    }
+
+    @Override
+    public CommonReply manualServiceDown(String serviceName) {
+        if (adapter.downService(serviceName)) {
+            recordService.recordManualDown(serviceName);
+            return CommonReplyBuilder.buildSuccessReply();
+        } else
+            return CommonReplyBuilder.buildErrorReply("adapter error");
     }
 
     @RequestMapping("/test")
-    public String test(){
+    public String test() {
         LinkedList<AdapterService> adapterServices = new LinkedList<>();
 
         AdapterService adapterService = new AdapterService();

@@ -4,9 +4,11 @@ import app.database.dao.OverallRepository;
 import app.feignclient.GatewayManager;
 import app.feignclient.entity.Group;
 import app.handle.HandleInter;
+import app.handle.commonHandle.servicehouse.ServiceHouseInter;
 import app.handle.commonHandle.warehouse.WarehoseInter;
 import entitylib.RequestMessage;
 import entitylib.ResponseMessage;
+import entitylib.ServiceMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -25,6 +27,9 @@ public class HandlerCenter implements HandleInter {
 
     @Autowired
     WarehoseInter warehoseInter;
+
+    @Autowired
+    ServiceHouseInter serviceHouseInter;
 
     @Override
     public void msgReceive(ResponseMessage responseMessage) {
@@ -51,6 +56,12 @@ public class HandlerCenter implements HandleInter {
         if(this.msgHandleListener!=null){
             msgHandleListener.afterSumup();
         }
+        serviceHouseInter.sumup();
+    }
+
+    @Override
+    public void msgReceive(ServiceMessage serviceMessage) {
+        serviceHouseInter.messageReceive(serviceMessage);
     }
 
     @Autowired

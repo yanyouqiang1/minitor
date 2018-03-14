@@ -1,6 +1,6 @@
 package app.database.service;
 
-import app.Schedule.strategy.overall.TimeWindow;
+import app.Schedule.strategy.overall.NativeStrategy;
 import app.database.dao.StrategyOverallSwitchRepository;
 import app.database.dao.StrategyTimeWindowRepository;
 import app.database.domain.Strategy_overallSwitch;
@@ -21,12 +21,12 @@ public class StrategyTimeWindowService {
     @Autowired
     StrategyTimeWindowRepository timeWindowRepository;
 
-    public Map<String, TimeWindow.ServiceParameter> getParameters() {
+    public Map<String, NativeStrategy.ServiceParameter> getParameters() {
         List<Strategy_timeWindow> responseTimes = timeWindowRepository.getAllByIdNotNull();
         if (responseTimes == null) return null;
-        Map<String, TimeWindow.ServiceParameter> map = new HashMap<String, TimeWindow.ServiceParameter>();
+        Map<String, NativeStrategy.ServiceParameter> map = new HashMap<String, NativeStrategy.ServiceParameter>();
         for (Strategy_timeWindow responseTime : responseTimes) {
-            TimeWindow.ServiceParameter parameter = new TimeWindow.ServiceParameter(responseTime.getUpper(), responseTime.getLower(), responseTime.getUpperLimit());
+            NativeStrategy.ServiceParameter parameter = new NativeStrategy.ServiceParameter(responseTime.getUpper(), responseTime.getLower(), responseTime.getUpperLimit());
             map.put(responseTime.getServiceName(), parameter);
         }
         return map;

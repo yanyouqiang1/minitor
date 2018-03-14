@@ -20,6 +20,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel target="1.8">
+      <module name="eureka" target="1.6" />
       <module name="gateway" target="1.8" />
       <module name="MinitorSchedule" target="1.6" />
       <module name="monitor" target="1.8" />
